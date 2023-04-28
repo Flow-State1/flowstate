@@ -33,7 +33,7 @@ Saving changes when branch is already published (make sure you are working on yo
   - Run command: git status (To verify you are working on the appropriate branch before commiting)
   - Run command: git add . (To add any new files, if you created any. If not ignore)
   - Run command: git commit -m "commit message that should be descriptive"
-  - Run command: git push
+  - Run command: git push (To send everything to the remote branch on the repository)
 
   
 =======================================================
