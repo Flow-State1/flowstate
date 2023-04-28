@@ -9,6 +9,7 @@ Clone the github repository onto your laptop:
 
   
 Create new branch(make branch name to be descriptive):
+  - Run command: git checkout frontend (if you are working on frontend)
   - Run command: git branch newbranchname
   - Run command: git checkout createdbranchname
     
