@@ -1,6 +1,8 @@
 # flowstate
 
 
+Make sure git is installed on your machine (Download Link: https://git-scm.com/download/win) 
+
 Clone the github repository onto your laptop:
 
     -Create a folder on your laptop and open it with VS CODE.
