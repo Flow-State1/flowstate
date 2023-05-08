@@ -17,8 +17,8 @@ Create new branch(make branch name to be descriptive):
     
     
 Install yarn and dependencies for the project:
-  - On the terminal run the command: npm install yarn
-  - After the installation run the command: yarn
+  - On the terminal run the command(Optional): npm install yarn 
+  - After the installation run the command: yarn (Alternatively npm install)
   
 Run the application:
   - Run the command: yarn run dev
