@@ -17,11 +17,11 @@ Create new branch(make branch name to be descriptive):
     
     
 Install yarn and dependencies for the project:
-  - On the terminal run the command(Optional): npm install yarn 
-  - After the installation run the command: yarn (Alternatively npm install)
+  - On the terminal run the command(Optional): npm install --global yarn 
+  - After the installation run the command(Make sure the terminal thats being used on vs code is not powershell): yarn 
   
 Run the application:
-  - Run the command: yarn run dev(Alternatively npm run dev)
+  - Run the command: yarn run dev
   
 
 Saving changes to repository from newly created branch (follow these steps if you are working on a newly created branch and you havent followed them / to publish branch):
