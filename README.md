@@ -39,7 +39,3 @@ Saving changes when branch is already published (make sure you are working on yo
 
   
 =======================================================
-
-    
-
-
