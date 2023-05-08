@@ -21,7 +21,7 @@ Install yarn and dependencies for the project:
   - After the installation run the command: yarn (Alternatively npm install)
   
 Run the application:
-  - Run the command: yarn run dev
+  - Run the command: yarn run dev(Alternatively npm run dev)
   
 
 Saving changes to repository from newly created branch (follow these steps if you are working on a newly created branch and you havent followed them / to publish branch):
