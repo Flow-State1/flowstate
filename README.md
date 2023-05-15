@@ -12,8 +12,7 @@ Clone the github repository onto your laptop:
   
 Create new branch(make branch name to be descriptive):
   - Run command: git checkout frontend (if you are working on frontend)
-  - Run command: git branch newbranchname
-  - Run command: git checkout branchname (branchname is recently created branch)
+  - Run command: git checkout -b 'branchname' (Will create branch if not there and switch to the branch , if it is it will just switch to the branch without create another)
     
     
 Install yarn and dependencies for the project:
