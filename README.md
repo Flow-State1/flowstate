@@ -18,7 +18,11 @@ Create new branch(make branch name to be descriptive):
     
 Install yarn and dependencies for the project:
   - On the terminal run the command: npm install --global yarn 
+<<<<<<< HEAD
   - After the installation run the command(Make sure the terminal thats being used on vs code is not powershell): yarn or npm install(if you get errors when running the app)
+=======
+  - After the installation run the command(Make sure the terminal thats being used on vs code is not powershell): yarn or npm install(if you get errors when running the app) 
+>>>>>>> 8c00d562421c977de8ab86ed73da7d2a23d2b3d8
   
 Run the application:
   - Run the command: yarn run dev
