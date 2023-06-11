@@ -274,9 +274,9 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-.splash-container .splash-content{
+  }
+  
+  .splash-container .splash-content {
     position: relative;
     top: 2.5%;
     display: flex;
@@ -284,9 +284,9 @@ body{
     justify-content: center;
     align-items: center;
     text-align: center;
-}
-
-.splash-container .splash-content h1{
+  }
+  
+  .splash-container .splash-content h1 {
     font-size: 5.5rem;
     font-weight: 700;
     color: #ffff;
@@ -294,17 +294,17 @@ body{
     justify-content: center;
     align-items: center;
     letter-spacing: 5.5px;
-}
-
-.button-container{
+  }
+  
+  .button-container {
     position: relative;
     top: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.segmented-button {
+  }
+  
+  .segmented-button {
     text-align: center;
     border: none;
     outline: none;
@@ -315,33 +315,62 @@ body{
     height: 85px;
     width: 260px;
     transition: all 0.2s ease-in-out;
-}
-
-.left {
+  }
+  
+  .left {
     border: 4px solid var(--primary-color);
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     background-color: var(--primary-color);
     color: #ffffff;
-}
-
-.right {
+  }
+  
+  .right {
     border: 4px solid var(--primary-color);
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     background-color: #ffffff;
     color: var(--primary-color);
-}
-
-.segmented-button:hover {
+  }
+  
+  .segmented-button:hover {
     background-color: var(--secondary-color);
     border-color: var(--secondary-color);
     color: #ffffff;
     transition: all 0.2s ease-in-out;
-}
+  }
+  
+  /* Media Queries */
+  
+  @media (max-width: 768px) {
+    /* For tablet screens */
+    .splash-container .splash-content h1 {
+      font-size: 4rem;
+    }
+  
+    .segmented-button {
+      height: 70px;
+      width: 200px;
+      font-size: 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    /* For mobile screens */
+    .splash-container .splash-content h1 {
+      font-size: 3.5rem;
+    }
+  
+    .segmented-button {
+      height: 60px;
+      width: 180px;
+      font-size: 18px;
+    }
+  }
+  
 
 /* LOGIN PAGE */
-.login-container{
+.login-container {
     position: relative;
     width: 100%;
     height: 100vh;
@@ -350,264 +379,265 @@ body{
     justify-content: center;
     align-items: center;
 }
-
-.login-card{
+  
+.login-card {
     position: relative;
-    width: 35%;
-    height: 95%;
+    width: 40%;
+    height: 95vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     text-align: center;
     background-color: #fff;
     border-radius: 25px;
-    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
+    margin: 10vh auto; 
 }
-
-.login-card-content{
+  
+.login-card-content {
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 65%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 95px; /* Adjust the margin-top value as needed */
 }
-
-.login-card-content img{
-    width: 18rem;
-    height: 14rem;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
+  
+.login-card-content img {
+    width: 40%;
+    max-width: 10rem;
+    height: auto;
+    align-self: center; /* Added to center the image horizontally */
+    margin-bottom: 0.8rem; /* Adjusted margin for spacing */
 }
-
-.login-card-content .logo-title{
+  
+.login-card-content .logo-title {
     position: relative;
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     font-weight: 700;
     color: var(--primary-color);
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 1.2rem;
 }
-
-
-.login-card-title{
-    font-size: 2rem;
+  
+.login-card-title {
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--primary-color);
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
 }
-
-.login-card-content .login-form{
+  
+.login-card-content .login-form {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
-
-.login-form input{
-    width: 30rem;
-    height: 3.5rem;
+  
+.login-form input {
+    width: 70%;
+    max-width: 17rem;
+    height: 2.8rem;
     border-radius: 1rem;
     border: 1px solid var(--primary-color);
     margin-bottom: 1rem;
     padding-left: 1rem;
-    font-size: 1.5rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: var(--primary-color);
     outline: none;
 }
-
-.login-form input:focus{
-    border: 1px solid var(--secondary-color);
-}
-
-.eye-icon{
+  
+.eye-icon {
     position: relative;
-    top: -17%;
-    left: 44%;
+    top: -15%;
+    left: 40%;
     cursor: pointer;
 }
-
-.forgot-password-link{
+  
+.forgot-password-link {
     position: relative;
-    font-size: 1rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: var(--primary-color);
     text-decoration: none;
     margin-bottom: 1rem;
 }
-
-.forgot-password-link:hover{
+  
+.forgot-password-link:hover {
     color: var(--secondary-color);
 }
-
-.login-form .login-button{
+  
+.login-form .login-button {
     position: relative;
-    width: 15rem;
-    height: 4rem;
+    width: 50%;
+    max-width: 14rem;
+    height: 2.8rem;
     border-radius: 40rem;
     border: none;
     background-color: var(--primary-color);
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 500;
     cursor: pointer;
     outline: none;
     margin-bottom: 1rem;
     transition: all 0.2s ease-in-out;
 }
-
-.login-form .login-button:hover{
+  
+.login-form .login-button:hover {
     background-color: var(--secondary-color);
     transition: all 0.2s ease-in-out;
 }
-
-.login-form .signup-link{
+  
+.login-form .signup-link {
     position: relative;
-    font-size: 1rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: var(--primary-color);
     text-decoration: none;
-    margin-bottom: 1rem;
 }
-
-.login-form .signup-link:hover{
+  
+.login-form .signup-link:hover {
     color: var(--secondary-color);
 }
+  
 
 /* SIGNUP PAGE */
 
-.signup-container{
+.signup-container {
     position: relative;
     width: 100%;
-    height: 100vh;
+    height: 120vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-
-.signup-card{
+  
+.signup-card {
     position: relative;
-    width: 35%;
-    height: 95%;
+    width: 40%;
+    height: 110vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     text-align: center;
     background-color: #fff;
     border-radius: 25px;
-    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
+    margin: 1vh auto;
+    margin-bottom: 40px;
 }
-
-.signup-card-content{
+  
+.signup-card-content {
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 65%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 120px;
 }
-
-.signup-card-content img{
-    width: 18rem;
-    height: 14rem;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
+  
+.signup-card-content img {
+    width: 40%;
+    max-width: 10rem;
+    height: auto;
+    align-self: center;
+    margin-bottom: 0.8rem;
 }
-
-.signup-card-content .logo-title{
+  
+.signup-card-content .logo-title {
     position: relative;
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     font-weight: 700;
     color: var(--primary-color);
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 1.2rem;
 }
-
-.signup-card-title{
-    font-size: 2rem;
+  
+.signup-card-title {
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--primary-color);
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
 }
-
-.signup-card-content .signup-form{
+  
+.signup-card-content .signup-form {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
-
-.signup-form input{
-    width: 30rem;
-    height: 3.5rem;
+  
+.signup-form input {
+    width: 70%;
+    max-width: 17rem;
+    height: 2.8rem;
     border-radius: 1rem;
     border: 1px solid var(--primary-color);
     margin-bottom: 1rem;
     padding-left: 1rem;
-    font-size: 1.5rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: var(--primary-color);
     outline: none;
 }
-
-.sign-eye-icon{
+  
+.sign-eye-icon {
     position: relative;
-    top: -12.5%;
-    left: 44%;
+    top: -12%;
+    left: 40%;
     cursor: pointer;
 }
-
-.signup-form input:focus{
+  
+.signup-form input:focus {
     border: 1px solid var(--secondary-color);
 }
-
-.signup-form .signup-button{
+  
+.signup-form .signup-button {
     position: relative;
-    width: 15rem;
-    height: 4rem;
+    width: 50%;
+    max-width: 14rem;
+    height: 2.8rem;
     border-radius: 40rem;
     border: none;
     background-color: var(--primary-color);
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 500;
     cursor: pointer;
     outline: none;
-    margin-bottom: 1rem;
-    transition: all 0.2s ease-in-out;
+    margin-bottom: 0.8rem;
 }
-
-.signup-form .signup-button:hover{
-    background-color: var(--secondary-color);
-    transition: all 0.2s ease-in-out;
-}
-
-.signup-form .login-link{
+  
+.signup-form .login-link {
     position: relative;
-    font-size: 1rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: var(--primary-color);
     text-decoration: none;
     margin-bottom: 1rem;
+    margin-top: 10px;
 }
-
-.signup-form .login-link:hover{
+  
+.signup-form .signup-button:hover {
+    background-color: var(--secondary-color);
+    transition: all 0.2s ease-in-out;
+}
+  
+.signup-form .login-link:hover {
     color: var(--secondary-color);
 }
+  
 
 /* RESET PASSWORD PAGE */
 .reset-container{
@@ -622,52 +652,52 @@ body{
 
 .reset-card{
     position: relative;
-    width: 35%;
-    height: 95%;
+    width: 40%;
+    height: 95vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     text-align: center;
     background-color: #fff;
     border-radius: 25px;
-    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
+    margin: 10vh auto;
 }
 
 .reset-card-content{
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 65%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 80px; /* Adjust the margin-top value as needed */
 }
 
 .reset-card-content img{
-    width: 18rem;
-    height: 14rem;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
+    width: 40%;
+    max-width: 10rem;
+    height: auto;
+    align-self: center; /* Added to center the image horizontally */
+    margin-bottom: 0.8rem; /* Adjusted margin for spacing */
 }
 
 .reset-card-content .logo-title{
     position: relative;
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     font-weight: 700;
     color: var(--primary-color);
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 1.2rem;
 }
 
 .reset-card-title{
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--primary-color);
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .reset-card-content .reset-form{
@@ -679,13 +709,14 @@ body{
 }
 
 .reset-form input{
-    width: 30rem;
-    height: 3.5rem;
+    width: 70%;
+    max-width: 17rem;
+    height: 2.8rem;
     border-radius: 1rem;
     border: 1px solid var(--primary-color);
-    margin-bottom: 1rem;
+    margin-bottom: 1.8rem;
     padding-left: 1rem;
-    font-size: 1.5rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: var(--primary-color);
     outline: none;
@@ -697,17 +728,18 @@ body{
 
 .reset-form .reset-button{
     position: relative;
-    width: 15rem;
-    height: 4rem;
+    width: 50%;
+    max-width: 14rem;
+    height: 2.8rem;
     border-radius: 40rem;
     border: none;
     background-color: var(--primary-color);
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 500;
     cursor: pointer;
     outline: none;
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
     transition: all 0.2s ease-in-out;
 }
 
@@ -718,11 +750,11 @@ body{
 
 .reset-form .login-link{
     position: relative;
-    font-size: 1rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: var(--primary-color);
     text-decoration: none;
-    margin-bottom: 1rem;
+    margin-top: 10px;
 }
 
 .reset-form .login-link:hover{
@@ -742,52 +774,52 @@ body{
 
 .new-card{
     position: relative;
-    width: 35%;
-    height: 95%;
+    width: 40%;
+    height: 95vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     text-align: center;
     background-color: #fff;
     border-radius: 25px;
-    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
+    margin: 10vh auto; 
 }
 
 .new-card-content{
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 65%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 95px; /* Adjust the margin-top value as needed */
 }
 
 .new-card-content img{
-    width: 18rem;
-    height: 14rem;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
+    width: 40%;
+    max-width: 10rem;
+    height: auto;
+    align-self: center; /* Added to center the image horizontally */
+    margin-bottom: 0.8rem; /* Adjusted margin for spacing */
 }
 
 .new-card-content .logo-title{
     position: relative;
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     font-weight: 700;
     color: var(--primary-color);
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 1.2rem;
 }
 
 .new-card-title{
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--primary-color);
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .new-card-content .new-form{
@@ -799,13 +831,14 @@ body{
 }
 
 .new-form input{
-    width: 30rem;
-    height: 3.5rem;
+    width: 70%;
+    max-width: 17rem;
+    height: 2.8rem;
     border-radius: 1rem;
     border: 1px solid var(--primary-color);
     margin-bottom: 1rem;
     padding-left: 1rem;
-    font-size: 1.5rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: var(--primary-color);
     outline: none;
@@ -814,7 +847,7 @@ body{
 .reset-eye-icon{
     position: absolute;
     right: 1rem;
-    top: 5.6rem;
+    top: 7.4rem;
     cursor: pointer;
 }
 
@@ -824,17 +857,18 @@ body{
 
 .new-form .new-button{
     position: relative;
-    width: 15rem;
-    height: 4rem;
+    width: 50%;
+    max-width: 14rem;
+    height: 2.8rem;
     border-radius: 40rem;
     border: none;
     background-color: var(--primary-color);
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 500;
     cursor: pointer;
     outline: none;
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
     transition: all 0.2s ease-in-out;
 }
 
