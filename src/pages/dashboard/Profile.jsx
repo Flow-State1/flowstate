@@ -1,11 +1,12 @@
-import React from 'react'
-import { useNavigate } from 'react-router'
-import { motion } from 'framer-motion'
-import '../styles.css'
+import React from 'react';
+import { useNavigate } from 'react-router';
+import { useMediaQuery } from 'react-responsive';
+import { motion } from 'framer-motion';
+import '../styles.css';
 
 const Profile = () => {
-    const navigate = useNavigate()
-
+    const navigate = useNavigate();
+    const isTabletOrLaptop = useMediaQuery({ query: '(min-width: 768px)' });
     const handleEditProfile = () => {
         navigate('/dashboard/dashboard/profile/editprofile')
     }
@@ -34,13 +35,16 @@ const Profile = () => {
                     <div className='profile-content-body-card'>
                         <div className='profile-content-body-card-header'>
                             <div className="profile-profile-avatar">
-                                <img src="https://www.w3schools.com/howto/img_avatar.png" alt=""                                    style={{
-                                        width: '32rem',
-                                        height: '32rem',
+                                <img 
+                                    src="https://www.w3schools.com/howto/img_avatar.png" 
+                                    alt=""                                    
+                                    style={{
+                                        width: '12rem',
+                                        height: '12rem',
                                         borderRadius: '50%',
                                         objectFit: 'cover',
                                         position: 'relative',
-                                        top: '40%',
+                                        top: '75%',
                                     }}
                                 />
                             </div>
@@ -51,9 +55,27 @@ const Profile = () => {
                         </div>
 
                         <div className='profile-content-body-card-buttons'>
-                            <button className='profile-content-body-card-button' onClick={handleEditProfile} >Edit Profile</button>
-                            <button className='profile-content-body-card-button' onClick={handleChangePassword} >Change Password</button>
-                            <button className='profile-content-body-card-button' onClick={handleViewProfile} >View Profile</button>
+                            <button 
+                                className='profile-content-body-card-button' 
+                                onClick={handleEditProfile} 
+                                style={{ width: isTabletOrLaptop ? '15rem' : '50%' }}
+                            >
+                                Edit Profile
+                            </button>
+                            <button 
+                                className='profile-content-body-card-button' 
+                                onClick={handleChangePassword} 
+                                style={{ width: isTabletOrLaptop ? '15rem' : '50%' }}
+                            >
+                                Change Password
+                            </button>
+                            <button 
+                                className='profile-content-body-card-button' 
+                                onClick={handleViewProfile} 
+                                style={{ width: isTabletOrLaptop ? '15rem' : '50%' }}
+                            >
+                                View Profile
+                            </button>
                         </div>
                     </div>
                 </div>

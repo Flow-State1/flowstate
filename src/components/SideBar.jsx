@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine,faBell, faGears, faUserCircle, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine,faBell, faGears, faUserCircle, faLayerGroup, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import logo from "../assets/logo.png";
 import "../pages/styles.css"
 
@@ -38,7 +38,7 @@ const SideBarNavigation = () => {
                     <div className='navbar-profile-info'>
                         <h4 className='navbar-profile-name-title'
                             style={{
-                                fontSize: '1.5rem',
+                                fontSize: '1.2rem',
                                 fontWeight: '600',
                                 marginBottom: '0.1rem'
                             }}
@@ -52,7 +52,7 @@ const SideBarNavigation = () => {
             <div className="sidebar">
                 <div className='sidebar-header'>
                     <img src={logo} alt='logo' className='sidebar-logo' />
-                    <h1 className='sidebar-title'>floW-stAte</h1>
+                    <h1 className='sidebar-title'>Flow State</h1>
                 </div>
 
                 <div className='sidebar-menu'>
@@ -133,7 +133,7 @@ const SideBarNavigation = () => {
                     <div className='sidebar-logout'>
                         <button className='sidebar-logout-btn' onClick={handleLogout}>
                         <FontAwesomeIcon
-                            icon={faUserCircle}
+                            icon={faSignOut}
                             className="icon"
                             style={{
                                 fontSize: '1.5rem',

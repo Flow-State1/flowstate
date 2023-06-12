@@ -883,7 +883,7 @@ body{
     top: 0;
     left: 0;
     width: 100%;
-    height: 5rem;
+    height: 3.6rem;
     background-color: #ffffff;
     box-shadow: 0 3px 5px rgba(0,0,0,0.2);
     z-index: 9999;
@@ -918,8 +918,8 @@ body{
 
 .navbar-right-profile{
     position: relative;
-    top: .4rem;
-    left: 45%;
+    top: .2rem;
+    left: 44%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -945,7 +945,7 @@ body{
     position: fixed;
     top: 0;
     left: 0;
-    width: 18rem;
+    width: 15rem;
     height: 100%;
     background-color: var(--primary-color);
     transition: all 0.3s ease-in-out;
@@ -964,18 +964,19 @@ body{
 }
 
 .sidebar-header img{
-    width: 7.5rem;
-    height: 6.5rem;
-    margin-bottom: 0.5rem;
+    width: 5.5rem;
+    height: 4.5rem;
+    margin-top: 30px;
+    cursor: pointer;
 }
 
 .sidebar-header h1{
-    font-size: 1.7rem;
+    font-size: 1.4rem;
     font-weight: 700;
     color: #ffffff;
 }
 
-.sidebar-menu{
+.sidebar-menu {
     position: relative;
     width: 100%;
     height: 95%;
@@ -984,8 +985,8 @@ body{
     align-items: center;
     flex-direction: column;
 }
-
-.sidebar-menu ul{
+  
+.sidebar-menu ul {
     width: 100%;
     height: 100%;
     display: flex;
@@ -993,106 +994,106 @@ body{
     align-items: center;
     flex-direction: column;
 }
-
-.sidebar-menu .icon{
-    width: 2rem;
-    height: 2rem;
+  
+.sidebar-menu .icon {
+    width: 1.3rem;
+    height: 1.3rem; 
     margin-right: 0.5rem;
 }
-
-.sidebar-menu ul li{
+  
+.sidebar-menu ul li {
     position: relative;
     width: 100%;
-    height: 4.5rem;
+    height: 3.2rem;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.2rem;
     transition: all 0.2s ease-in-out;
 }
-
-.sidebar-menu ul li a{
+  
+.sidebar-menu ul li a {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    margin: auto;
     text-decoration: none;
     color: #ffffff;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     font-weight: 500;
-    padding-left: 2.5rem;
-    border-radius: 40rem;
+    padding-left: 2rem;
+    /* border-radius: 40rem; */
     transition: all 0.2s ease-in-out;
+    margin-top: 18px;
 }
-
-.sidebar-logout{
+  
+.sidebar-logout {
     position: relative;
     bottom: 7%;
     width: 100%;
-    height: 10%;
+    height: 8%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
-
-.sidebar-logout-btn{
-    width: 14rem;
-    height: 3rem;
+  
+.sidebar-logout-btn {
+    width: 10rem;
+    height: 2.5rem;
     border-radius: 40rem;
     border: 1px solid #ffffff;
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(255, 255, 255, 0.1);
     color: #ffffff;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     font-weight: 500;
     outline: none;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 }
-
-.sidebar-logout-btn .icon{
-    width: 1.5rem;
-    height: 1.5rem;
+  
+.sidebar-logout-btn .icon {
+    width: 1.2rem;
+    height: 1.2rem;
     margin-right: 0.5rem;
 }
-
-.sidebar-logout-btn:hover{
-    background-color: rgba(255,255,255,0.2);
+  
+.sidebar-logout-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
     transition: all 0.2s ease-in-out;
 }
-
-.sidebar-menu ul li:hover{
-    border-radius: 40rem;
-    background-color: rgba(255,255,255,0.1);
+  
+.sidebar-menu ul li a:hover {
+    /* border-radius: 40rem; */
+    background-color: rgba(255, 255, 255, 0.2);
     transition: all 0.2s ease-in-out;
 }
-
-.sidebar-menu ul li.active a{
-    border-radius: 40rem;
-    background-color: rgba(255,255,255,0.1);
+  
+.sidebar-menu ul li.active a {
+    /* border-radius: 40rem; */
+    background-color: rgba(255, 255, 255, 0.1);
     color: #ffffff;
 }
-
-.sidebar-menu ul li.active a:hover{
-    background-color: rgba(255,255,255,0.1);
+  
+.sidebar-menu ul li.active a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
     transition: all 0.2s ease-in-out;
 }
-
-
-.side-bar-header img{
-    width: 8rem;
-    height: 8rem;
+  
+.sidebar-header img {
+    width: 6rem;
+    height: 6rem;
     border-radius: 50%;
-    margin-bottom: .5rem;
-}
+}  
 
 /* DASHBOARD PAGE */
 
 .dashboard-content {
     position: absolute;
     top: 3rem;
-    left: 18rem;
+    left: 16rem;
     width: calc(100% - 18rem);
     height: calc(100% - 4rem);
     padding: 2rem;
@@ -1106,10 +1107,11 @@ body{
     justify-content: flex-start;
     align-items: center;
     flex-direction: row;
+    
 }
 
 .dashboard-content-header h2{
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: var(--primary-color);
 }
@@ -1149,7 +1151,7 @@ body{
     flex-direction: row;
 }
 .dashboard-content-body-summary-graph-card h3{
-    font-size: 2rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: var(--primary-color);
 }
@@ -1185,12 +1187,12 @@ body{
 }
 
 .dashboard-content-body-profile-right-card-avatar img{
-    width: 10rem;
-    height: 10rem;
+    width: 8rem;
+    height: 8rem;
     border-radius: 50%;
     border: 5px solid #ffffff;
     object-fit: cover;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.8rem;
 }
 
 .dashboard-content-body-profile-right-card-avatar-name{
@@ -1204,13 +1206,13 @@ body{
 }
 
 .dashboard-content-body-profile-right-card-avatar-name h3{
-    font-size: 2rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: var(--primary-color);
 }
 
 .dashboard-content-body-profile-right-card-avatar-name p {
-    font-size: 1.3rem;
+    font-size: 0.9rem;
     font-weight: 500;
     color: #000000;
 }
@@ -1231,7 +1233,7 @@ body{
 }
 
 .dashboard-content-body-profile-right-summary-card h3{
-    font-size: 2rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: var(--primary-color);
     margin-bottom: 1rem;
@@ -1262,7 +1264,7 @@ body{
 }
 
 .dashboard-content-body-profile-middle-mini-card h3{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: var(--primary-color);
     margin-bottom: 1rem;
@@ -1279,7 +1281,7 @@ body{
 .analytics-content{
     position: absolute;
     top: 3rem;
-    left: 18rem;
+    left: 16rem;
     width: calc(100% - 18rem);
     height: calc(100% - 4rem);
     padding: 2.5rem;
@@ -1296,7 +1298,7 @@ body{
 }
 
 .analytics-content-header h2{
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: var(--primary-color);
 }
@@ -1326,7 +1328,7 @@ body{
 }
 
 .analytics-content-body-consumption-graph-card h3{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: var(--primary-color);
     margin-bottom: 1rem;
@@ -1334,8 +1336,8 @@ body{
 
 .analytics-content-body-summary-graph-card-header-select{
     position: absolute;
-    top: 5%;
-    right: 0.5%;
+    top: 6.5%;
+    right: 4%;
     width: 20%;
     height: 5%;
     display: flex;
@@ -1346,8 +1348,8 @@ body{
 
 .analytics-content-body-summary-graph-card-header-select select{
     border-radius: 10px;
-    padding: 0.5rem;
-    font-size: 1rem;
+    padding: 0.3rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: var(--primary-color);
 }
@@ -1379,7 +1381,7 @@ body{
 }
 
 .analytics-content-body-usage-graph-card h3{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: var(--primary-color);
     margin-bottom: 1rem;
@@ -1412,7 +1414,7 @@ body{
 }
 
 .analytics-content-body-summary-graph-card h3{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: var(--primary-color);
     margin-bottom: 1rem;
@@ -1445,7 +1447,7 @@ body{
 }
 
 .analytics-content-body-middle-card h3{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: var(--primary-color);
     margin-bottom: 1rem;
@@ -1478,7 +1480,7 @@ body{
 }
 
 .analytics-content-body-power-right-card h3{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: var(--primary-color);
     margin-bottom: 1rem;
@@ -1731,7 +1733,7 @@ body{
 }
 
 .settings-content-header h2{
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: var(--primary-color);
 }
@@ -1814,7 +1816,7 @@ label{
 .profile-content{
     position: absolute;
     top: 3rem;
-    left: 18rem;
+    left: 16.5rem;
     width: calc(100% - 18rem);
     height: calc(100% - 4rem);
     padding: 2.5rem;
@@ -1831,23 +1833,26 @@ label{
 }
 
 .profile-content-header h2{
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: var(--primary-color);
 }
 
 .profile-content-body{
     width: 100%;
-    height: 90%;
+    min-height: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.6);
+    background-color: #ffffff;
+    border-radius: 10px;
 }
 
 .profile-content-body-card{
     position: relative;
-    top: 0.5rem;
+    top: 0.8rem;
     width: 90%;
     height: 80%;
     display: flex;
@@ -1863,18 +1868,22 @@ label{
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    display: inline-block;
+    border: 3px solid #888888;
+    border-radius: 50%;
+    padding: 2px; 
 }
 
-.profile-profile-avatar img{
+.profile-profile-avatar, img{
     width: 34rem;
     height: 34rem;
     border-radius: 50%;
-    object-fit: cover;
+    display: block;
 }
 
 .profile-content-body-card-header-name{
     position: relative;
-    top: 7.5rem;
+    bottom: 7.5rem;
     width: 100%;
     height: 10%;
     display: flex;
@@ -1884,14 +1893,14 @@ label{
 }
 
 .profile-content-body-card-header-name h2{
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: var(--primary-color);
 }
 
 .profile-content-body-card-buttons{
     position: absolute;
-    top: 100%;
+    top: 90%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
@@ -1901,16 +1910,17 @@ label{
 }
 
 .profile-content-body-card-buttons button{
-    width: 20rem;
-    height: 4rem;
-    margin-bottom: 2%;
+    width: 14rem;
+    height: 2.8rem;
+    margin-bottom: 6%;
     border: none;
     border-radius: 30px;
     background-color: var(--primary-color);
     color: #ffffff;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 500;
     cursor: pointer;
+    outline: none;
     text-align: center;
 }
 
@@ -1925,11 +1935,11 @@ label{
 
 .profile-profile-avatar-camera{
     position: absolute;
-    top: 100%;
-    left: 95%;
+    top: 88%;
+    left: 90%;
     transform: translate(-50%, -50%);
-    width: 5rem;
-    height: 5rem;
+    width: 3rem;
+    height: 3rem;
     border-radius: 50%;
     background-color: var(--primary-color);
     display: flex;
@@ -1940,8 +1950,8 @@ label{
 }
 
 .camera-icon{
-    width: 3rem;
-    height: 3rem;
+    width: 1.5rem;
+    height: 1.5rem;
     color: #ffffff;
 }
 
@@ -2005,32 +2015,33 @@ label{
 }
 
 .profile-edit-details-form input{
-    width: 30rem;
-    height: 4rem;
+    width: 100%;
+    max-width: 17rem;
+    height: 2.5rem;
     border-radius: 1rem;
     border: 1px solid var(--primary-color);
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
     padding-left: 1rem;
-    font-size: 1.5rem;
+    font-size: 0.8rem;
     font-weight: 500;
-    outline: none;
+    position: relative;
+    top: 2rem;
     color: var(--primary-color);
-    cursor: pointer;
+    outline: none;
 }
-
-
 
 .profile-edit-details-form input:focus{
     border: 1px solid var(--secondary-color);
 }
 
 .profile-edit-details-form button{
-    width: 15rem;
-    height: 4rem;
-    border-radius: 30rem;
+    width: 50%;
+    max-width: 14rem;
+    height: 2.8rem;
+    border-radius: 40rem;
     text-align: center;
     border: 1px solid var(--primary-color);
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 500;
     outline: none;
     background-color: var(--primary-color);
@@ -2038,6 +2049,7 @@ label{
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 }
+
 
 .profile-edit-details-form button:hover{
     background-color: var(--secondary-color);

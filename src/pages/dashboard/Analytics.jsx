@@ -63,7 +63,6 @@ const Analytics = () => {
                     <div className='analytics-content-body-consumption-graph-card'>
                         <div className='analytics-content-body-summary-graph-card-header'>
                             <h3>Consumption Vs. Usage</h3>
-
                             <div className='analytics-content-body-summary-graph-card-header-select'>
                                 <select name="" id="">
                                     <option value="">Today</option>
@@ -78,7 +77,6 @@ const Analytics = () => {
                     <div className='analytics-content-body-usage-graph-card'>
                         <div className='analytics-content-body-summary-graph-card-header'>
                             <h3>Consumption/Day</h3>
-
                             <div className='analytics-content-body-summary-graph-card-header-select'>
                                 <select name="" id="">
                                     <option value="">Today</option>
@@ -89,8 +87,6 @@ const Analytics = () => {
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
