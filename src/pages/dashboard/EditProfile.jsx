@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useMediaQuery } from 'react-responsive';
 import { faCamera, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 import '../styles.css'
 
 const EditProfile = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const isTabletOrLaptop = useMediaQuery({ query: '(min-width: 768px)' });
     const [passwordVisible, setPasswordVisible] = useState(false);
 
     const togglePasswordVisibility = () => {
@@ -33,7 +35,18 @@ const EditProfile = () => {
                     <div className='profile-content-body-card'>
                         <div className='profile-content-body-card-head'>
                             <div className="profile-profile-avatar">
-                            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="" />
+                            <img 
+                                src="https://www.w3schools.com/howto/img_avatar.png" 
+                                alt="" 
+                                style={{
+                                    width: '12rem',
+                                    height: '12rem',
+                                    borderRadius: '50%',
+                                    objectFit: 'cover',
+                                    position: 'relative',
+                                    top: '75%',
+                                }}
+                            />
 
                                 <div className="profile-profile-avatar-camera">
                                         <FontAwesomeIcon 
@@ -43,12 +56,7 @@ const EditProfile = () => {
                                 </div>
                             </div>
 
-                            <div className='profile-content-body-card-head-name'>
-                                <h2>Andre</h2>
-                            </div>
-
                             <div className='profile-edit-details'>
-                                <h3 className='profile-edit-details-header'>Profile Details</h3>
                                 
                                 <form className='profile-edit-details-form'>
                                     <input className='profile-edit-details-form-input' type="text" placeholder='Email' />
@@ -61,13 +69,20 @@ const EditProfile = () => {
                                         style={{ 
                                             cursor: 'pointer',
                                             position: 'relative',
-                                            top: '-3.2rem',
+                                            top: '-1.1rem',
+                                            left: '5.3rem',
                                             width: '1.5rem',
                                             height: '1.5rem',
                                         }}
                                     />
 
-                                    <button className='profile-edit-details-form-button' onClick={handleSaveChanges} >Save Changes</button>
+                                    <button 
+                                        className='profile-edit-details-form-button' 
+                                        onClick={handleSaveChanges} 
+                                        style={{ width: isTabletOrLaptop ? '15rem' : '50%' }}
+                                    >
+                                        Save Changes
+                                    </button>
                                 </form>
                         </div>
                     </div>
