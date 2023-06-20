@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { motion } from 'framer-motion'
-import { useNavigate } from 'react-router'
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useMediaQuery } from 'react-responsive';
 import { faCamera, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
@@ -18,6 +18,7 @@ const EditProfile = () => {
     const handleSaveChanges = () => {
         navigate('/dashboard/dashboard/profile')
     }
+
     return(
         <motion.div
             initial={{ opacity: 0 }}
@@ -70,7 +71,7 @@ const EditProfile = () => {
                                             cursor: 'pointer',
                                             position: 'relative',
                                             top: '-1.1rem',
-                                            left: '5.3rem',
+                                            left: '5.8rem',
                                             width: '1.5rem',
                                             height: '1.5rem',
                                         }}

@@ -34,7 +34,18 @@ const ChangePassword = () => {
                     <div className='profile-content-body-card'>
                         <div className='profile-content-body-card-head'>
                             <div className="profile-profile-avatar">
-                            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="" />
+                            <img 
+                                src="https://www.w3schools.com/howto/img_avatar.png" 
+                                alt=""
+                                style={{
+                                    width: '12rem',
+                                    height: '12rem',
+                                    borderRadius: '50%',
+                                    objectFit: 'cover',
+                                    position: 'relative',
+                                    top: '75%',
+                                }}
+                            />
 
                             </div>
 
@@ -55,7 +66,7 @@ const ChangePassword = () => {
                                         style={{ 
                                             cursor: 'pointer',
                                             position: 'relative',
-                                            top: '-3.2rem',
+                                            top: '-1.1rem',
                                             width: '1.5rem',
                                             height: '1.5rem',
                                         }}

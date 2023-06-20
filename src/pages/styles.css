@@ -454,7 +454,7 @@ body{
   
 .eye-icon {
     position: relative;
-    top: -15%;
+    top: -16%;
     left: 40%;
     cursor: pointer;
 }
@@ -1953,6 +1953,7 @@ label{
     width: 1.5rem;
     height: 1.5rem;
     color: #ffffff;
+    cursor: pointer;
 }
 
 .profile-profile-avatar{
@@ -1971,6 +1972,7 @@ label{
     height: 25rem;
     border-radius: 50%;
     object-fit: cover;
+    
 }
 
 .profile-content-body-card-head-name{
@@ -2035,19 +2037,18 @@ label{
 }
 
 .profile-edit-details-form button{
-    width: 50%;
-    max-width: 14rem;
+    width: 14rem;
     height: 2.8rem;
-    border-radius: 40rem;
-    text-align: center;
-    border: 1px solid var(--primary-color);
-    font-size: 1.2rem;
-    font-weight: 500;
-    outline: none;
+    margin-bottom: 6%;
+    border: none;
+    border-radius: 30px;
     background-color: var(--primary-color);
     color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
+    outline: none;
+    text-align: center;
 }
 
 
