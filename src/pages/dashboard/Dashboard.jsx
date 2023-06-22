@@ -1,10 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { useNavigate } from 'react-router'
 import { motion } from 'framer-motion'
 import '../styles.css'
 
-const Dashboard = () => {
+const Dashboard = ({WebSocket}) => {
+
+    const [socket,setSocket] = useState("");
+
+    useEffect(()=>{
+        //Open the connection
+        console.log('Use effect running');
+
+        WebSocket.addEventListener('open',(event)=>{
+            console.log('Connected to WS Server as client, waiting for messages');
+        })
+
+        //Listen for messages
+    WebSocket.addEventListener("message", (event) => {
+      console.log("Message from server ", event.data);
+    });
+
+    },[])
+
     return(
         <motion.div
             initial={{ opacity: 0 }}
