@@ -9,17 +9,17 @@ const Dashboard = ({WebSocket}) => {
     const [socket,setSocket] = useState("");
 
     useEffect(()=>{
-        //Open the connection
-        console.log('Use effect running');
 
-        WebSocket.addEventListener('open',(event)=>{
-            console.log('Connected to WS Server as client, waiting for messages');
-        })
+        const messages = (event) => {
+            console.log("Message from server ", event.data);
+        }
 
         //Listen for messages
-    WebSocket.addEventListener("message", (event) => {
-      console.log("Message from server ", event.data);
-    });
+        WebSocket.addEventListener("message", messages);
+
+        return ()=>{
+            WebSocket.removeEventListener('message',messages);
+        }
 
     },[])
 

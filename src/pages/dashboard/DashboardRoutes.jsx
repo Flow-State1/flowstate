@@ -12,24 +12,16 @@ import EditProfile from './EditProfile'
 import ViewProfile from './ViewProfile'
 import ChangePassword from './ChangePassword'
 
-const DashboardRoutes = () => {
+const DashboardRoutes = ({WebSocket}) => {
     const path = useLocation();
 
-    //Instance of the WebSocket
-    const socket = new WebSocket("ws://localhost:3001");
 
-    setInterval(() => {
-            // if(socket.readyState ===WebSocket.OPEN){
-            
-            // }
-            socket.send('Send me messages');
-    }, 10000);
 
     return(
         <AnimatePresence mode='sync'>
             <LayoutDashboard>
                 <Routes location={path} key={path.pathname}>
-                    <Route path="/dashboard/dashboard" element={<Dashboard WebSocket={socket} />} />
+                    <Route path="/dashboard/dashboard" element={<Dashboard WebSocket={WebSocket} />} />
                     <Route path="/dashboard/analytics" element={<Analytics />} />
                     <Route path="/dashboard/notifications" element={<Notifications />} />
                     <Route path="/dashboard/settings" element={<Settings />} />
