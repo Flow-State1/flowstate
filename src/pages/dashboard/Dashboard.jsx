@@ -1,24 +1,32 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { useNavigate } from 'react-router'
 import { motion } from 'framer-motion'
 import '../styles.css'
 
-const Dashboard = ({WebSocket}) => {
+const Dashboard = () => {
 
-    const [socket,setSocket] = useState("");
 
     useEffect(()=>{
+
+        return ()=>{
+        //Instance of the WebSocket
+        const socket = new WebSocket("ws://localhost:3001") 
+
+        // console.log(socket);
+        setInterval(() => {
+                socket.send('Send me messages');
+        }, 10000);
 
         const messages = (event) => {
             console.log("Message from server ", event.data);
         }
 
         //Listen for messages
-        WebSocket.addEventListener("message", messages);
-
-        return ()=>{
-            WebSocket.removeEventListener('message',messages);
+        socket.addEventListener("message", messages);
+            // socket.removeEventListener('message',messages);
+        
+        // console.log(socket);
         }
 
     },[])
