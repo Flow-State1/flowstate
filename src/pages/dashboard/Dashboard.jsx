@@ -4,32 +4,100 @@ import { useNavigate } from 'react-router'
 import { motion } from 'framer-motion'
 import '../styles.css'
 
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
+  import { Line } from 'react-chartjs-2';
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+
 const Dashboard = () => {
 
+    const [payload,setPayload] = useState([]);
+        // Power, Voltage, Current,AEnergy
+        const time = new Date();
+        const hour = time.getHours();
+        const minutes = time.getMinutes();
+        const seconds = time.getSeconds();
+    
+    //    let labels = [`${hour}:00`];
+    const [labels,setLabels] = useState([`${hour}:00`]);
 
+    
     useEffect(()=>{
 
         return ()=>{
         //Instance of the WebSocket
         const socket = new WebSocket("ws://localhost:3001") 
-
-        // console.log(socket);
+        let saved_time = `${hour}:${minutes}`;
         setInterval(() => {
-                socket.send('Send me messages');
-        }, 10000);
 
-        const messages = (event) => {
-            console.log("Message from server ", event.data);
-        }
+            // This will help us set the labels of the graph using the hour and the current minutes of the hour
+            let current_time = new Date();
+            let current_hour = current_time.getHours();
+            let current_minutes = current_time.getMinutes();
+            // console.log(`Saved Time: ${saved_time}`);
+            if(saved_time != `${current_hour}:${current_minutes}`){
+                saved_time = `${current_hour}:${current_minutes}`
+                setLabels(prevLabel => {
+                    if (prevLabel !== `${current_hour}:${current_minutes}`) {
+                      return [...prevLabel, `${current_hour}:${current_minutes}`];
+                    } else {
+                      return prevLabel;
+                    }
+                  });
+            }
+            socket.send('Send me messages');
+        }, 30000);
 
         //Listen for messages
-        socket.addEventListener("message", messages);
-            // socket.removeEventListener('message',messages);
-        
-        // console.log(socket);
+        socket.addEventListener("message", (event) => {
+            const json = JSON.parse(event.data);
+            const result = json.result['switch:0'];
+            console.log(result);
+            // console.log(result);
+            setPayload(prevLoad=>[...prevLoad,result]);
+        });
         }
 
     },[])
+
+
+   
+    
+    // const labels = [saved_time]
+
+    const dataObject = {
+    labels,
+    datasets: [
+        {
+        label: 'Power vs Hour',
+        // apower
+        data: labels.map(()=>{
+            return(
+                // ?
+                Math.floor(Math.random() * 100) + 1
+            );
+        }),
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        },
+    ],
+    };
 
     return(
         <motion.div
@@ -50,6 +118,7 @@ const Dashboard = () => {
                         <div className='dashboard-content-body-summary-graph-card-header'>
                             <h3>Live Graph</h3>
                         </div>
+                        <Line data={dataObject}/>
                     </div>
                     <div className='dashboard-content-body-profile-right-card'>
                         <div className='dashboard-content-body-profile-right-card-avatar'>
