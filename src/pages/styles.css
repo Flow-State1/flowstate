@@ -1000,7 +1000,6 @@ body{
 
 
 /* Profile Page */
-
 .profile-card-name h1{
     position: absolute;
     top: 6%;
@@ -1019,8 +1018,8 @@ body{
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 30rem;
-    height: 30rem;
+    width: 20rem;
+    height: 20rem;
     border-radius: 50%;
     background-color: #ffffff;
     display: flex;
@@ -1031,25 +1030,25 @@ body{
 
 .profile-buttons{
     position: absolute;
-    top: 88%;
+    top: 92%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
 }
 
 .profile-buttons button{
-    width: 20rem;
-    height: 4rem;
-    margin-bottom: 1%;
+    width: 14rem;
+    height: 3rem;
+    margin-bottom: 7px;
     border: none;
     border-radius: 30px;
     background-color: var(--primary-color);
     color: #ffffff;
-    font-size: 1.5rem;
-    font-weight: 500;
+    font-size: 1rem;
     cursor: pointer;
     text-align: center;
 }
@@ -1150,7 +1149,7 @@ body{
 
 .notifications-card{
     position: absolute;
-    top: 28%;
+    top: 38%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 40%;
@@ -1163,41 +1162,42 @@ body{
 
 .notifications-card h1{
     position: absolute;
-    top: 1%;
+    top: 0.5%;
     left: 1%;
-    font-size: 2rem;
+    font-size: 1rem;
     font-weight: 500;
     color: var(--primary-color);
 }
 
 .notifications-card-2{
     position: absolute;
-    top: 80%;
+    top: 90%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 82%;
-    height: 50%;
+    height: 54%;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
+
 .notifications-card-2 h1{
     position: absolute;
-    top: 1%;
+    top: -1%;
     left: 1%;
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 500;
     color: var(--primary-color);
 }
 
 .notifications-avatar{
     position: absolute;
-    top: 25%;
+    top: 55%;
     left: 20%;
     transform: translate(-50%, -50%);
-    width: 6rem;
-    height: 6rem;
+    width: 8rem;
+    height: 8rem;
     border-radius: 50%;
     background-color: #ffffff;
     display: flex;
@@ -1214,11 +1214,10 @@ body{
 
 .notifications-content p{
     position: absolute;
-    top: 70%;
-    left: 50%;
-    text-align: center;
+    top: 50%;
+    left: 60%;
     transform: translate(-50%, -50%);
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 500;
     color: var(--primary-color);
 }
