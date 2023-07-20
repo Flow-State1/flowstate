@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine,faBell, faGears, faUserCircle, faLayerGroup, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import logo from "../assets/logo.png";
 import "../pages/styles.css"
+import HamburgerMenu from "./HamburgerMenu";
 
 const SideBarNavigation = () => {
     const navigate = useNavigate()
@@ -27,7 +28,8 @@ const SideBarNavigation = () => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5 }}
         >
-            <div className='navbar'>
+            <div className='navbar'  >
+                
                 <div className='navbar-right-profile'>
 
                     <div className='navbar-profile-avatar'>
@@ -46,8 +48,14 @@ const SideBarNavigation = () => {
                             Andre
                         </h4>
                     </div>
+                   
+
                 </div>
             </div>
+            <div>
+            <HamburgerMenu/>
+            </div>
+      
 
             <div className="sidebar">
                 <div className='sidebar-header'>
