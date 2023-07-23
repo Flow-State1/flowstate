@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import bgImg from "../assets/bgImg.jpg";
 import { motion } from "framer-motion";
 import '../pages/styles.css'
-import SideBarNavigation from "./SIdeBar";
+import SideBarNavigation from "./SIdeBar";   
+import HamburgerMenu from "./HamburgerMenu";
 
 const BackgroundImage = () => {
+
     return (
         <motion.div 
             className="backgroundContainer"
@@ -52,10 +54,24 @@ const BackgroundImage = () => {
 }
 
 const LayoutDashboard = ({ children }) => {
+
+    //Hiding side bar when screensize below 800px
+    
+    const [screenW, setScreenW] = useState(window.innerWidth);
+
+    useEffect(() => {
+        function handleResize() {
+
+            setScreenW(window.innerWidth);
+
+        }
+        window.addEventListener('resize', handleResize)
+    })
+
     return (
         <>
             <BackgroundImage />
-            <SideBarNavigation />
+            {screenW < 800 ? <HamburgerMenu/> : <SideBarNavigation /> }
             { children }
         </>
     );

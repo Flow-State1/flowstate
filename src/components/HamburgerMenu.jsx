@@ -108,14 +108,14 @@ const MenuLabel = styled.label`
   background-color: ${COLORS.primaryLight};
   position: fixed;
   top: 6rem;
-  right: 6rem;
+  left: 1.5rem;
   border-radius: 10%;
-  height: 7rem;
-  width: 7rem;
+  height: 3rem;
+  width: 3rem;
   cursor: pointer;
   z-index: 1000;
   box-shadow: 0 1rem 3rem rgba(182, 237, 200, 0.3);
-  text-align: center;
+  text-align: center
 `;
 
 const NavBackground = styled.div`
@@ -137,17 +137,17 @@ const NavBackground = styled.div`
 const Icon = styled.span`
   position: relative;
   background-color: ${(props) => (props.clicked ? "transparent" : "black")};
-  width: 3rem;
+  width: 1.5rem;
   height: 2px;
   display: inline-block;
-  margin-top: 3.5rem;
+  margin-top: 1.5rem;
   transition: all 0.3s;
 
   &::before,
   &::after {
     content: "";
     background-color: black;
-    width: 3rem;
+    width: 1.5rem;
     height: 2px;
     display: inline-block;
 
