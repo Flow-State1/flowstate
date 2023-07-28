@@ -29,7 +29,7 @@ const Dashboard = () => {
   const [payload, setPayload] = useState([]);
   const [data, setData] = useState([]);
   const [voltage,setVoltage] = useState();
-  const [power,setPower] = useState();
+  const [apower,setPower] = useState();
   const [current,setCurrent] = useState();
   const [consumption,setConcumption] = useState([]);
   // Power, Voltage, Current,AEnergy
@@ -75,13 +75,13 @@ const Dashboard = () => {
       socket.addEventListener("message", (event) => {
         const json = JSON.parse(event.data);
         const result = json.result["switch:0"];
-        const consumption = result['aenergy']
+        const consumption = result['aenergy'];
         //Currently loggin out mutliple time, issue is with the websocket send ing messages and stuff need to fix that out later
         console.log(result);
         setPayload((prevLoad) => [...prevLoad, result]);
         setConcumption(prevConsumption=>[...prevConsumption,consumption['total']]);
         setCurrent(result['current']);
-        setPower(result['power']);
+        setPower(result['apower']);
         setVoltage(result['voltage']);
       });
     };
@@ -142,19 +142,18 @@ const Dashboard = () => {
             <div className="dashboard-content-body-profile-middle-mini-cards">
               <div className="dashboard-content-body-profile-middle-mini-card">
                 <div className="dashboard-content-body-profile-middle-mini-card-header">
-                  <h3>Voltage</h3>
-                  
+                  <h3>Voltage: {voltage}</h3>
                 </div>
               </div>
               <div className="dashboard-content-body-profile-middle-mini-card">
                 <div className="dashboard-content-body-profile-middle-mini-card-header">
-                  <h3>Current</h3>
+                  <h3>Current: {current}</h3>
                 </div>
               </div>
 
               <div className="dashboard-content-body-profile-middle-mini-card">
                 <div className="dashboard-content-body-profile-middle-mini-card-header">
-                  <h3>Power</h3>
+                  <h3>Power: {apower}</h3>
                 </div>
               </div>
             </div>
