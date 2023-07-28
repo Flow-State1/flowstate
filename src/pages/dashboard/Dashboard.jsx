@@ -28,12 +28,17 @@ ChartJS.register(
 const Dashboard = () => {
   const [payload, setPayload] = useState([]);
   const [data, setData] = useState([]);
+  const [voltage,setVoltage] = useState();
+  const [power,setPower] = useState();
+  const [current,setCurrent] = useState();
+  const [consumption,setConcumption] = useState([]);
   // Power, Voltage, Current,AEnergy
   const time = new Date();
   const hour = time.getHours();
-  const minutes = time.getMinutes() < 10 ? `0${time.getMinutes()}`:time.getMinutes();
+  const minutes =
+    time.getMinutes() < 10 ? `0${time.getMinutes()}` : time.getMinutes();
 
-  const [labels,setLabels] = useState([`${hour}:00`]);
+  const [labels, setLabels] = useState([`${hour}:00`]);
 
   useEffect(() => {
     return () => {
@@ -43,32 +48,41 @@ const Dashboard = () => {
       setInterval(() => {
         const c_time = new Date();
         const c_hour = c_time.getHours();
-        const c_minutes = c_time.getMinutes() < 10 ? `0${c_time.getMinutes()}`:c_time.getMinutes();
+        const c_minutes =
+          c_time.getMinutes() < 10
+            ? `0${c_time.getMinutes()}`
+            : c_time.getMinutes();
 
-        if(saved_time != `${c_hour}:${c_minutes}`){
-            saved_time = `${c_hour}:${c_minutes}`;
-            setLabels(prevLabel => {
-                if (prevLabel !== `${c_hour}:${c_minutes}`) {
-                  return [...prevLabel, `${c_hour}:${c_minutes}`];
-                } else {
-                  return prevLabel;
-                }
-              });
+        if (saved_time != `${c_hour}:${c_minutes}`) {
+          saved_time = `${c_hour}:${c_minutes}`;
+          setLabels((prevLabel) => {
+            if (prevLabel !== `${c_hour}:${c_minutes}`) {
+              return [...prevLabel, `${c_hour}:${c_minutes}`];
+            } else {
+              return prevLabel;
+            }
+          });
         }
         setData((prevData) => [
           ...prevData,
           Math.floor(Math.random() * 100) + 1,
         ]);
-        // socket.send("Send me messages");
+
+        socket.send("Send me messages");
       }, 30000);
 
-      //Listen for messages
+      //Listen for messages from web socket
       socket.addEventListener("message", (event) => {
         const json = JSON.parse(event.data);
         const result = json.result["switch:0"];
+        const consumption = result['aenergy']
+        //Currently loggin out mutliple time, issue is with the websocket send ing messages and stuff need to fix that out later
         console.log(result);
-        // console.log(result);
         setPayload((prevLoad) => [...prevLoad, result]);
+        setConcumption(prevConsumption=>[...prevConsumption,consumption['total']]);
+        setCurrent(result['current']);
+        setPower(result['power']);
+        setVoltage(result['voltage']);
       });
     };
   }, []);
@@ -77,8 +91,8 @@ const Dashboard = () => {
     labels,
     datasets: [
       {
-        label: "Power vs Hour",
-        data: data,
+        label: "Device1 (Consumption)",
+        data: consumption,
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
@@ -129,6 +143,7 @@ const Dashboard = () => {
               <div className="dashboard-content-body-profile-middle-mini-card">
                 <div className="dashboard-content-body-profile-middle-mini-card-header">
                   <h3>Voltage</h3>
+                  
                 </div>
               </div>
               <div className="dashboard-content-body-profile-middle-mini-card">
