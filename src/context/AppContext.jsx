@@ -5,95 +5,24 @@ import { createContext, useState, useEffect, useContext } from "react";
 export const AppContext = createContext();
 
 const AppContextProvider = (props) => {
-  const [payload, setPayload] = useState([]);
-  const [data, setData] = useState([]);
-  const [voltage, setVoltage] = useState();
-  const [apower, setPower] = useState();
-  const [current, setCurrent] = useState();
-  const [consumption, setConcumption] = useState([]);
-  const time = new Date();
-  const hour = time.getHours();
-  const minutes =
-    time.getMinutes() < 10 ? `0${time.getMinutes()}` : time.getMinutes();
-  const [labels, setLabels] = useState([`${hour}:${minutes}`]);
+  // const [socket, setSocket] = useState('');
+  const socket = new WebSocket("ws://localhost:3001");
+  // useEffect(() => {
 
-  useEffect(() => {
-    return () => {
-      //Instance of the WebSocket
-      const socket = new WebSocket("ws://localhost:3001");
-      let saved_time = `${hour}:${minutes}`;
-      setInterval(() => {
-        const c_time = new Date();
-        const c_hour = c_time.getHours();
-        const c_minutes =
-          c_time.getMinutes() < 10
-            ? `0${c_time.getMinutes()}`
-            : c_time.getMinutes();
+  //   return () => {
+  //     setSocket(new WebSocket("ws://localhost:3001"));
+  //   };
+  // },[]);
 
-        if (saved_time != `${c_hour}:${c_minutes}`) {
-          saved_time = `${c_hour}:${c_minutes}`;
-          setLabels((prevLabel) => {
-            if (prevLabel !== `${c_hour}:${c_minutes}`) {
-              return [...prevLabel, `${c_hour}:${c_minutes}`];
-            } else {
-              return prevLabel;
-            }
-          });
-        }
-        setData((prevData) => [
-          ...prevData,
-          Math.floor(Math.random() * 100) + 1,
-        ]);
-
-        socket.send("Send me messages");
-      }, 30000);
-
-      //Listen for messages from web socket
-      socket.addEventListener("message", (event) => {
-        const json = JSON.parse(event.data);
-        const result = json.result["switch:0"];
-        const consumption = result['aenergy'];
-        //Currently loggin out mutliple time, issue is with the websocket send ing messages and stuff need to fix that out later
-        console.log(result);
-        setPayload((prevLoad) => [...prevLoad, result]);
-        setConcumption(prevConsumption=>[...prevConsumption,consumption['total']]);
-        setCurrent(result['current']);
-        setPower(result['apower']);
-        setVoltage(result['voltage']);
-      });
-    };
-  }, []);
-
-  const dataObject = {
-    labels,
-    datasets: [
-      {
-        label: "Device1 (Consumption)",
-        data: consumption,
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
-      },
-    ],
-  };
-
-  return <AppContext.Provider value={{
-    payload,
-    setPayload,
-    data,
-    setData,
-    voltage,
-    setVoltage,
-    apower,
-    setPower,
-    current,
-    setCurrent,
-    consumption,
-    setConcumption,
-    labels,
-    setLabels,
-    dataObject
-  }}>{props.children}</AppContext.Provider>;
+  return (
+    <AppContext.Provider
+      value={{
+        socket,
+      }}
+    >
+      {props.children}
+    </AppContext.Provider>
+  );
 };
-
 
 export default AppContextProvider;

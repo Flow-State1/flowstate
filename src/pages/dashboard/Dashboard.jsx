@@ -11,7 +11,7 @@ const Dashboard = () => {
 
   const {payload,voltage,apower,current,consumption} = useContext(AppContext);
 
-  console.log(consumption);
+  // console.log(consumption);
 
   return (
     <motion.div

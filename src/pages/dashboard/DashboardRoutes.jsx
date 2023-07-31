@@ -11,6 +11,7 @@ import Profile from './Profile'
 import EditProfile from './EditProfile'
 import ViewProfile from './ViewProfile'
 import ChangePassword from './ChangePassword'
+import DashboardContextProvider, { DashboardContext } from '../../context/DashboardContext'
 
 const DashboardRoutes = () => {
     const path = useLocation();
@@ -24,6 +25,7 @@ const DashboardRoutes = () => {
 
 
     return(
+        <DashboardContextProvider>
         <AnimatePresence mode='sync'>
             <LayoutDashboard>
                 <Routes location={path} key={path.pathname}>
@@ -38,6 +40,7 @@ const DashboardRoutes = () => {
                 </Routes>
             </LayoutDashboard>
         </AnimatePresence>
+        </DashboardContextProvider>
     )
 }
 
