@@ -15,6 +15,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import ToggleSwitch from "../../components/TogggleSwitch";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -113,7 +114,8 @@ const Dashboard = () => {
         <div className="dashboard-content">
           <div className="dashboard-content-header">
             <h2>Dashboard</h2>
-            <button
+            <ToggleSwitch/>
+            {/* <button
               onClick={()=>{
                 fetch('http://localhost:3001/publish/switch',{
                   method:'POST',
@@ -122,7 +124,7 @@ const Dashboard = () => {
                   console.log(`id:Switch_End_Point,${error}`);
                 })
               }}
-            >Switch Device On/Of</button>
+            >Switch Device On/Of</button> */}
           </div>
 
           <div className="dashboard-content-body">
