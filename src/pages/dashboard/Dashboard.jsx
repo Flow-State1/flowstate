@@ -28,10 +28,10 @@ ChartJS.register(
 const Dashboard = () => {
   const [payload, setPayload] = useState([]);
   const [data, setData] = useState([]);
-  const [voltage,setVoltage] = useState();
-  const [apower,setPower] = useState();
-  const [current,setCurrent] = useState();
-  const [consumption,setConcumption] = useState([]);
+  const [voltage, setVoltage] = useState();
+  const [apower, setPower] = useState();
+  const [current, setCurrent] = useState();
+  const [consumption, setConcumption] = useState([]);
   // Power, Voltage, Current,AEnergy
   const time = new Date();
   const hour = time.getHours();
@@ -75,14 +75,17 @@ const Dashboard = () => {
       socket.addEventListener("message", (event) => {
         const json = JSON.parse(event.data);
         const result = json.result["switch:0"];
-        const consumption = result['aenergy'];
+        const consumption = result["aenergy"];
         //Currently loggin out mutliple time, issue is with the websocket send ing messages and stuff need to fix that out later
         console.log(result);
         setPayload((prevLoad) => [...prevLoad, result]);
-        setConcumption(prevConsumption=>[...prevConsumption,consumption['total']]);
-        setCurrent(result['current']);
-        setPower(result['apower']);
-        setVoltage(result['voltage']);
+        setConcumption((prevConsumption) => [
+          ...prevConsumption,
+          consumption["total"],
+        ]);
+        setCurrent(result["current"]);
+        setPower(result["apower"]);
+        setVoltage(result["voltage"]);
       });
     };
   }, []);
@@ -110,14 +113,27 @@ const Dashboard = () => {
         <div className="dashboard-content">
           <div className="dashboard-content-header">
             <h2>Dashboard</h2>
+            <button
+              onClick={()=>{
+                fetch('http://localhost:3001/publish/switch',{
+                  method:'POST',
+                  headers:{"Content-type":"application/json"}
+                }).then(response=>console.log(response)).catch((error)=>{
+                  console.log(`id:Switch_End_Point,${error}`);
+                })
+              }}
+            >Switch Device On/Of</button>
           </div>
 
           <div className="dashboard-content-body">
             <div className="dashboard-content-body-summary-graph-card">
               <div className="dashboard-content-body-summary-graph-card-header">
                 <h3>Live Graph</h3>
+                
               </div>
-              <Line data={dataObject} />
+              <Line
+                data={dataObject} />
+                
             </div>
             <div className="dashboard-content-body-profile-right-card">
               <div className="dashboard-content-body-profile-right-card-avatar">
