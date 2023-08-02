@@ -3,6 +3,9 @@ import { Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { motion } from "framer-motion";
 import "../styles.css";
+import { useCookies } from "react-cookie";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 import {
   Chart as ChartJS,
@@ -26,6 +29,9 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const [cookies, removeCookie] = useCookies([]);
+  const [name, setName] = useState("");
   const [payload, setPayload] = useState([]);
   const [data, setData] = useState([]);
   const [voltage,setVoltage] = useState();
@@ -41,6 +47,21 @@ const Dashboard = () => {
   const [labels, setLabels] = useState([`${hour}:00`]);
 
   useEffect(() => {
+    
+    const verifyCookie = async () => {
+      if(!cookies.token) {
+        navigate("/login");
+      }
+
+      const {data} = await axios.post(
+        "http://localhost:3001",
+        {},
+        {withCredentials: true}
+      );
+    };
+    const {status, user} = data;
+    setName(user);
+
     return () => {
       //Instance of the WebSocket
       const socket = new WebSocket("ws://localhost:3001");
@@ -85,7 +106,8 @@ const Dashboard = () => {
         setVoltage(result['voltage']);
       });
     };
-  }, []);
+    verifyCookie();
+  }, [cookies, navigate, removeCookie]);
 
   const dataObject = {
     labels,
@@ -127,7 +149,7 @@ const Dashboard = () => {
                 />
 
                 <div className="dashboard-content-body-profile-right-card-avatar-name">
-                  <h3>Hi Andre!</h3>
+                  <h3>Hi {name}</h3>
                   <p>How are you today?</p>
                 </div>
               </div>

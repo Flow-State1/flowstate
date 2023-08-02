@@ -5,9 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useMediaQuery } from 'react-responsive';
 import logo from "../assets/logo.png";
-import "./styles.css"
+import "./styles.css";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
+  
     const navigate = useNavigate();
     const isTabletOrLaptop = useMediaQuery({ query: '(min-width: 768px)' });
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -15,6 +18,62 @@ const Login = () => {
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };
+
+    const [inputValue, setInputValue] = useState({
+      email: "",
+      password: "",
+    });
+
+    const { email, password } = inputValue;
+
+    const handleOnChange = (e) => {
+      const { name, value } = e.target;
+      setInputValue({
+        ...inputValue,
+        [name]: value,
+      });
+    };
+
+    const handleError = (err) =>
+      toast.error(err, {
+      position: "bottom-left",
+    });
+
+    const handleSuccess = (msg) =>
+      toast.success(msg, {
+      position: "bottom-left",
+    });
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        const { data } = await axios.post(
+          "http://localhost:3001/users/login",
+          {
+            ...inputValue,
+          },
+          { withCredentials: true }
+        );
+        console.log(data);
+        const { success, message } = data;
+        if (success) {
+          handleSuccess(message);
+          setTimeout(() => {
+            navigate("/dashboard/*");
+          }, 1000);
+        } else {
+          handleError(message);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    setInputValue({
+      ...inputValue,
+      email: "",
+      password: "",
+    });
 
     return (
         <motion.div
@@ -36,17 +95,23 @@ const Login = () => {
               <h1>Flow State</h1>
             </div>
   
-            <form className="login-form">
+            <form className="login-form" onSubmit={handleSubmit}>
               <h1 className="login-card-title">Login</h1>
               <input
-                type="text"
+                type="email"
+                name="email"
+                value={email}
                 placeholder="Email"
+                onChange={handleOnChange}
                 className="login-input"
                 style={{ width: isTabletOrLaptop ? '30rem' : '80%' }}
               />
               <input
                 type={passwordVisible ? 'text' : 'password'}
+                name="password"
+                value={password}
                 placeholder="Password"
+                onChange={handleOnChange}
                 className="login-input"
                 style={{ width: isTabletOrLaptop ? '30rem' : '80%' }}
               />
@@ -62,7 +127,7 @@ const Login = () => {
   
               <button
                 className="login-button"
-                onClick={() => navigate('/dashboard/dashboard/dashboard')}
+                //onClick={() => navigate('/dashboard/dashboard/dashboard')}
                 style={{ width: isTabletOrLaptop ? '15rem' : '50%' }}
               >
                 Login
@@ -72,6 +137,7 @@ const Login = () => {
                 Don't have an account? Sign Up
               </Link>
             </form>
+            <ToastContainer/>
           </div>
         </div>
       </motion.div>
