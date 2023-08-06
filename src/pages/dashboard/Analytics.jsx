@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router'
 import '../styles.css'
+import { DashboardContext } from '../../context/DashboardContext'
 
 const Analytics = () => {
+
+
     return(
         <motion.div 
             initial={{ opacity: 0 }}

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { motion } from "framer-motion";
@@ -16,6 +16,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import ToggleSwitch from "../../components/TogggleSwitch";
+import { DashboardContext } from "../../context/DashboardContext";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -27,25 +28,52 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
-  const [payload, setPayload] = useState([]);
-  const [data, setData] = useState([]);
-  const [voltage, setVoltage] = useState();
-  const [apower, setPower] = useState();
-  const [current, setCurrent] = useState();
-  const [consumption, setConcumption] = useState([]);
-  // Power, Voltage, Current,AEnergy
   const time = new Date();
   const hour = time.getHours();
   const minutes =
     time.getMinutes() < 10 ? `0${time.getMinutes()}` : time.getMinutes();
 
-  const [labels, setLabels] = useState([`${hour}:00`]);
+  const [labels, setLabels] = useState([`${hour}:${minutes}`]);
+
+  const {
+    apower,
+    apower_,
+    consumption,
+    consumption_,
+    current,
+    current_,
+    data,
+    data_,
+    payload,
+    payload_,
+    voltage,
+    voltage_,
+    setPower,
+    setPower_,
+    setConsumption,
+    setConsumption_,
+    setCurrent,
+    setCurrent_,
+    setData,
+    setData_,
+    setPayload,
+    setPayload_,
+    setVoltage,
+    setVoltage_,
+    minutes_ts,
+    setMinutes_ts,
+    cost,setCost
+  } = useContext(DashboardContext);
+
+  let c_cost = 0
 
   useEffect(() => {
     return () => {
       //Instance of the WebSocket
       const socket = new WebSocket("ws://localhost:3001");
       let saved_time = `${hour}:${minutes}`;
+
+      //This is for creating the labels on the graph
       setInterval(() => {
         const c_time = new Date();
         const c_hour = c_time.getHours();
@@ -64,32 +92,60 @@ const Dashboard = () => {
             }
           });
         }
-        setData((prevData) => [
-          ...prevData,
-          Math.floor(Math.random() * 100) + 1,
-        ]);
-
-        socket.send("Send me messages");
-      }, 30000);
+      }, 60000);
 
       //Listen for messages from web socket
       socket.addEventListener("message", (event) => {
         const json = JSON.parse(event.data);
-        const result = json.result["switch:0"];
-        const consumption = result["aenergy"];
-        //Currently loggin out mutliple time, issue is with the websocket send ing messages and stuff need to fix that out later
-        console.log(result);
-        setPayload((prevLoad) => [...prevLoad, result]);
-        setConcumption((prevConsumption) => [
-          ...prevConsumption,
-          consumption["total"],
-        ]);
-        setCurrent(result["current"]);
-        setPower(result["apower"]);
-        setVoltage(result["voltage"]);
+
+        if (json["src"] == "shellyplus1pm-a8032ab11964") {
+          const result = json.result["switch:0"];
+          const consumption = result["aenergy"];
+          setCost(()=>{
+            const pwr_kwh = result['apower'] / 1000;
+            const cst = pwr_kwh * 1.77
+            console.log(`current cost:${cst}`);
+            console.log(`Total cost:${c_cost}+${cst} = ${c_cost + cst}`);
+            c_cost = c_cost + cst
+            return c_cost
+          })
+          setPayload((prevLoad) => [...prevLoad, result]);
+          setConsumption((prevConsumption) => [
+            ...prevConsumption,
+            consumption["total"],
+          ]);
+          setCurrent(result["current"]);
+          setPower(result["apower"]);
+          setVoltage(result["voltage"]);
+        }
+
+        // Updatgin state variable for device 2
+        else if (json["src"] == "shellyplus1pm-7c87ce719ccc") {
+          const result = json.result["switch:0"];
+          const consumption = result["aenergy"];
+          setCost(()=>{
+            const pwr_kwh = result['apower'] / 1000;
+            // console.log(pwr_kwh);
+            const cst = pwr_kwh * 1.77
+            console.log(`current cost:${cst}`);
+            console.log(`Total cost:${c_cost}+${cst} = ${c_cost + cst}`);
+            c_cost = c_cost + cst
+            return c_cost
+          })
+          setPayload_((prevLoad) => [...prevLoad, result]);
+          setConsumption_((prevConsumption) => [
+            ...prevConsumption,
+            consumption["total"],
+          ]);
+          setCurrent_(result["current"]);
+          setPower_(result["apower"]);
+          setVoltage_(result["voltage"]);
+        }
       });
     };
   }, []);
+
+console.log(cost);  
 
   const dataObject = {
     labels,
@@ -99,6 +155,12 @@ const Dashboard = () => {
         data: consumption,
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
+      },
+      {
+        label: "Device2 (Consumption)",
+        data: consumption_,
+        borderColor: "rgb(255, 99, 132)",
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
     ],
   };
@@ -114,28 +176,29 @@ const Dashboard = () => {
         <div className="dashboard-content">
           <div className="dashboard-content-header">
             <h2>Dashboard</h2>
-            <ToggleSwitch/>
-            {/* <button
-              onClick={()=>{
-                fetch('http://localhost:3001/publish/switch',{
-                  method:'POST',
-                  headers:{"Content-type":"application/json"}
-                }).then(response=>console.log(response)).catch((error)=>{
-                  console.log(`id:Switch_End_Point,${error}`);
+            {/* <ToggleSwitch/> */}
+            <button
+              onClick={() => {
+                fetch("http://localhost:3001/publish/switch", {
+                  method: "POST",
+                  headers: { "Content-type": "application/json" },
                 })
+                  .then((response) => console.log(response))
+                  .catch((error) => {
+                    console.log(`id:Switch_End_Point,${error}`);
+                  });
               }}
-            >Switch Device On/Of</button> */}
+            >
+              Switch Device On/Of
+            </button>
           </div>
 
           <div className="dashboard-content-body">
             <div className="dashboard-content-body-summary-graph-card">
               <div className="dashboard-content-body-summary-graph-card-header">
                 <h3>Live Graph</h3>
-                
               </div>
-              <Line
-                data={dataObject} />
-                
+              <Line data={dataObject} />
             </div>
             <div className="dashboard-content-body-profile-right-card">
               <div className="dashboard-content-body-profile-right-card-avatar">
@@ -153,7 +216,7 @@ const Dashboard = () => {
 
             <div className="dashboard-content-body-profile-right-summary-card">
               <div className="dashboard-content-body-profile-right-summary-card-header">
-                <h3>Latest Updates</h3>
+                <h3>Running Costs:R{cost}</h3>
               </div>
             </div>
 
