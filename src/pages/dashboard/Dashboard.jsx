@@ -62,10 +62,11 @@ const Dashboard = () => {
     setVoltage_,
     minutes_ts,
     setMinutes_ts,
-    cost,setCost
+    cost,
+    setCost,
   } = useContext(DashboardContext);
 
-  let c_cost = 0
+  let c_cost = 0;
 
   useEffect(() => {
     return () => {
@@ -97,55 +98,107 @@ const Dashboard = () => {
       //Listen for messages from web socket
       socket.addEventListener("message", (event) => {
         const json = JSON.parse(event.data);
+        console.log(`Results: ${JSON.stringify(json.result["switch:0"])}`);
 
         if (json["src"] == "shellyplus1pm-a8032ab11964") {
-          const result = json.result["switch:0"];
-          const consumption = result["aenergy"];
-          setCost(()=>{
-            const pwr_kwh = result['apower'] / 1000;
-            const cst = pwr_kwh * 1.77
-            console.log(`current cost:${cst}`);
-            console.log(`Total cost:${c_cost}+${cst} = ${c_cost + cst}`);
-            c_cost = c_cost + cst
-            return c_cost
-          })
-          setPayload((prevLoad) => [...prevLoad, result]);
-          setConsumption((prevConsumption) => [
-            ...prevConsumption,
-            consumption["total"],
-          ]);
-          setCurrent(result["current"]);
-          setPower(result["apower"]);
-          setVoltage(result["voltage"]);
+          if (json.result["switch:0"]["output"] == true) {
+            const result = json.result["switch:0"];
+            const consumption = result["aenergy"];
+            console.log(`aenergy:${result.toString()}`);
+            setCost(() => {
+              const pwr_kwh = result["apower"] / 1000;
+              const cst = pwr_kwh * 1.77;
+              console.log(`current cost:${cst}`);
+              console.log(`Total cost:${c_cost}+${cst} = ${c_cost + cst}`);
+              c_cost = c_cost + cst;
+              return c_cost;
+            });
+            setPayload((prevLoad) => [...prevLoad, result]);
+            setConsumption((prevConsumption) => {
+              if (consumption["total"] != 0) {
+                return [...prevConsumption, consumption["total"]];
+              } else if (consumption["total"] == 0) {
+                return 0;
+              }
+            });
+            setCurrent(result["current"]);
+            setPower(result["apower"]);
+            setVoltage(result["voltage"]);
+          } 
+          // Check if switch is off
+          else {
+            const result = json.result["switch:0"];
+            console.log("switch is off");
+            setCost(() => {
+              const pwr_kwh = 0 / 1000;
+              // console.log(pwr_kwh);
+              const cst = pwr_kwh * 1.77;
+              console.log(`current cost:${cst}`);
+              console.log(`Total cost:${c_cost}+${cst} = ${c_cost + cst}`);
+              c_cost = c_cost + cst;
+              return c_cost;
+            });
+            setPayload((prevLoad) => [...prevLoad, result]);
+            setConsumption((prevConsumption) => [...prevConsumption, 0]);
+            setCurrent(0);
+            setPower(0);
+            setVoltage(result["voltage"]);
+          }
         }
 
-        // Updatgin state variable for device 2
+        // Updating state variable for device 2
         else if (json["src"] == "shellyplus1pm-7c87ce719ccc") {
-          const result = json.result["switch:0"];
-          const consumption = result["aenergy"];
-          setCost(()=>{
-            const pwr_kwh = result['apower'] / 1000;
-            // console.log(pwr_kwh);
-            const cst = pwr_kwh * 1.77
-            console.log(`current cost:${cst}`);
-            console.log(`Total cost:${c_cost}+${cst} = ${c_cost + cst}`);
-            c_cost = c_cost + cst
-            return c_cost
-          })
-          setPayload_((prevLoad) => [...prevLoad, result]);
-          setConsumption_((prevConsumption) => [
-            ...prevConsumption,
-            consumption["total"],
-          ]);
-          setCurrent_(result["current"]);
-          setPower_(result["apower"]);
-          setVoltage_(result["voltage"]);
+          if (json.result["switch:0"]["output"] == true) {
+            const result = json.result["switch:0"];
+            const consumption = result["aenergy"];
+            console.log(`aenergy:${result.toString()}`);
+            setCost(() => {
+              const pwr_kwh = result["apower"] / 1000;
+              // console.log(pwr_kwh);
+              const cst = pwr_kwh * 1.77;
+              console.log(`current cost:${cst}`);
+              console.log(`Total cost:${c_cost}+${cst} = ${c_cost + cst}`);
+              c_cost = c_cost + cst;
+              return c_cost;
+            });
+            setPayload_((prevLoad) => [...prevLoad, result]);
+            setConsumption_((prevConsumption) => {
+              if (consumption["total"] != 0) {
+                return [...prevConsumption, consumption["total"]];
+              } else if (consumption["total"] == 0) {
+                return 0;
+              }
+            });
+            setCurrent_(result["current"]);
+            setPower_(result["apower"]);
+            setVoltage_(result["voltage"]);
+          } 
+          //Check if switch is off
+          else {
+            const result = json.result["switch:0"];
+            console.log("switch is off");
+            setCost(() => {
+              const pwr_kwh = 0 / 1000;
+              // console.log(pwr_kwh);
+              const cst = pwr_kwh * 1.77;
+              console.log(`current cost:${cst}`);
+              console.log(`Total cost:${c_cost}+${cst} = ${c_cost + cst}`);
+              c_cost = c_cost + cst;
+              return c_cost;
+            });
+            setPayload_((prevLoad) => [...prevLoad, result]);
+            setConsumption_((prevConsumption) => [...prevConsumption, 0]);
+            setCurrent_(0);
+            setPower_(0);
+            setVoltage_(result["voltage"]);
+          }
         }
       });
     };
   }, []);
 
-console.log(cost);  
+  console.log(`Consumption:${consumption}`);
+  console.log(`Consumption_:${consumption_}`);
 
   const dataObject = {
     labels,
@@ -176,10 +229,9 @@ console.log(cost);
         <div className="dashboard-content">
           <div className="dashboard-content-header">
             <h2>Dashboard</h2>
-            {/* <ToggleSwitch/> */}
             <button
               onClick={() => {
-                fetch("http://localhost:3001/publish/switch", {
+                fetch("http://localhost:3001/publish/switch/1", {
                   method: "POST",
                   headers: { "Content-type": "application/json" },
                 })
@@ -189,7 +241,21 @@ console.log(cost);
                   });
               }}
             >
-              Switch Device On/Of
+              Device1 On/Of
+            </button>
+            <button
+              onClick={() => {
+                fetch("http://localhost:3001/publish/switch/2", {
+                  method: "POST",
+                  headers: { "Content-type": "application/json" },
+                })
+                  .then((response) => console.log(response))
+                  .catch((error) => {
+                    console.log(`id:Switch_End_Point,${error}`);
+                  });
+              }}
+            >
+              Device2 On/Of
             </button>
           </div>
 
@@ -223,18 +289,18 @@ console.log(cost);
             <div className="dashboard-content-body-profile-middle-mini-cards">
               <div className="dashboard-content-body-profile-middle-mini-card">
                 <div className="dashboard-content-body-profile-middle-mini-card-header">
-                  <h3>Voltage: {voltage}</h3>
+                  <h3>Voltage: {voltage_}</h3>
                 </div>
               </div>
               <div className="dashboard-content-body-profile-middle-mini-card">
                 <div className="dashboard-content-body-profile-middle-mini-card-header">
-                  <h3>Current: {current}</h3>
+                  <h3>Current: {current_}</h3>
                 </div>
               </div>
 
               <div className="dashboard-content-body-profile-middle-mini-card">
                 <div className="dashboard-content-body-profile-middle-mini-card-header">
-                  <h3>Power: {apower}</h3>
+                  <h3>Power: {apower_}</h3>
                 </div>
               </div>
             </div>
