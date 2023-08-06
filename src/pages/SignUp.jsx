@@ -65,7 +65,7 @@ const SignUp = () => {
                     navigate("/dashboard/*");
                 }, 1000);
             } else {
-                handleError(error);
+                handleError(message);
             }
         }
         catch(error) {
