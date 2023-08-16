@@ -11,6 +11,7 @@ import Dashboard from './pages/dashboard'
 import { Route, Routes } from 'react-router-dom'
 import LoadingScreen from './components/loadingScreen'
 import LoadingCard from './components/loadingCard'
+import Chatbox from './pages/chatbot'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/analytics' element={<Analytics />} />
         <Route path='/loading' element={<LoadingScreen />} />
+        <Route path='/chatbot' element={<Chatbox/>} />
         <Route path='loading-card' element={<LoadingCard />} />
       </Routes>
     </>
