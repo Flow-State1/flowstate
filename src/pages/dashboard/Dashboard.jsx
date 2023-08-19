@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { motion } from "framer-motion";
 import "../styles.css";
-
 import {
   Chart as ChartJS,
   CategoryScale,
