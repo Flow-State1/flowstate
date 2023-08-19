@@ -6,27 +6,25 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useMediaQuery } from 'react-responsive';
 import logo from "../assets/logo.png";
 import "./styles.css";
-import axios from 'axios';
-import { ToastContainer, toast } from "react-toastify";
 
 const SignUp = () => {
 
     const navigate = useNavigate();
     const isTabletOrLaptop = useMediaQuery({ query: '(min-width: 768px)' });
     const [passwordVisible, setPasswordVisible] = useState(false);
-
-    const togglePasswordVisibility = () => {
-        setPasswordVisible(!passwordVisible);
-    };
-
+    const[error, setError] = useState('');
     const[inputValue, setInputValue] = useState({
         name: "",
         email: "",
         password: "",
         confirmPassword: "",
     });
-
+    
     const {name, email, password, confirmPassword } = inputValue;
+    
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
 
     const handleOnChange = (e) => {
         const { name , value} = e.target;
@@ -36,41 +34,40 @@ const SignUp = () => {
         });
     };
 
-    const handleError = (err) =>
-        toast.error(err, {
-        position: "bottom-left",
-    });
-    
-    const handleSuccess = (msg) =>
-        toast.success(msg, {
-        position: "bottom-right",
-    });
-
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         try {
-            const {data} = await axios.post(
-                "http://localhost:3001/users/signup",
-                {
-                    ...inputValue,
-                },
-                {withCredentials: true}
-            );
 
-            const {success, message} = data;
-
-            if(success) {
-                handleSuccess(message);
-                setTimeout(() => {
-                    navigate("/dashboard/*");
-                }, 1000);
-            } else {
-                handleError(message);
+            if (!name || !email || !password || !confirmPassword) {
+                setError("Please fill in all fields.");
+                return;
             }
+
+            if (password !== confirmPassword) {
+                setError("Passwords do not match.");
+                return;
+            }
+
+            fetch("http://localhost:3001/users/signup",{
+                method: 'POST',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify(inputValue)
+            }).then((response) => {
+                if(!response.ok) {
+                    console.log(response.status);
+                }
+                else {
+                    console.log("User created and directed to dashboard");
+                    navigate('/dashboard/dashboard/dashboard');
+                }
+            });
         }
         catch(error) {
             console.log(error);
         }
+
         setInputValue({
             ...inputValue,
             name: "",
@@ -112,15 +109,17 @@ const SignUp = () => {
                             onChange={handleOnChange}
                             className="signup-input" 
                             style={{ width: isTabletOrLaptop ? '30rem' : '80%' }}
+                            required
                         />
                         <input 
-                            type="text"
+                            type="email"
                             name="email"
                             value={email}
                             placeholder="Email"
                             onChange={handleOnChange}
                             className="signup-input"
                             style={{ width: isTabletOrLaptop ? '30rem' : '80%' }}
+                            required
                         />
                         <input 
                             type={passwordVisible ? "text" : "password"} 
@@ -130,6 +129,7 @@ const SignUp = () => {
                             onChange={handleOnChange}
                             className="signup-input" 
                             style={{ width: isTabletOrLaptop ? '30rem' : '80%' }}
+                            required
                         />
                         <input 
                             type={passwordVisible ? "text" : "password"} 
@@ -139,7 +139,9 @@ const SignUp = () => {
                             onChange={handleOnChange}
                             className="signup-input" 
                             style={{ width: isTabletOrLaptop ? '30rem' : '80%' }}
+                            required
                         />
+                        <p style={{color:"red", fontSize:"10pt"}}>{error}</p>
                         <FontAwesomeIcon
                             icon={passwordVisible ? faEye : faEyeSlash} 
                             onClick={togglePasswordVisibility}
@@ -154,10 +156,8 @@ const SignUp = () => {
                             Already have an account? Login
                         </Link>
                     </form>
-                    <ToastContainer/>
                 </div>
             </div>
-
         </motion.div>
     )
 }

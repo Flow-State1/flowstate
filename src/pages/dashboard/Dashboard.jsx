@@ -3,9 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { motion } from "framer-motion";
 import "../styles.css";
-import { useCookies } from "react-cookie";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 
 import {
   Chart as ChartJS,
@@ -72,21 +69,6 @@ const Dashboard = () => {
   let c_cost = 0;
 
   useEffect(() => {
-    
-    const verifyCookie = async () => {
-      if(!cookies.token) {
-        navigate("/login");
-      }
-
-      const {data} = await axios.post(
-        "http://localhost:3001",
-        {},
-        {withCredentials: true}
-      );
-    };
-    const {status, user} = data;
-    setName(user);
-
     return () => {
       //Instance of the WebSocket
       const socket = new WebSocket("ws://localhost:3001");
@@ -215,6 +197,9 @@ const Dashboard = () => {
     };
   }, []);
 
+  console.log(`Consumption:${consumption}`);
+  console.log(`Consumption_:${consumption_}`);
+
   const dataObject = {
     labels,
     datasets: [
@@ -289,7 +274,7 @@ const Dashboard = () => {
                 />
 
                 <div className="dashboard-content-body-profile-right-card-avatar-name">
-                  <h3>Hi {name}</h3>
+                  <h3>Hi Andre!</h3>
                   <p>How are you today?</p>
                 </div>
               </div>
