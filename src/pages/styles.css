@@ -487,12 +487,59 @@ body{
     outline: none;
     margin-bottom: 1rem;
     transition: all 0.2s ease-in-out;
+    position: relative;
 }
   
 .login-form .login-button:hover {
     background-color: var(--secondary-color);
     transition: all 0.2s ease-in-out;
 }
+
+.login-button:disabled::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.8em;
+    color: #fff;
+}
+
+.login-button .fa-spinner {
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+
+.error-message {
+    background-color: #f8d7da; /* Light red background color */
+    color: #721c24; /* Dark red text color */
+    padding: 6px;
+    border: 1px solid #f5c6cb; /* Light red border color */
+    margin-top: -16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 1rem;
+    margin-bottom: 9px;
+}
+
+.error-message span {
+    margin-right: 10px; /* Add margin between error message and close button */
+}
+  
+.close-button {
+    background-color: transparent;
+    border: none;
+    color: #721c24; /* Dark red color */
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
   
 .login-form .signup-link {
     position: relative;
@@ -628,6 +675,25 @@ body{
     margin-bottom: 1rem;
     margin-top: 10px;
 }
+
+.signup-button:disabled::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.8em;
+    color: #fff;
+}
+
+.signup-button .fa-spinner {
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
   
 .signup-form .signup-button:hover {
     background-color: var(--secondary-color);
