@@ -1,5 +1,12 @@
-import { Page, Text, View, Document, StyleSheet, Image } from "@react-pdf/renderer";
-
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+  Image,
+} from "@react-pdf/renderer";
+import Logo from "../assets/logo.png";
 
 // Create styles
 const styles = StyleSheet.create({
@@ -15,18 +22,19 @@ const styles = StyleSheet.create({
 });
 
 // Create Document Component
-const MyDocument = ({img}) => {
-
-
+const MyDocument = ({ img }) => {
   return (
     <Document>
-    <Page size="A4" style={styles.page}>
-      <View style={styles.section}>
-        <Text>Chart Data</Text>
-        <Image src={{uri:img}}/>
-      </View>
-    </Page>
-  </Document>
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Image style={{width:"75px",height:"75px"}} src={Logo} />
+          <Text>Flow State</Text>
+        </View>
+        <View>
+          <Image src={{ uri: img }} />
+        </View>
+      </Page>
+    </Document>
   );
 };
 
