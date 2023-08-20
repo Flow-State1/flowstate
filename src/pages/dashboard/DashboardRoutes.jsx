@@ -12,6 +12,7 @@ import EditProfile from "./EditProfile";
 import ViewProfile from "./ViewProfile";
 import ChangePassword from "./ChangePassword";
 import DashboardContextProvider from "../../context/DashboardContext";
+import Report from "./Report";
 
 const DashboardRoutes = () => {
   const path = useLocation();
@@ -40,6 +41,10 @@ const DashboardRoutes = () => {
             <Route
               path="/dashboard/profile/changepassword"
               element={<ChangePassword />}
+            />
+            <Route
+              path="/dashboard/Report"
+              element={<Report />}
             />
           </Routes>
         </LayoutDashboard>
