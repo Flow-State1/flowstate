@@ -8,8 +8,10 @@ import Login from './Login'
 import SignUp from './SignUp'
 import ResetPassword from './ResetPassword'
 import NewPassword from './NewPassword'
+import Report from './Report'
 
 const PageRoutes = () => {
+    
     const location = useLocation();
 
     return(
@@ -22,6 +24,8 @@ const PageRoutes = () => {
                 <Route exact path="/signup" element={<SignUp />} />
                 <Route exact path="/resetpassword" element={<ResetPassword />} />
                 <Route exact path="/newpassword" element={<NewPassword />} />
+                {/* Added report route */}
+                <Route exact path="/report" element={<Report />} />
             </Routes>
             </Layout>
         </AnimatePresence>

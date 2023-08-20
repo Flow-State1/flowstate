@@ -13,16 +13,21 @@
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+
     "@jikji/generator": "^0.4.0",
     "@jikji/react": "^0.4.1",
     "@react-pdf/renderer": "^3.1.12",
     "chart.js": "^4.3.3",
     "chartjs-to-image": "^1.2.1",
+
+    "axios": "^1.4.0",
+
     "faker": "^6.6.6",
     "file-saver": "^2.0.5",
     "framer-motion": "^10.12.16",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
+    "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
     "react-pdf-charts": "^0.2.1",
     "react-redux": "^8.1.1",
