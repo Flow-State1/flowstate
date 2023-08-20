@@ -21,73 +21,8 @@ const SignUp = () => {
     togglePasswordVisibility,
     SignUpOnChange,
     SignUpSubmit,
+    isLoading
   } = useContext(AppContext);
-
-    const navigate = useNavigate();
-    const isTabletOrLaptop = useMediaQuery({ query: '(min-width: 768px)' });
-    const [passwordVisible, setPasswordVisible] = useState(false);
-    const[error, setError] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const[inputValue, setInputValue] = useState({
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-    });
-    
-    const {name, email, password, confirmPassword } = inputValue;
-    
-    const togglePasswordVisibility = () => {
-        setPasswordVisible(!passwordVisible);
-    };
-  
-  const handleOnChange = (e) => {
-        const { name , value} = e.target;
-        setInputValue({
-            ...inputValue,
-            [name]: value,
-        });
-    };
-  
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsLoading(true);
-        try {
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            fetch("http://localhost:3001/users/signup",{
-                method: 'POST',
-                headers: {
-                    'Content-Type':'application/json'
-                },
-                body:JSON.stringify(inputValue)
-            }).then((response) => {
-                if(!response.ok) {
-                    response.json().then(data => {
-                        console.log(data.message);
-                        // setErrorMessage(data.message);
-                        // setIsErrorVisible(true);
-                    });
-                }
-                else {
-                    console.log("User created and directed to dashboard");
-                    navigate('/dashboard/dashboard/dashboard');
-                }
-            });
-        }
-        catch(error) {
-            console.log(error);
-        }
-
-        setInputValue({
-            ...inputValue,
-            name: "",
-            email: "",
-            password: "",
-            confirmPassword: "",
-        });
-        console.log(isLoading);
-        setIsLoading(false);
-    };
 
     return(
         <motion.div 
@@ -111,14 +46,14 @@ const SignUp = () => {
                         </h1>
                     </div>
 
-                    <form className="signup-form" onSubmit={handleSubmit}>
+                    <form className="signup-form" onSubmit={SignUpSubmit}>
                         <h1 className="signup-card-title">Sign Up</h1>
                         <input 
                             type="text"
                             name="name"
                             value={name}
                             placeholder="Name" 
-                            onChange={handleOnChange}
+                            onChange={SignUpOnChange}
                             className="signup-input" 
                             style={{ width: isTabletOrLaptop ? '30rem' : '80%' }}
                             required
@@ -128,7 +63,7 @@ const SignUp = () => {
                             name="email"
                             value={email}
                             placeholder="Email"
-                            onChange={handleOnChange}
+                            onChange={SignUpOnChange}
                             className="signup-input"
                             style={{ width: isTabletOrLaptop ? '30rem' : '80%' }}
                             required
@@ -138,7 +73,7 @@ const SignUp = () => {
                             name="password"
                             value={password}
                             placeholder="Password" 
-                            onChange={handleOnChange}
+                            onChange={SignUpOnChange}
                             className="signup-input" 
                             style={{ width: isTabletOrLaptop ? '30rem' : '80%' }}
                             required
@@ -148,7 +83,7 @@ const SignUp = () => {
                             name="confirmPassword"
                             value={confirmPassword}
                             placeholder="Confirm Password" 
-                            onChange={handleOnChange}
+                            onChange={SignUpOnChange}
                             className="signup-input" 
                             style={{ width: isTabletOrLaptop ? '30rem' : '80%' }}
                             required

@@ -37,7 +37,9 @@ export const AppContextProvider = (props) => {
     password: "",
     confirmPassword: "",
   });
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isErrorVisible, setIsErrorVisible] = useState(false);
   const { name, email, password, confirmPassword } = inputValue;
 
   const togglePasswordVisibility = () => {
@@ -207,6 +209,10 @@ export const AppContextProvider = (props) => {
         email,
         password,
         confirmPassword,
+        isErrorVisible,
+        errorMessage,
+        isLoading,
+        setIsErrorVisible,
         togglePasswordVisibility,
         SignUpOnChange,
         SignUpSubmit,
