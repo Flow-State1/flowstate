@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useMediaQuery } from 'react-responsive';
 import logo from "../assets/logo.png";
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import "./styles.css";
 
 const Login = () => {
@@ -12,6 +13,9 @@ const Login = () => {
   const navigate = useNavigate();
   const isTabletOrLaptop = useMediaQuery({ query: '(min-width: 768px)' });
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isErrorVisible, setIsErrorVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -32,9 +36,11 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
+      await new Promise(resolve => setTimeout(resolve, 1500));
       fetch("http://localhost:3001/users/login", {
         method: 'POST',
         headers: {
@@ -44,7 +50,11 @@ const Login = () => {
       }).then((response) => {
 
         if(!response.ok) {
-          console.log(response.status);
+          response.json().then(data => {
+            console.log(data.message);
+            setErrorMessage(data.message);
+            setIsErrorVisible(true);
+          });
         }
         else {
           console.log("User logged in successfully");
@@ -61,6 +71,8 @@ const Login = () => {
       email: "",
       password: "",
     });
+    console.log(isLoading);
+    setIsLoading(false);
   };
 
   return (
@@ -109,6 +121,15 @@ const Login = () => {
               className="eye-icon"
             />
 
+            {isErrorVisible && (
+              <div className="error-message">
+                <span>{errorMessage}</span>
+                <button className="close-button" onClick={() => setIsErrorVisible(false)}>
+                  &#x2716; {/* Unicode character for '✖' */}
+                </button>
+              </div>
+            )}
+
             <Link to="/resetpassword" className="forgot-password-link">
               Forgot Password?
             </Link>
@@ -116,8 +137,9 @@ const Login = () => {
             <button
               className="login-button"
               style={{ width: isTabletOrLaptop ? '15rem' : '50%' }}
+              disabled={isLoading}
             >
-              Login
+              {isLoading ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Login'}
             </button>
 
             <Link to="/signup" className="signup-link">

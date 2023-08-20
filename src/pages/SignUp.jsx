@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useMediaQuery } from 'react-responsive';
 import logo from "../assets/logo.png";
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import "./styles.css";
 
 const SignUp = () => {
@@ -13,6 +14,7 @@ const SignUp = () => {
     const isTabletOrLaptop = useMediaQuery({ query: '(min-width: 768px)' });
     const [passwordVisible, setPasswordVisible] = useState(false);
     const[error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const[inputValue, setInputValue] = useState({
         name: "",
         email: "",
@@ -34,20 +36,11 @@ const SignUp = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
         try {
-
-            if (!name || !email || !password || !confirmPassword) {
-                setError("Please fill in all fields.");
-                return;
-            }
-
-            if (password !== confirmPassword) {
-                setError("Passwords do not match.");
-                return;
-            }
-
+            await new Promise(resolve => setTimeout(resolve, 1500));
             fetch("http://localhost:3001/users/signup",{
                 method: 'POST',
                 headers: {
@@ -56,7 +49,11 @@ const SignUp = () => {
                 body:JSON.stringify(inputValue)
             }).then((response) => {
                 if(!response.ok) {
-                    console.log(response.status);
+                    response.json().then(data => {
+                        console.log(data.message);
+                        // setErrorMessage(data.message);
+                        // setIsErrorVisible(true);
+                    });
                 }
                 else {
                     console.log("User created and directed to dashboard");
@@ -75,6 +72,8 @@ const SignUp = () => {
             password: "",
             confirmPassword: "",
         });
+        console.log(isLoading);
+        setIsLoading(false);
     };
 
     return(
@@ -148,8 +147,12 @@ const SignUp = () => {
                             className="sign-eye-icon"
                         />
 
-                        <button className="signup-button" style={{ width: isTabletOrLaptop ? '15rem' : '50%' }}>
-                            Sign Up
+                        <button 
+                            className="signup-button" 
+                            style={{ width: isTabletOrLaptop ? '15rem' : '50%' }}
+                            disabled={isLoading}
+                        >
+                            {isLoading ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Sign Up'}
                         </button>
 
                         <Link to="/login" className="login-link">
