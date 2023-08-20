@@ -9,6 +9,7 @@ import SignUp from './SignUp'
 import ResetPassword from './ResetPassword'
 import NewPassword from './NewPassword'
 
+
 const PageRoutes = () => {
     
     const location = useLocation();

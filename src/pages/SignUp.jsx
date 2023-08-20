@@ -1,14 +1,27 @@
-import React, { useState }from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { useMediaQuery } from 'react-responsive';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { useMediaQuery } from "react-responsive";
 import logo from "../assets/logo.png";
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import "./styles.css";
+import { AppContext } from "../context/AppContext";
 
 const SignUp = () => {
+  const {
+    isTabletOrLaptop,
+    passwordVisible,
+    error,
+    name,
+    email,
+    password,
+    confirmPassword,
+    togglePasswordVisibility,
+    SignUpOnChange,
+    SignUpSubmit,
+  } = useContext(AppContext);
 
     const navigate = useNavigate();
     const isTabletOrLaptop = useMediaQuery({ query: '(min-width: 768px)' });
@@ -27,15 +40,15 @@ const SignUp = () => {
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };
-
-    const handleOnChange = (e) => {
+  
+  const handleOnChange = (e) => {
         const { name , value} = e.target;
         setInputValue({
             ...inputValue,
             [name]: value,
         });
     };
-
+  
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);

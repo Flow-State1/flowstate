@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { useMediaQuery } from 'react-responsive';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/logo.png";
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import "./styles.css";
+import { AppContext } from "../context/AppContext";
 
 const Login = () => {
 
@@ -76,7 +76,7 @@ const Login = () => {
   };
 
   return (
-      <motion.div
+    <motion.div
       className="login-container"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -89,31 +89,31 @@ const Login = () => {
             src={logo}
             alt="logo"
             className="logo"
-            style={{ width: isTabletOrLaptop ? '18rem' : '14rem' }}
+            style={{ width: isTabletOrLaptop ? "18rem" : "14rem" }}
           />
           <div className="logo-title">
             <h1>Flow State</h1>
           </div>
 
-          <form className="login-form" onSubmit={handleSubmit}>
+          <form className="login-form" onSubmit={LoginSubmit}>
             <h1 className="login-card-title">Login</h1>
             <input
               type="email"
               name="email"
               value={email}
               placeholder="Email"
-              onChange={handleOnChange}
+              onChange={LoginOnChange}
               className="login-input"
-              style={{ width: isTabletOrLaptop ? '30rem' : '80%' }}
+              style={{ width: isTabletOrLaptop ? "30rem" : "80%" }}
             />
             <input
-              type={passwordVisible ? 'text' : 'password'}
+              type={passwordVisible ? "text" : "password"}
               name="password"
               value={password}
               placeholder="Password"
-              onChange={handleOnChange}
+              onChange={LoginOnChange}
               className="login-input"
-              style={{ width: isTabletOrLaptop ? '30rem' : '80%' }}
+              style={{ width: isTabletOrLaptop ? "30rem" : "80%" }}
             />
             <FontAwesomeIcon
               icon={passwordVisible ? faEye : faEyeSlash}
@@ -150,6 +150,6 @@ const Login = () => {
       </div>
     </motion.div>
   );
-}
+};
 
-export default React.memo(Login)
+export default React.memo(Login);

@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { motion } from "framer-motion";
 import "../styles.css";
-
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -17,6 +16,7 @@ import {
 import { Line } from "react-chartjs-2";
 import ToggleSwitch from "../../components/TogggleSwitch";
 import { DashboardContext } from "../../context/DashboardContext";
+import { AppContext } from "../../context/AppContext";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -64,9 +64,11 @@ const Dashboard = () => {
     setMinutes_ts,
     cost,
     setCost,
-  } = useContext(DashboardContext);
+    user
+  } = useContext(AppContext);
 
   let c_cost = 0;
+  console.log(user);
 
   useEffect(() => {
     return () => {
@@ -274,7 +276,7 @@ const Dashboard = () => {
                 />
 
                 <div className="dashboard-content-body-profile-right-card-avatar-name">
-                  <h3>Hi Andre!</h3>
+                  <h3>Hi {user.name}!</h3>
                   <p>How are you today?</p>
                 </div>
               </div>
@@ -289,18 +291,21 @@ const Dashboard = () => {
             <div className="dashboard-content-body-profile-middle-mini-cards">
               <div className="dashboard-content-body-profile-middle-mini-card">
                 <div className="dashboard-content-body-profile-middle-mini-card-header">
-                  <h3>Voltage: {voltage_}</h3>
+                  <h3>Voltage1: {voltage}</h3>
+                  <h3>Voltage2: {voltage_}</h3>
                 </div>
               </div>
               <div className="dashboard-content-body-profile-middle-mini-card">
                 <div className="dashboard-content-body-profile-middle-mini-card-header">
-                  <h3>Current: {current_}</h3>
+                  <h3>Current1: {current}</h3>
+                  <h3>Current2: {current_}</h3>
                 </div>
               </div>
 
               <div className="dashboard-content-body-profile-middle-mini-card">
                 <div className="dashboard-content-body-profile-middle-mini-card-header">
-                  <h3>Power: {apower_}</h3>
+                  <h3>Power1: {apower}</h3>
+                  <h3>Power2: {apower_}</h3>
                 </div>
               </div>
             </div>
