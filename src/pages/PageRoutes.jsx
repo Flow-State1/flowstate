@@ -11,6 +11,7 @@ import NewPassword from './NewPassword'
 import Report from './Report'
 
 const PageRoutes = () => {
+    
     const location = useLocation();
 
     return(
