@@ -17,6 +17,7 @@ import {
 import { Line } from "react-chartjs-2";
 import ToggleSwitch from "../../components/TogggleSwitch";
 import { DashboardContext } from "../../context/DashboardContext";
+import { AppContext } from "../../context/AppContext";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -64,7 +65,7 @@ const Dashboard = () => {
     setMinutes_ts,
     cost,
     setCost,
-  } = useContext(DashboardContext);
+  } = useContext(AppContext);
 
   let c_cost = 0;
 
