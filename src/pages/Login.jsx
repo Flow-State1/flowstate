@@ -1,70 +1,28 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { useMediaQuery } from 'react-responsive';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
 import logo from "../assets/logo.png";
 import "./styles.css";
+import { AppContext } from "../context/AppContext";
 
 const Login = () => {
+  // const navigate = useNavigate();
 
-  const navigate = useNavigate();
-  const isTabletOrLaptop = useMediaQuery({ query: '(min-width: 768px)' });
-  const [passwordVisible, setPasswordVisible] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-  };
-
-  const [inputValue, setInputValue] = useState({
-    email: "",
-    password: "",
-  });
-
-  const { email, password } = inputValue;
-
-  const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    setInputValue({
-      ...inputValue,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    try {
-      fetch("http://localhost:3001/users/login", {
-        method: 'POST',
-        headers: {
-          'Content-Type':'application/json'
-        },
-        body: JSON.stringify(inputValue),
-      }).then((response) => {
-
-        if(!response.ok) {
-          console.log(response.status);
-        }
-        else {
-          console.log("User logged in successfully");
-          navigate('/dashboard/dashboard/dashboard');
-        }
-
-      })
-
-    } catch (error) {
-      console.log(error);
-    }
-    setInputValue({
-      ...inputValue,
-      email: "",
-      password: "",
-    });
-  };
+  const {
+    isTabletOrLaptop,
+    passwordVisible,
+    email,
+    password,
+    togglePasswordVisibility,
+    LoginOnChange,
+    LoginSubmit,
+  } = useContext(AppContext);
 
   return (
-      <motion.div
+    <motion.div
       className="login-container"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -77,31 +35,31 @@ const Login = () => {
             src={logo}
             alt="logo"
             className="logo"
-            style={{ width: isTabletOrLaptop ? '18rem' : '14rem' }}
+            style={{ width: isTabletOrLaptop ? "18rem" : "14rem" }}
           />
           <div className="logo-title">
             <h1>Flow State</h1>
           </div>
 
-          <form className="login-form" onSubmit={handleSubmit}>
+          <form className="login-form" onSubmit={LoginSubmit}>
             <h1 className="login-card-title">Login</h1>
             <input
               type="email"
               name="email"
               value={email}
               placeholder="Email"
-              onChange={handleOnChange}
+              onChange={LoginOnChange}
               className="login-input"
-              style={{ width: isTabletOrLaptop ? '30rem' : '80%' }}
+              style={{ width: isTabletOrLaptop ? "30rem" : "80%" }}
             />
             <input
-              type={passwordVisible ? 'text' : 'password'}
+              type={passwordVisible ? "text" : "password"}
               name="password"
               value={password}
               placeholder="Password"
-              onChange={handleOnChange}
+              onChange={LoginOnChange}
               className="login-input"
-              style={{ width: isTabletOrLaptop ? '30rem' : '80%' }}
+              style={{ width: isTabletOrLaptop ? "30rem" : "80%" }}
             />
             <FontAwesomeIcon
               icon={passwordVisible ? faEye : faEyeSlash}
@@ -115,7 +73,7 @@ const Login = () => {
 
             <button
               className="login-button"
-              style={{ width: isTabletOrLaptop ? '15rem' : '50%' }}
+              style={{ width: isTabletOrLaptop ? "15rem" : "50%" }}
             >
               Login
             </button>
@@ -128,6 +86,6 @@ const Login = () => {
       </div>
     </motion.div>
   );
-}
+};
 
-export default React.memo(Login)
+export default React.memo(Login);

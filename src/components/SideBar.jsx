@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,10 +6,12 @@ import { faChartLine, faBell, faGears, faUserCircle, faLayerGroup, faSignOut } f
 import logo from "../assets/logo.png";
 import "../pages/styles.css"
 import HamburgerMenu from "./HamburgerMenu";
+import { AppContext } from "../context/AppContext";
 
 const SideBarNavigation = () => {
     const navigate = useNavigate()
 
+    const {user} = useContext(AppContext);
 
     const handleLogout = () => {
         navigate('/')
@@ -46,7 +48,7 @@ const SideBarNavigation = () => {
                                 marginBottom: '0.1rem'
                             }}
                         >
-                            Andre
+                            {user.name}
                         </h4>
                     </div>
 

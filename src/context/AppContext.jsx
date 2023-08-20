@@ -1,4 +1,4 @@
-import { useState, createContext,useRef, useCallback  } from "react";
+import { useState, createContext, useRef, useCallback } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -19,10 +19,119 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+import { useNavigate, Link } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 export const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
+  const [user, setUser] = useState();
+  const navigate = useNavigate();
+  // Context for signing up user and keeping them in state
+  const isTabletOrLaptop = useMediaQuery({ query: "(min-width: 768px)" });
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [error, setError] = useState("");
+  const [inputValue, setInputValue] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const { name, email, password, confirmPassword } = inputValue;
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  const SignUpOnChange = (e) => {
+    const { name, value } = e.target;
+    setInputValue({
+      ...inputValue,
+      [name]: value,
+    });
+  };
+
+  const SignUpSubmit = (e) => {
+    e.preventDefault();
+    try {
+      if (!name || !email || !password || !confirmPassword) {
+        setError("Please fill in all fields.");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        setError("Passwords do not match.");
+        return;
+      }
+
+      fetch("http://localhost:3001/users/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inputValue),
+      }).then((response) => {
+        if (!response.ok) {
+          console.log(response.status);
+        } else {
+          console.log("User created and directed to dashboard");
+          setUser(inputValue);
+          navigate("/dashboard/dashboard/dashboard");
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    setInputValue({
+      ...inputValue,
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
+  };
+
+  // Context for when user login
+
+  const LoginOnChange = (e) => {
+    const { name, value } = e.target;
+    setInputValue({
+      ...inputValue,
+      [name]: value,
+    });
+  };
+
+  const LoginSubmit = (e) => {
+    e.preventDefault();
+    try {
+      fetch("http://localhost:3001/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inputValue),
+      }).then((response) => {
+        if (!response.ok) {
+          console.log(response.status);
+        } else {
+          console.log("User logged in successfully");
+          setUser(inputValue);
+          navigate("/dashboard/dashboard/dashboard");
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    setInputValue({
+      ...inputValue,
+      email: "",
+      password: "",
+    });
+  };
+
+  // Context for the live charts
   const [payload, setPayload] = useState([]);
   const [payload_, setPayload_] = useState([]);
   //State variable for device shellyplus1pm-a8032ab1196
@@ -89,6 +198,20 @@ export const AppContextProvider = (props) => {
         chart_data_object,
         chart_image,
         chart_ref,
+        isTabletOrLaptop,
+        passwordVisible,
+        error,
+        inputValue,
+        user,
+        name,
+        email,
+        password,
+        confirmPassword,
+        togglePasswordVisibility,
+        SignUpOnChange,
+        SignUpSubmit,
+        LoginOnChange,
+        LoginSubmit,
         generateReport,
         setPower,
         setPower_,
