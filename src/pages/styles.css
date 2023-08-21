@@ -1287,13 +1287,18 @@ body{
     color: var(--primary-color);
 }
 .bot-avatar{
-    width: 35px;
+    width: 40px;
     height:35px;
     border-radius: 50%;
     display:flex;
     justify-content: center;
     align-items: center;
     font-size:0.9rem;
-    background-color:#088395;
-    color:#ffff
+    background-color:var(--primary-color);
+    color:#ffff;
+    margin-right:15px;
+    /* --primary-color: #0A4D68;
+    --secondary-color: #088395;
+    --tertiary-color: #05BFDB;
+    --quaternary-color: #00FFCA; */
 }

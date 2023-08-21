@@ -6,8 +6,14 @@ class MessageParser {
     }
   
     parse(message) {
-      console.log(message)
+      // console.log(message)
+      const lowercase=message.toLowerCase()
+      console.log(this.state)
+      if (lowercase.includes("hello")){
+       this.actionProvider.helloWorldHandler()//coming from the action provider 
+      } 
     }
   }
   
   export default MessageParser;
+  //  new MessageParser(actionProvider,state)   
