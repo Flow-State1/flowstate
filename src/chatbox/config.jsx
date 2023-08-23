@@ -7,9 +7,7 @@ const botName="Somebot";
 const config = {
   botName:"Flow-Bot",
   initialMessages: [
-    createChatBotMessage(`Hey there my name is ${botName} how can I help you`,{
-    widget:'InAppqs'
-})],
+    createChatBotMessage(`Hey there my name is ${botName} how can I help you`)],
     customComponents: {
       // Replaces the default header
      // Replaces the default bot avatar

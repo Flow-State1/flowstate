@@ -12,17 +12,21 @@ const InAppqs=(props)=>{
             setState((state)=>({...state,inAppqs:fiveFirstTodos}))
         });
     },[]);
-    renderInAppsqs=()=>{
-        props.inAppqs.map(inAppq=>{
-        <li className="q-widgets" key={inAppqs.id}></li>
-        })
-    }
-    return(
-        <div className="a-questions">   
+
+    const renderInAppqs=()=>{
+        return props.inAppqs.map((inApp) =>{
+            return(
+                <li className='q-widgets' key={inApp.id}>
+                {inApp.title}
+            </li>
+            );
+        });
+    };
+    return ( <div className="a-questions">   
         <ul className="q-widgets">
-        {this.renderInAppsqs()}
+        {renderInAppqs()}
         </ul>  
         </div>
-        )  
+    )    
 }
 export default InAppqs

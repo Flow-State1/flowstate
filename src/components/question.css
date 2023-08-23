@@ -1,3 +1,13 @@
 .a-questions{
     color:aquamarine
 }
+.q-widgets{
+    margin:0;
+    padding:0;
+    list-style-type:none;
+}
+.todo-widget-list-item{
+    font-size:1rem;
+    margin:8px 0;
+    text-align:left;
+}
