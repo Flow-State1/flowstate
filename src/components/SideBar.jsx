@@ -48,7 +48,7 @@ const SideBarNavigation = () => {
                                 marginBottom: '0.1rem'
                             }}
                         >
-                            {user.name}
+                            Andrea
                         </h4>
                     </div>
 

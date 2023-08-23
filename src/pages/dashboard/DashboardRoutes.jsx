@@ -22,44 +22,38 @@ const DashboardRoutes = () => {
 
   const { authenticated } = useContext(AppContext);
   const navigate = useNavigate();
-
+  // console.log(authenticated);
   return (
     <>
-      {authenticated ? (
-        <AnimatePresence mode="sync">
-          <DashboardContextProvider>
-            <LayoutDashboard>
-              <Routes location={path} key={path.pathname}>
-                <Route path="/dashboard/dashboard" element={<Dashboard />} />
-                <Route path="/dashboard/analytics" element={<Analytics />} />
-                <Route
-                  path="/dashboard/notifications"
-                  element={<Notifications />}
-                />
-                <Route path="/dashboard/settings" element={<Settings />} />
-                <Route path="/dashboard/profile" element={<Profile />} />
-                <Route
-                  path="/dashboard/profile/editprofile"
-                  element={<EditProfile />}
-                />
-                <Route
-                  path="/dashboard/profile/viewprofile"
-                  element={<ViewProfile />}
-                />
-                <Route
-                  path="/dashboard/profile/changepassword"
-                  element={<ChangePassword />}
-                />
-                <Route path="/dashboard/Report" element={<Report />} />
-              </Routes>
-            </LayoutDashboard>
-          </DashboardContextProvider>
-        </AnimatePresence>
-      ) : (
-        <>
-          <Redirect/>
-        </>
-      )}
+      <AnimatePresence mode="sync">
+        <DashboardContextProvider>
+          <LayoutDashboard>
+            <Routes location={path} key={path.pathname}>
+              <Route path="/dashboard/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard/analytics" element={<Analytics />} />
+              <Route
+                path="/dashboard/notifications"
+                element={<Notifications />}
+              />
+              <Route path="/dashboard/settings" element={<Settings />} />
+              <Route path="/dashboard/profile" element={<Profile />} />
+              <Route
+                path="/dashboard/profile/editprofile"
+                element={<EditProfile />}
+              />
+              <Route
+                path="/dashboard/profile/viewprofile"
+                element={<ViewProfile />}
+              />
+              <Route
+                path="/dashboard/profile/changepassword"
+                element={<ChangePassword />}
+              />
+              <Route path="/dashboard/Report" element={<Report />} />
+            </Routes>
+          </LayoutDashboard>
+        </DashboardContextProvider>
+      </AnimatePresence>
     </>
   );
 };

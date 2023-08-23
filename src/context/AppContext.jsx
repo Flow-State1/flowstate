@@ -31,7 +31,8 @@ export const AppContextProvider = (props) => {
   const isTabletOrLaptop = useMediaQuery({ query: "(min-width: 768px)" });
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [error, setError] = useState("");
-  const [authenticated,SetAuthenticated] = useState(false);
+  let storage = sessionStorage;
+  let authenticated = storage.getItem("authenticated");
   const [inputValue, setInputValue] = useState({
     name: "",
     email: "",
@@ -79,7 +80,7 @@ export const AppContextProvider = (props) => {
           console.log(response.status);
         } else {
           console.log("User created and directed to dashboard");
-          SetAuthenticated(true);
+          authenticated.current = true;
           setUser(inputValue);
           navigate("/dashboard/dashboard/dashboard");
         }
@@ -120,6 +121,7 @@ export const AppContextProvider = (props) => {
           console.log(response.status);
         } else {
           console.log("User logged in successfully");
+          
           setUser(inputValue);
           navigate("/dashboard/dashboard/dashboard");
         }
@@ -127,7 +129,7 @@ export const AppContextProvider = (props) => {
     } catch (error) {
       console.log(error);
     }
-    SetAuthenticated(true);
+    authenticated.current = true;
     setInputValue({
       ...inputValue,
       email: "",
@@ -215,7 +217,6 @@ export const AppContextProvider = (props) => {
         errorMessage,
         isLoading,
         authenticated,
-        SetAuthenticated,
         setIsErrorVisible,
         togglePasswordVisibility,
         SignUpOnChange,
