@@ -276,7 +276,7 @@ const Dashboard = () => {
                 />
 
                 <div className="dashboard-content-body-profile-right-card-avatar-name">
-                  <h3>Hi {user.name}!</h3>
+                  <h3>Hi {user.email}!</h3>
                   <p>How are you today?</p>
                 </div>
               </div>

@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useContext, useMemo } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import LayoutDashboard from "../../../src/components/BackgroundImage";
@@ -13,43 +13,54 @@ import ViewProfile from "./ViewProfile";
 import ChangePassword from "./ChangePassword";
 import DashboardContextProvider from "../../context/DashboardContext";
 import Report from "./Report";
+import { AppContext } from "../../context/AppContext";
+import LoginCard from "../../components/LoginCard";
+import Redirect from "../Redirect";
 
 const DashboardRoutes = () => {
   const path = useLocation();
 
+  const { authenticated } = useContext(AppContext);
+  const navigate = useNavigate();
+
   return (
-    <AnimatePresence mode="sync">
-      <DashboardContextProvider>
-        <LayoutDashboard>
-          <Routes location={path} key={path.pathname}>
-            <Route path="/dashboard/dashboard" element={<Dashboard />} />
-            <Route path="/dashboard/analytics" element={<Analytics />} />
-            <Route
-              path="/dashboard/notifications"
-              element={<Notifications />}
-            />
-            <Route path="/dashboard/settings" element={<Settings />} />
-            <Route path="/dashboard/profile" element={<Profile />} />
-            <Route
-              path="/dashboard/profile/editprofile"
-              element={<EditProfile />}
-            />
-            <Route
-              path="/dashboard/profile/viewprofile"
-              element={<ViewProfile />}
-            />
-            <Route
-              path="/dashboard/profile/changepassword"
-              element={<ChangePassword />}
-            />
-            <Route
-              path="/dashboard/Report"
-              element={<Report />}
-            />
-          </Routes>
-        </LayoutDashboard>
-      </DashboardContextProvider>
-    </AnimatePresence>
+    <>
+      {authenticated ? (
+        <AnimatePresence mode="sync">
+          <DashboardContextProvider>
+            <LayoutDashboard>
+              <Routes location={path} key={path.pathname}>
+                <Route path="/dashboard/dashboard" element={<Dashboard />} />
+                <Route path="/dashboard/analytics" element={<Analytics />} />
+                <Route
+                  path="/dashboard/notifications"
+                  element={<Notifications />}
+                />
+                <Route path="/dashboard/settings" element={<Settings />} />
+                <Route path="/dashboard/profile" element={<Profile />} />
+                <Route
+                  path="/dashboard/profile/editprofile"
+                  element={<EditProfile />}
+                />
+                <Route
+                  path="/dashboard/profile/viewprofile"
+                  element={<ViewProfile />}
+                />
+                <Route
+                  path="/dashboard/profile/changepassword"
+                  element={<ChangePassword />}
+                />
+                <Route path="/dashboard/Report" element={<Report />} />
+              </Routes>
+            </LayoutDashboard>
+          </DashboardContextProvider>
+        </AnimatePresence>
+      ) : (
+        <>
+          <Redirect/>
+        </>
+      )}
+    </>
   );
 };
 

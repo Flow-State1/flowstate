@@ -10,7 +10,7 @@ import { AppContext } from "../context/AppContext";
 
 const Login = () => {
 
-const {LoginOnChange,LoginSubmit,email,password,isLoading,isErrorVisible,isTabletOrLaptop,passwordVisible,togglePasswordVisibility} = useContext(AppContext);
+const {LoginOnChange,LoginSubmit,email,password,isLoading,isErrorVisible,isTabletOrLaptop,passwordVisible,togglePasswordVisibility,setIsErrorVisible} = useContext(AppContext);
 
   return (
     <motion.div

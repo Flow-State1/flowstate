@@ -31,6 +31,7 @@ export const AppContextProvider = (props) => {
   const isTabletOrLaptop = useMediaQuery({ query: "(min-width: 768px)" });
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [error, setError] = useState("");
+  const [authenticated,SetAuthenticated] = useState(false);
   const [inputValue, setInputValue] = useState({
     name: "",
     email: "",
@@ -78,6 +79,7 @@ export const AppContextProvider = (props) => {
           console.log(response.status);
         } else {
           console.log("User created and directed to dashboard");
+          SetAuthenticated(true);
           setUser(inputValue);
           navigate("/dashboard/dashboard/dashboard");
         }
@@ -96,7 +98,6 @@ export const AppContextProvider = (props) => {
   };
 
   // Context for when user login
-
   const LoginOnChange = (e) => {
     const { name, value } = e.target;
     setInputValue({
@@ -126,6 +127,7 @@ export const AppContextProvider = (props) => {
     } catch (error) {
       console.log(error);
     }
+    SetAuthenticated(true);
     setInputValue({
       ...inputValue,
       email: "",
@@ -212,6 +214,8 @@ export const AppContextProvider = (props) => {
         isErrorVisible,
         errorMessage,
         isLoading,
+        authenticated,
+        SetAuthenticated,
         setIsErrorVisible,
         togglePasswordVisibility,
         SignUpOnChange,
