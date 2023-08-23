@@ -3,15 +3,21 @@ import React from "react";
 import { createChatBotMessage  } from "react-chatbot-kit";
 import BotAvatar from "../components/BotAvatar";
 import InAppqs from "../components/InAppqs";
-const botName="Somebot";
+const botName="Flowbot";
 const config = {
   botName:"Flow-Bot",
   initialMessages: [
-    createChatBotMessage(`Hey there my name is ${botName} how can I help you`)],
+    createChatBotMessage(`Hi lets chat`)],
     customComponents: {
       // Replaces the default header
+      header: () => <div style={{ backgroundColor: 'red', padding: "5px", borderRadius: "3px" }}>This is the header</div>,
      // Replaces the default bot avatar
-     botAvatar: (props) => <BotAvatar{...props} />
+     botAvatar: (props) => <BotAvatar{...props} />,
+     botChatMessage: (props) => <CustomChatMessage {...props} />,
+         // Replaces the default user icon
+    userAvatar: (props) => <MyUserAvatar {...props} />,
+    // Replaces the default user chat message
+    userChatMessage: (props) => <MyUserChatMessage {...props} />
    },
    customStyles: {
     // Overrides the chatbot message styles
