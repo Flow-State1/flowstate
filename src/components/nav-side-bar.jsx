@@ -33,6 +33,7 @@ const NavSideBarComponent = () => {
                         <li><a href="/notifications">Notfications</a></li>
                         <li><a href="/analytics">Analytics</a></li>
                         <li><a href="/profile">Profile</a></li>
+                        <li><a href="/chatbot">Chatbot</a></li>
                     </ul>
                 </div>
             </div>
