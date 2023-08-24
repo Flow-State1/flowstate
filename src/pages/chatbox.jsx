@@ -93,7 +93,7 @@ const chatbox= () => {
 
                     <div className="main-content-card">
                         <div className="main-content-card-item">
-                                <h1>Chatboat</h1>
+                                <h1>Chatbot</h1>
                         </div>
                             <div className="profile-details">
                             <div style={{postion:"left",height:"1000px",width:"700px"}}>
