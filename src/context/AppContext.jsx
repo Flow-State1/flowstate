@@ -1,4 +1,10 @@
-import { useState, createContext, useRef, useCallback } from "react";
+import {
+  useState,
+  createContext,
+  useRef,
+  useCallback,
+  useContext,
+} from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -32,7 +38,8 @@ export const AppContextProvider = (props) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [error, setError] = useState("");
   let storage = sessionStorage;
-  let authenticated = storage.getItem("authenticated");
+  // let authenticated = storage.getItem("authenticated");
+  const [authenticated, setAuthenticated] = useState(false);
   const [inputValue, setInputValue] = useState({
     name: "",
     email: "",
@@ -40,7 +47,7 @@ export const AppContextProvider = (props) => {
     confirmPassword: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [isErrorVisible, setIsErrorVisible] = useState(false);
   const { name, email, password, confirmPassword } = inputValue;
 
@@ -80,7 +87,8 @@ export const AppContextProvider = (props) => {
           console.log(response.status);
         } else {
           console.log("User created and directed to dashboard");
-          authenticated.current = true;
+          // authenticated.current = true;
+          setAuthenticated(true);
           setUser(inputValue);
           navigate("/dashboard/dashboard/dashboard");
         }
@@ -121,7 +129,7 @@ export const AppContextProvider = (props) => {
           console.log(response.status);
         } else {
           console.log("User logged in successfully");
-          
+          setAuthenticated(true);
           setUser(inputValue);
           navigate("/dashboard/dashboard/dashboard");
         }
@@ -129,7 +137,7 @@ export const AppContextProvider = (props) => {
     } catch (error) {
       console.log(error);
     }
-    authenticated.current = true;
+    setAuthenticated(true);
     setInputValue({
       ...inputValue,
       email: "",
@@ -159,7 +167,31 @@ export const AppContextProvider = (props) => {
   let chart_ref = useRef(null);
   let [chart_image, setChart_image] = useState("");
   const chart_data_object = {
-    labels: ["2011", "2012", "2013"],
+    labels: ["00:00", 
+    "01:00", 
+    "02:00",
+    "03:00",
+    "04:00",
+    "05:00",
+    "06:00",
+    "07:00",
+    "08:00",
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
+    "19:00",
+    "20:00",
+    "21:00",
+    "22:00",
+    "23:00"
+  ],
     datasets: [
       {
         label: "Device1 (Consumption)",
