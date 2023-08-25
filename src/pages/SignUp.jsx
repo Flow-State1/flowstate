@@ -9,7 +9,7 @@ import "./styles.css";
 import { AppContext } from "../context/AppContext";
 
 const SignUp = () => {
-    
+
     const {
         isTabletOrLaptop,
         isErrorVisible,

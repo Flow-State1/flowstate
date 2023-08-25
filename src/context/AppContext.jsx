@@ -40,8 +40,6 @@ export const AppContextProvider = (props) => {
     confirmPassword: "",
   });
 
-  const { name, email, password, confirmPassword } = inputValue;
-
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
@@ -220,6 +218,10 @@ export const AppContextProvider = (props) => {
         email,
         password,
         confirmPassword,
+        isErrorVisible,
+        errorMessage,
+        isLoading,
+        setIsErrorVisible,
         togglePasswordVisibility,
         isLoading,
         isErrorVisible,
