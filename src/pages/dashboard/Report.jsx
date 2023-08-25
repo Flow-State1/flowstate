@@ -5,31 +5,26 @@ import { AppContext } from "../../context/AppContext";
 import { Line } from "react-chartjs-2";
 
 function Report() {
-  const { generateReport, chart_data_object, chart_image, chart_ref } =
+  const { generateReport, chart_data_object, chart_image, chart_ref,chartData } =
     useContext(AppContext);
 
-    const [date,setDate] = useState("");
 
-  useEffect(()=>{
-    return()=>{
-      fetch("http://localhost:3001/consumptions").then((res)=>{
-        res.json();
-      }).then((res)=>{
-        console.log(res);
-      }).catch((err)=>{
-        console.log(`id:Fetching consumption,Error:${err}`);
-      })
-    }
-  },[])
+
+  console.log("Chartdata",chartData);
 
   return (
     <>
       <div style={{ marginLeft: "400px", marginTop: "60px" }}>
-        <input type="date" name="date picker" id=""  onChange={(e)=>setDate(e.target.value)}/>
+        <input
+          type="date"
+          name="date picker"
+          id=""
+          onChange={(e) => setDate(e.target.value)}
+        />
         <button onClick={generateReport}>Generate Report</button>
-        <div style={{background:"#FFF"}}>
+        <div style={{ background: "#FFF" }}>
           <Line
-            style={{width: "700px", height: "700px"  }}
+            style={{ width: "700px", height: "700px" }}
             ref={chart_ref}
             data={chart_data_object}
           />

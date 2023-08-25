@@ -4,6 +4,7 @@ import {
   useRef,
   useCallback,
   useContext,
+  useEffect,
 } from "react";
 import {
   Chart as ChartJS,
@@ -50,7 +51,9 @@ export const AppContextProvider = (props) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isErrorVisible, setIsErrorVisible] = useState(false);
   const { name, email, password, confirmPassword } = inputValue;
-
+  const [chartData, setChartData] = useState([]);
+  const [chartData2, setChartData2] = useState([]);
+  const [chartData_, setChartData_] = useState([]);
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
@@ -167,54 +170,64 @@ export const AppContextProvider = (props) => {
   let chart_ref = useRef(null);
   let [chart_image, setChart_image] = useState("");
   const chart_data_object = {
-    labels: ["00:00", 
-    "01:00", 
-    "02:00",
-    "03:00",
-    "04:00",
-    "05:00",
-    "06:00",
-    "07:00",
-    "08:00",
-    "09:00",
-    "10:00",
-    "11:00",
-    "12:00",
-    "13:00",
-    "14:00",
-    "15:00",
-    "16:00",
-    "17:00",
-    "18:00",
-    "19:00",
-    "20:00",
-    "21:00",
-    "22:00",
-    "23:00"
-  ],
+    labels: [
+      "00:00",
+      "01:00",
+      "02:00",
+      "03:00",
+      "04:00",
+      "05:00",
+      "06:00",
+      "07:00",
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+    ],
     datasets: [
       {
         label: "Device1 (Consumption)",
-        data: [10, 20, 35],
+        data: chartData,
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
       {
         label: "Device2 (Consumption)",
-        data: [5, 15, 45],
+        data: chartData2,
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
     ],
   };
 
-  const generateReport = useCallback(() => {
+  const generateReport = useCallback(async () => {
     const link = document.createElement("a");
     // link.download = "chart.png";
     link.href = chart_ref.current.toBase64Image();
     link.click();
     setChart_image(chart_ref.current.toBase64Image());
+    fetch("http://localhost:3001/consumptions")
+      .then((response) => response.json())
+      .then((results) => {
+        results.forEach((result) => {
+          let payload = JSON.parse(result["payload"]);
+          let rslt = payload["result"];
+          let switch_0 = rslt["switch:0"];
+          let aenergy = switch_0["aenergy"];
+          let total_consumption = aenergy["total"];
+          setChartData_((prevData) => [...prevData, total_consumption]);
+        });
+      });
   }, []);
+
+  useEffect(() => {
+    let even = chartData_.filter((data, index) => index % 2 == 0);
+    let odd = chartData_.filter((data, index) => index % 2 != 0);
+    setChartData(even);
+    setChartData2(odd);
+  },[chartData_]);
 
   return (
     <AppContext.Provider
@@ -249,6 +262,7 @@ export const AppContextProvider = (props) => {
         errorMessage,
         isLoading,
         authenticated,
+        chartData,
         setIsErrorVisible,
         togglePasswordVisibility,
         SignUpOnChange,
