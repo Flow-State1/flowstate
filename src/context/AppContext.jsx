@@ -66,47 +66,45 @@ export const AppContextProvider = (props) => {
     });
   };
 
-  const SignUpSubmit = (e) => {
+  const SignUpSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
-      if (!name || !email || !password || !confirmPassword) {
-        setError("Please fill in all fields.");
-        return;
-      }
-
-      if (password !== confirmPassword) {
-        setError("Passwords do not match.");
-        return;
-      }
-
-      fetch("http://localhost:3001/users/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(inputValue),
-      }).then((response) => {
-        if (!response.ok) {
-          console.log(response.status);
-        } else {
-          console.log("User created and directed to dashboard");
-          // authenticated.current = true;
-          setAuthenticated(true);
-          setUser(inputValue);
-          navigate("/dashboard/dashboard/dashboard");
-        }
-      });
-    } catch (error) {
-      console.log(error);
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        fetch("http://localhost:3001/users/signup",{
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(inputValue)
+        }).then((response) => {
+            if(!response.ok) {
+                response.json().then(data => {
+                    console.log(data.message);
+                    setErrorMessage(data.message);
+                    setIsErrorVisible(true);
+                });
+            }
+            else {
+                console.log("User created and directed to dashboard");
+                setUser(inputValue);
+                navigate('/dashboard/dashboard/dashboard');
+            }
+        });
+    }
+    catch(error) {
+        console.log(error);
     }
 
     setInputValue({
-      ...inputValue,
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+        ...inputValue,
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
     });
+    console.log(isLoading);
+    setIsLoading(false);
   };
 
   // Context for when user login
@@ -118,25 +116,35 @@ export const AppContextProvider = (props) => {
     });
   };
 
-  const LoginSubmit = (e) => {
+  const LoginSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
+      await new Promise(resolve => setTimeout(resolve, 1500));
       fetch("http://localhost:3001/users/login", {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type':'application/json'
         },
         body: JSON.stringify(inputValue),
       }).then((response) => {
-        if (!response.ok) {
-          console.log(response.status);
-        } else {
+
+        if(!response.ok) {
+          response.json().then(data => {
+            console.log(data.message);
+            setErrorMessage(data.message);
+            setIsErrorVisible(true);
+          });
+        }
+        else {
           console.log("User logged in successfully");
           setAuthenticated(true);
           setUser(inputValue);
-          navigate("/dashboard/dashboard/dashboard");
+          navigate('/dashboard/dashboard/dashboard');
         }
-      });
+
+      })
+
     } catch (error) {
       console.log(error);
     }
@@ -146,6 +154,8 @@ export const AppContextProvider = (props) => {
       email: "",
       password: "",
     });
+    console.log(isLoading);
+    setIsLoading(false);
   };
 
   // Context for the live charts
@@ -251,7 +261,6 @@ export const AppContextProvider = (props) => {
         chart_ref,
         isTabletOrLaptop,
         passwordVisible,
-        error,
         inputValue,
         user,
         name,
@@ -265,11 +274,17 @@ export const AppContextProvider = (props) => {
         chartData,
         setIsErrorVisible,
         togglePasswordVisibility,
+        isLoading,
+        isErrorVisible,
+        errorMessage, 
+        setErrorMessage,
+        setIsErrorVisible,
         SignUpOnChange,
         SignUpSubmit,
         LoginOnChange,
         LoginSubmit,
         generateReport,
+        setIsLoading,
         setPower,
         setPower_,
         setConsumption,

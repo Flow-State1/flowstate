@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -10,7 +10,19 @@ import { AppContext } from "../context/AppContext";
 
 const Login = () => {
 
-const {LoginOnChange,LoginSubmit,email,password,isLoading,isErrorVisible,isTabletOrLaptop,passwordVisible,togglePasswordVisibility,setIsErrorVisible} = useContext(AppContext);
+  const {
+    LoginOnChange,
+    LoginSubmit,
+    email,
+    password,
+    isLoading,
+    isErrorVisible,
+    errorMessage,
+    isTabletOrLaptop,
+    passwordVisible,
+    togglePasswordVisibility,
+    setIsErrorVisible
+  } = useContext(AppContext);
 
   return (
     <motion.div
