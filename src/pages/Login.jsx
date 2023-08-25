@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -10,70 +10,19 @@ import { AppContext } from "../context/AppContext";
 
 const Login = () => {
 
-  const navigate = useNavigate();
-  const isTabletOrLaptop = useMediaQuery({ query: '(min-width: 768px)' });
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isErrorVisible, setIsErrorVisible] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-  };
-
-  const [inputValue, setInputValue] = useState({
-    email: "",
-    password: "",
-  });
-
-  const { email, password } = inputValue;
-
-  const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    setInputValue({
-      ...inputValue,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      fetch("http://localhost:3001/users/login", {
-        method: 'POST',
-        headers: {
-          'Content-Type':'application/json'
-        },
-        body: JSON.stringify(inputValue),
-      }).then((response) => {
-
-        if(!response.ok) {
-          response.json().then(data => {
-            console.log(data.message);
-            setErrorMessage(data.message);
-            setIsErrorVisible(true);
-          });
-        }
-        else {
-          console.log("User logged in successfully");
-          navigate('/dashboard/dashboard/dashboard');
-        }
-
-      })
-
-    } catch (error) {
-      console.log(error);
-    }
-    setInputValue({
-      ...inputValue,
-      email: "",
-      password: "",
-    });
-    console.log(isLoading);
-    setIsLoading(false);
-  };
+  const {
+    LoginOnChange,
+    LoginSubmit,
+    email,
+    password,
+    isLoading,
+    isErrorVisible,
+    errorMessage,
+    isTabletOrLaptop,
+    passwordVisible,
+    togglePasswordVisibility,
+    setIsErrorVisible
+  } = useContext(AppContext);
 
   return (
     <motion.div

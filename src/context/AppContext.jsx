@@ -30,7 +30,9 @@ export const AppContextProvider = (props) => {
   // Context for signing up user and keeping them in state
   const isTabletOrLaptop = useMediaQuery({ query: "(min-width: 768px)" });
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isErrorVisible, setIsErrorVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [inputValue, setInputValue] = useState({
     name: "",
     email: "",
@@ -52,45 +54,45 @@ export const AppContextProvider = (props) => {
     });
   };
 
-  const SignUpSubmit = (e) => {
+  const SignUpSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
-      if (!name || !email || !password || !confirmPassword) {
-        setError("Please fill in all fields.");
-        return;
-      }
-
-      if (password !== confirmPassword) {
-        setError("Passwords do not match.");
-        return;
-      }
-
-      fetch("http://localhost:3001/users/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(inputValue),
-      }).then((response) => {
-        if (!response.ok) {
-          console.log(response.status);
-        } else {
-          console.log("User created and directed to dashboard");
-          setUser(inputValue);
-          navigate("/dashboard/dashboard/dashboard");
-        }
-      });
-    } catch (error) {
-      console.log(error);
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        fetch("http://localhost:3001/users/signup",{
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(inputValue)
+        }).then((response) => {
+            if(!response.ok) {
+                response.json().then(data => {
+                    console.log(data.message);
+                    setErrorMessage(data.message);
+                    setIsErrorVisible(true);
+                });
+            }
+            else {
+                console.log("User created and directed to dashboard");
+                setUser(inputValue);
+                navigate('/dashboard/dashboard/dashboard');
+            }
+        });
+    }
+    catch(error) {
+        console.log(error);
     }
 
     setInputValue({
-      ...inputValue,
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+        ...inputValue,
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
     });
+    console.log(isLoading);
+    setIsLoading(false);
   };
 
   // Context for when user login
@@ -103,24 +105,34 @@ export const AppContextProvider = (props) => {
     });
   };
 
-  const LoginSubmit = (e) => {
+  const LoginSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
+      await new Promise(resolve => setTimeout(resolve, 1500));
       fetch("http://localhost:3001/users/login", {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type':'application/json'
         },
         body: JSON.stringify(inputValue),
       }).then((response) => {
-        if (!response.ok) {
-          console.log(response.status);
-        } else {
+
+        if(!response.ok) {
+          response.json().then(data => {
+            console.log(data.message);
+            setErrorMessage(data.message);
+            setIsErrorVisible(true);
+          });
+        }
+        else {
           console.log("User logged in successfully");
           setUser(inputValue);
-          navigate("/dashboard/dashboard/dashboard");
+          navigate('/dashboard/dashboard/dashboard');
         }
-      });
+
+      })
+
     } catch (error) {
       console.log(error);
     }
@@ -129,6 +141,8 @@ export const AppContextProvider = (props) => {
       email: "",
       password: "",
     });
+    console.log(isLoading);
+    setIsLoading(false);
   };
 
   // Context for the live charts
@@ -200,7 +214,6 @@ export const AppContextProvider = (props) => {
         chart_ref,
         isTabletOrLaptop,
         passwordVisible,
-        error,
         inputValue,
         user,
         name,
@@ -208,11 +221,17 @@ export const AppContextProvider = (props) => {
         password,
         confirmPassword,
         togglePasswordVisibility,
+        isLoading,
+        isErrorVisible,
+        errorMessage, 
+        setErrorMessage,
+        setIsErrorVisible,
         SignUpOnChange,
         SignUpSubmit,
         LoginOnChange,
         LoginSubmit,
         generateReport,
+        setIsLoading,
         setPower,
         setPower_,
         setConsumption,
