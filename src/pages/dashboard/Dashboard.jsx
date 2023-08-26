@@ -27,8 +27,10 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+import { useTheme } from "../../context/ThemeContext";
 
 const Dashboard = () => {
+  const { theme } = useTheme();
   const time = new Date();
   const hour = time.getHours();
   const minutes =
@@ -227,6 +229,7 @@ const Dashboard = () => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
+      className={`dashboard ${theme}`}
     >
       <div className="dashboard-container">
         <div className="dashboard-content">

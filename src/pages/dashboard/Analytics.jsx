@@ -4,8 +4,10 @@ import { useNavigate } from 'react-router'
 import '../styles.css'
 import { DashboardContext } from '../../context/DashboardContext'
 import { AppContext } from '../../context/AppContext'
+import { useTheme } from '../../context/ThemeContext'
 
 const Analytics = () => {
+    const { theme } = useTheme();
     const {costFunction,obj,obj2} = useContext(AppContext);
     useEffect(()=>{
         return()=>{
@@ -21,6 +23,7 @@ const Analytics = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: .2 }}
+            className={`analytics ${theme}`}
         >
         <div className='analytics-container'>
             <div className='analytics-content'>
