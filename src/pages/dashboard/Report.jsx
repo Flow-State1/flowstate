@@ -8,7 +8,7 @@ function Report() {
   const { generateReport, chart_data_object, chart_image, chart_ref,chartData } =
     useContext(AppContext);
 
-
+  const [date,setDate] = useState("");
 
   console.log("Chartdata",chartData);
 
@@ -29,7 +29,7 @@ function Report() {
             data={chart_data_object}
           />
         </div>
-        {/* <p>{date}</p> */}
+        <p>{date}</p>
       </div>
       <PDFViewer
         style={{
