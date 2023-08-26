@@ -138,7 +138,7 @@ function HamburgerMenu() {
       <Navigation clicked={click}>
         <List>
           <li>
-            <ItemLink onClick={handleClick} to="/">
+            <ItemLink onClick={handleClick} to="/dashboard">
               Dashboard
             </ItemLink>
           </li>
@@ -153,12 +153,12 @@ function HamburgerMenu() {
             </ItemLink>
           </li>
           <li>
-            <ItemLink onClick={handleClick} to="/settings">
+            <ItemLink onClick={handleClick} to="/dashboard/settings">
               Settings
             </ItemLink>
           </li>
           <li>
-            <ItemLink onClick={handleClick} to="/contact">
+            <ItemLink onClick={handleClick} to="/dashboard/profile">
               Profile
             </ItemLink>
           </li>

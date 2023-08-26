@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,12 +6,10 @@ import { faChartLine, faBell, faGears, faUserCircle, faLayerGroup, faSignOut } f
 import logo from "../assets/logo.png";
 import "../pages/styles.css"
 import HamburgerMenu from "./HamburgerMenu";
-import { AppContext } from "../context/AppContext";
 
 const SideBarNavigation = () => {
     const navigate = useNavigate()
 
-    const {user} = useContext(AppContext);
 
     const handleLogout = () => {
         navigate('/')
@@ -48,7 +46,7 @@ const SideBarNavigation = () => {
                                 marginBottom: '0.1rem'
                             }}
                         >
-                            Andrea
+                            Andre
                         </h4>
                     </div>
 
@@ -67,8 +65,8 @@ const SideBarNavigation = () => {
 
                 <div className='sidebar-menu'>
                     <ul className='sidebar-list'>
-                        <li className={`sidebar-list-item ${isActiveLink('/dashboard/dashboard/dashboard') ? 'active' : ''}`}>
-                            <Link to='/dashboard/dashboard/dashboard' className='sidebar-link active'>
+                        <li className={`sidebar-list-item ${isActiveLink('/dashboard') ? 'active' : ''}`}>
+                            <Link to='/dashboard' className='sidebar-link active'>
                                 <FontAwesomeIcon
                                     icon={faLayerGroup}
                                     className="icon"
@@ -81,8 +79,8 @@ const SideBarNavigation = () => {
                                 />Dashboard
                             </Link>
                         </li>
-                        <li className={`sidebar-list-item ${isActiveLink('/dashboard/dashboard/analytics') ? 'active' : ''}`}>
-                            <Link to='/dashboard/dashboard/analytics' className='sidebar-link'>
+                        <li className={`sidebar-list-item ${isActiveLink('/dashboard/analytics') ? 'active' : ''}`}>
+                            <Link to='/dashboard/analytics' className='sidebar-link'>
                                 <FontAwesomeIcon
                                     icon={faChartLine}
                                     className="icon"
@@ -96,23 +94,8 @@ const SideBarNavigation = () => {
                                 Analytics
                             </Link>
                         </li>
-                        <li className={`sidebar-list-item ${isActiveLink('/dashboard/dashboard/analytics') ? 'active' : ''}`}>
-                            <Link to='/dashboard/dashboard/report' className='sidebar-link'>
-                                <FontAwesomeIcon
-                                    icon={faChartLine}
-                                    className="icon"
-                                    style={{
-                                        fontSize: '1.5rem',
-                                        color: '#fff',
-                                        marginRight: '1.5rem',
-                                    }}
-
-                                />
-                                Report
-                            </Link>
-                        </li>
-                        <li className={`sidebar-list-item ${isActiveLink('/dashboard/dashboard/notifications') ? 'active' : ''}`}>
-                            <Link to='/dashboard/dashboard/notifications' className='sidebar-link'>
+                        <li className={`sidebar-list-item ${isActiveLink('/dashboard/notifications') ? 'active' : ''}`}>
+                            <Link to='/dashboard/notifications' className='sidebar-link'>
                                 <FontAwesomeIcon
                                     icon={faBell}
                                     className="icon"
@@ -125,8 +108,8 @@ const SideBarNavigation = () => {
                                 />Notifications
                             </Link>
                         </li>
-                        <li className={`sidebar-list-item ${isActiveLink('/dashboard/dashboard/settings') ? 'active' : ''}`}>
-                            <Link to='/dashboard/dashboard/settings' className='sidebar-link'>
+                        <li className={`sidebar-list-item ${isActiveLink('/dashboard/settings') ? 'active' : ''}`}>
+                            <Link to='/dashboard/settings' className='sidebar-link'>
                                 <FontAwesomeIcon
                                     icon={faGears}
                                     className="icon"
@@ -140,8 +123,8 @@ const SideBarNavigation = () => {
                             </Link>
                         </li>
 
-                        <li className={`sidebar-list-item ${isActiveLink('/dashboard/dashboard/profile') ? 'active' : ''}`}>
-                            <Link to='/dashboard/dashboard/profile' className='sidebar-link'>
+                        <li className={`sidebar-list-item ${isActiveLink('/dashboard/profile') ? 'active' : ''}`}>
+                            <Link to='/dashboard/profile' className='sidebar-link'>
                                 <FontAwesomeIcon
                                     icon={faUserCircle}
                                     className="icon"

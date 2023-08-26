@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { Routes, Route } from "react-router-dom";
-import { useNavigate } from "react-router";
 import { motion } from "framer-motion";
+import { useTheme } from "../../context/ThemeContext";
 import "../styles.css";
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,9 +14,8 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import ToggleSwitch from "../../components/TogggleSwitch";
+import ToggleSwitch from "../../components/Switch";
 import { DashboardContext } from "../../context/DashboardContext";
-import { AppContext } from "../../context/AppContext";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -28,6 +27,7 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
+
   const time = new Date();
   const hour = time.getHours();
   const minutes =
@@ -64,11 +64,9 @@ const Dashboard = () => {
     setMinutes_ts,
     cost,
     setCost,
-    user
-  } = useContext(AppContext);
+  } = useContext(DashboardContext);
 
   let c_cost = 0;
-  console.log(user);
 
   useEffect(() => {
     return () => {
@@ -220,6 +218,7 @@ const Dashboard = () => {
     ],
   };
 
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -231,7 +230,7 @@ const Dashboard = () => {
         <div className="dashboard-content">
           <div className="dashboard-content-header">
             <h2>Dashboard</h2>
-            <button
+            {/* <button
               onClick={() => {
                 fetch("http://localhost:3001/publish/switch/1", {
                   method: "POST",
@@ -243,7 +242,7 @@ const Dashboard = () => {
                   });
               }}
             >
-              Device1 On/Of
+              Device1 O/Off
             </button>
             <button
               onClick={() => {
@@ -257,8 +256,11 @@ const Dashboard = () => {
                   });
               }}
             >
-              Device2 On/Of
-            </button>
+              Device2 On/Off
+            </button> */}
+            <ToggleSwitch deviceId={1} />
+            <ToggleSwitch deviceId={2} />
+
           </div>
 
           <div className="dashboard-content-body">
@@ -276,7 +278,7 @@ const Dashboard = () => {
                 />
 
                 <div className="dashboard-content-body-profile-right-card-avatar-name">
-                  <h3>Hi Andrea!</h3>
+                  <h3>Hi Andre!</h3>
                   <p>How are you today?</p>
                 </div>
               </div>

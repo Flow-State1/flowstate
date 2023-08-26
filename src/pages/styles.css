@@ -1,5 +1,9 @@
 /* import poppins font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* import dark theme file './DarkTheme.css */
+@import url('./dashboard/DarkTheme.css');
+
 /* set global variables */
 :root{
     --primary-color: #0A4D68;
@@ -28,6 +32,51 @@
 body{
     background-color: #fff;
     color: #000;
+}
+
+/* Theme Change */
+.light {
+    --primary-color: #0A4D68;
+    --secondary-color: #088395;
+    --tertiary-color: #05BFDB;
+    --quaternary-color: #00FFCA;
+    --font-family: 'Poppins', sans-serif;
+    --default-font-size: 1rem;
+    --default-font-weight: 400;
+    --default-font-color: #000000;
+    --default-font-style: normal;
+    --default-font-variant: normal;
+    --default-font-stretch: normal;
+    --default-line-height: 1.5;
+    --default-letter-spacing: normal;
+    background-color: #fff;
+}
+
+.dark {
+    --primary-color: #666666;
+    --secondary-color: #b8b8ba;
+    --tertiary-color: #05BFDB;
+    --quaternary-color: #00FFCA;
+    --font-family: 'Poppins', sans-serif;
+    --default-font-size: 1rem;
+    --default-font-weight: 400;
+    --default-font-color: #000000;
+    --default-font-style: normal;
+    --default-font-variant: normal;
+    --default-font-stretch: normal;
+    --default-line-height: 1.5;
+    --default-letter-spacing: normal;
+    background-color: #333333;
+    color: white;
+}
+
+.dark .navbar{
+    background-color: #333333;
+    color: #fff;
+}
+
+.dark {
+    color: #000000;
 }
 
 /* BACKGROUND VIDEO & IMAGE*/
@@ -188,66 +237,6 @@ body{
     top: 10%;
     left: 10%;
     animation: animate 7s linear infinite;
-}
-
-.box div:nth-child(21){
-    top: 70%;
-    left: 70%;
-    animation: animate 5s linear infinite;
-}
-
-.box div:nth-child(22){
-    top: 30%;
-    left: 30%;
-    animation: animate 6s linear infinite;
-}
-
-.box div:nth-child(23){
-    top: 50%;
-    left: 90%;
-    animation: animate 4s linear infinite;
-}
-
-.box div:nth-child(24){
-    top: 30%;
-    left: 90%;
-    animation: animate 7s linear infinite;
-}
-
-.box div:nth-child(25){
-    top: 70%;
-    left: 90%;
-    animation: animate 5s linear infinite;
-}
-
-.box div:nth-child(26){
-    top: 90%;
-    left: 60%;
-    animation: animate 4s linear infinite;
-}
-
-.box div:nth-child(27){
-    top: 90%;
-    left: 50%;
-    animation: animate 6s linear infinite;
-}
-
-.box div:nth-child(28){
-    top: 10%;
-    left: 50%;
-    animation: animate 5s linear infinite;
-}
-
-.box div:nth-child(29){
-    top: 10%;
-    left: 60%;
-    animation: animate 7s linear infinite;
-}
-
-.box div:nth-child(30){
-    top: 50%;
-    left: 30%;
-    animation: animate 4s linear infinite;
 }
 
 
@@ -487,59 +476,12 @@ body{
     outline: none;
     margin-bottom: 1rem;
     transition: all 0.2s ease-in-out;
-    position: relative;
 }
   
 .login-form .login-button:hover {
     background-color: var(--secondary-color);
     transition: all 0.2s ease-in-out;
 }
-
-.login-button:disabled::after {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 0.8em;
-    color: #fff;
-}
-
-.login-button .fa-spinner {
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
-
-.error-message {
-    background-color: #f8d7da; /* Light red background color */
-    color: #721c24; /* Dark red text color */
-    padding: 6px;
-    border: 1px solid #f5c6cb; /* Light red border color */
-    margin-top: -16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 1rem;
-    margin-bottom: 9px;
-}
-
-.error-message span {
-    margin-right: 10px; /* Add margin between error message and close button */
-}
-  
-.close-button {
-    background-color: transparent;
-    border: none;
-    color: #721c24; /* Dark red color */
-    cursor: pointer;
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
   
 .login-form .signup-link {
     position: relative;
@@ -675,25 +617,6 @@ body{
     margin-bottom: 1rem;
     margin-top: 10px;
 }
-
-.signup-button:disabled::after {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 0.8em;
-    color: #fff;
-}
-
-.signup-button .fa-spinner {
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
   
 .signup-form .signup-button:hover {
     background-color: var(--secondary-color);
@@ -1181,6 +1104,29 @@ body{
     font-weight: 700;
     color: var(--primary-color);
 }
+
+.dashboard-content-header button {
+    width: 14rem;
+    height: 2.8rem;
+    margin-left: 5%;
+    border: none;
+    border-radius: 30px;
+    background-color: var(--primary-color);
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    text-align: center;
+}
+
+.dashboard-content-header button:hover {
+    background-color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+    transition: all 0.2s ease-in-out;
+}
+
+
 
 .dashboard-content-body {
     width: 100%;

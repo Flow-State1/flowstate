@@ -1,25 +1,11 @@
 import React, { useState } from 'react'
-import { useNavigate, useLocation } from 'react-router'
 import { motion } from 'framer-motion'
+import { useTheme } from '../../context/ThemeContext'
 import '../styles.css'
 
 const Settings = () => {
-    const navigate = useNavigate()
-    const location = useLocation();
-    const [theme, setTheme] = useState('light');
-  
-    React.useEffect(() => {
-      const pathname = location.pathname;
-      if (pathname === '/settings/dark') {
-        setTheme('dark');
-      } else {
-        setTheme('light');
-      }
-    }, [location]);
-  
-    const toggleTheme = () => {
-      setTheme(theme === 'light' ? 'dark' : 'light');
-    };
+    const { theme, toggleTheme } = useTheme();
+    
     const [notificationPreference, setNotificationPreference] = useState('email')
 
     const toggleNotificationPreference = (e) => {
@@ -37,9 +23,8 @@ const Settings = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className={`settings-container ${theme === 'dark' ? 'dark-theme' : ''}`}
         >
-          <div className='settings-container'>
+          <div className={`settings ${theme}`}>
             <div className='settings-content'>
               <div className='settings-content-header'>
                 <h2>Settings</h2>
@@ -49,22 +34,22 @@ const Settings = () => {
                 <div className='settings-section'>
                   <h3>Theme</h3>
                   <div className='theme-options'>
-                    <label className={`theme-option ${theme === 'light' ? 'active' : ''}`}>
-                      <input
-                        type='radio'
-                        value='light'
-                        checked={theme === 'light'}
-                        onChange={toggleTheme}
-                      />
+                    <label className='theme-option' >
+                    <input
+                      type="radio"
+                      value="light"
+                      checked={theme === 'light'}
+                      onChange={() => toggleTheme()}
+                    />
                       Light Mode
                     </label>
-                    <label className={`theme-option ${theme === 'dark' ? 'active' : ''}`}>
-                      <input
-                        type='radio'
-                        value='dark'
-                        checked={theme === 'dark'}
-                        onChange={toggleTheme}
-                      />
+                    <label className='theme-option' >
+                    <input
+                      type="radio"
+                      value="dark"
+                      checked={theme === 'dark'}
+                      onChange={() => toggleTheme()}
+                    />
                       Dark Mode
                     </label>
                   </div>

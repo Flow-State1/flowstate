@@ -8,15 +8,15 @@ const Profile = () => {
     const navigate = useNavigate();
     const isTabletOrLaptop = useMediaQuery({ query: '(min-width: 768px)' });
     const handleEditProfile = () => {
-        navigate('/dashboard/dashboard/profile/editprofile')
+        navigate('/dashboard/profile/editprofile')
     }
 
     const handleChangePassword = () => {
-        navigate('/dashboard/dashboard/profile/changepassword')
+        navigate('/dashboard/profile/changepassword')
     }
 
     const handleViewProfile = () => {
-        navigate('/dashboard/dashboard/profile/viewprofile')
+        navigate('/dashboard/profile/viewprofile')
     }
     return(
         <motion.div

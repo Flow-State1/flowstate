@@ -90,10 +90,6 @@ const Analytics = () => {
                             </div>
                         </div>
                     </div>
-
-                    <div>
-                        <a href="annual-report">Annual Report</a>
-                    </div>
                 </div>
             </div>
         </div>
