@@ -16,6 +16,7 @@ import Report from "./Report";
 import { AppContext } from "../../context/AppContext";
 import LoginCard from "../../components/LoginCard";
 import Redirect from "../Redirect";
+import { ThemeProvider } from "../../context/ThemeContext";
 
 const DashboardRoutes = () => {
   const path = useLocation();
@@ -27,6 +28,7 @@ const DashboardRoutes = () => {
     <>
       <AnimatePresence mode="sync">
         <DashboardContextProvider>
+          <ThemeProvider>
           <LayoutDashboard>
             <Routes location={path} key={path.pathname}>
               <Route path="/dashboard/dashboard" element={<Dashboard />} />
@@ -52,6 +54,7 @@ const DashboardRoutes = () => {
               <Route path="/dashboard/Report" element={<Report />} />
             </Routes>
           </LayoutDashboard>
+          </ThemeProvider>
         </DashboardContextProvider>
       </AnimatePresence>
     </>

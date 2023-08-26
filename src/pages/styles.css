@@ -1,5 +1,9 @@
 /* import poppins font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+@import url('./dashboard/DarkTheme.css');
+
+
 /* set global variables */
 :root{
     --primary-color: #0A4D68;
@@ -29,6 +33,52 @@ body{
     background-color: #fff;
     color: #000;
 }
+
+/* Theme Change */
+.light {
+    --primary-color: #0A4D68;
+    --secondary-color: #088395;
+    --tertiary-color: #05BFDB;
+    --quaternary-color: #00FFCA;
+    --font-family: 'Poppins', sans-serif;
+    --default-font-size: 1rem;
+    --default-font-weight: 400;
+    --default-font-color: #000000;
+    --default-font-style: normal;
+    --default-font-variant: normal;
+    --default-font-stretch: normal;
+    --default-line-height: 1.5;
+    --default-letter-spacing: normal;
+    background-color: #fff;
+}
+
+.dark {
+    --primary-color: #666666;
+    --secondary-color: #b8b8ba;
+    --tertiary-color: #05BFDB;
+    --quaternary-color: #00FFCA;
+    --font-family: 'Poppins', sans-serif;
+    --default-font-size: 1rem;
+    --default-font-weight: 400;
+    --default-font-color: #000000;
+    --default-font-style: normal;
+    --default-font-variant: normal;
+    --default-font-stretch: normal;
+    --default-line-height: 1.5;
+    --default-letter-spacing: normal;
+    background-color: #333333;
+    color: white;
+}
+
+.dark .navbar{
+    background-color: #333333;
+    color: #fff;
+}
+
+.dark {
+    color: #000000;
+}
+
 
 /* BACKGROUND VIDEO & IMAGE*/
 .backgroundContainer{
