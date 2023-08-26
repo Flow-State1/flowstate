@@ -123,7 +123,6 @@ const Analytics = () => {
           <div
             style={{
               background: "white",
-              height: "550px",
               boxShadow:
                 "0 3px 10px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1)",
               borderRadius: "10px",
@@ -150,6 +149,7 @@ const Analytics = () => {
                 ref={chart_ref}
                 data={aenergyObject}
               />
+              <p style={{textAlign:'center', color:'grey'}}>Time</p>
             </div>
             <div
               style={{
@@ -169,13 +169,13 @@ const Analytics = () => {
                 ref={chart_ref}
                 data={apowerObject}
               />
+              <p style={{textAlign:'center', color:'grey'}}>Time</p>
             </div>
           </div>
           <div
             style={{
               marginTop: 15,
               background: "white",
-              height: "550px",
               boxShadow:
                 "0 3px 10px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1)",
               borderRadius: "10px",
@@ -210,6 +210,7 @@ const Analytics = () => {
                 ref={chart_ref}
                 data={acurrent}
               />
+              <p style={{textAlign:'center', color:'grey'}}>Time</p>
             </div>
             <div
               style={{
@@ -229,13 +230,13 @@ const Analytics = () => {
                 ref={chart_ref}
                 data={avoltage}
               />
+              <p style={{textAlign:'center', color:'grey'}}>Time</p>
             </div>
           </div>
           <div
             style={{
               marginTop: 15,
               background: "white",
-              height: "550px",
               borderRadius: "10px",
               padding: "25px",
               display: "flex",
@@ -252,7 +253,7 @@ const Analytics = () => {
               }}
             >
               <div className="analytics-content-header">
-                <h2>Cost</h2>
+                <h2>Cost(R)</h2>
               </div>
               {/* Chart here */}
               <Line
@@ -260,6 +261,7 @@ const Analytics = () => {
                 ref={chart_ref}
                 data={acurrent}
               />
+              <p style={{textAlign:'center', color:'grey'}}>Time</p>
             </div>
             {/* <div
               style={{
