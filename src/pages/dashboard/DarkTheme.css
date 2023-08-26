@@ -1,0 +1,21 @@
+/* import '../styles.css'; */
+
+/* set global variables */
+.dark {
+    --primary-color: #666666;
+    --secondary-color: #787A91;
+    --tertiary-color: #05BFDB;
+    --quaternary-color: #00FFCA;
+    --font-family: 'Poppins', sans-serif;
+    --default-font-size: 1rem;
+    --default-font-weight: 400;
+    --default-font-color: #000000;
+    --default-font-style: normal;
+    --default-font-variant: normal;
+    --default-font-stretch: normal;
+    --default-line-height: 1.5;
+    --default-letter-spacing: normal;
+    background-color: #333333;
+    color: white;
+}
+
