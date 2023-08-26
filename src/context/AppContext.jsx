@@ -15,12 +15,14 @@ import {
   Title,
   Tooltip,
   Legend,
+  BarElement,
 } from "chart.js";
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
   PointElement,
+  BarElement,
   LineElement,
   Title,
   Tooltip,
@@ -216,6 +218,39 @@ export const AppContextProvider = (props) => {
     ],
   };
 
+  let labels = [
+    "00:00",
+    "01:00",
+    "02:00",
+    "03:00",
+    "04:00",
+    "05:00",
+    "06:00",
+    "07:00",
+    "08:00",
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
+    "19:00",
+    "20:00",
+    "21:00",
+    "22:00",
+    "23:00",
+  ]
+
+  const retrieveAll = () => {
+    fetch("http://localhost:3001/consumptions").then((response) =>
+      response.json()
+    );
+  };
+
   const generateReport = useCallback(async () => {
     const link = document.createElement("a");
     // link.download = "chart.png";
@@ -250,7 +285,6 @@ export const AppContextProvider = (props) => {
 
   const [obj, setObj] = useState();
   const [obj2, setObj2] = useState();
-  
 
   // For calculating costs of devices it returns the total current and voltage of the devices
   const costFunction = () => {
@@ -271,8 +305,8 @@ export const AppContextProvider = (props) => {
           }
           resultArray.push({ totalCurrent, totalVoltage });
         }
-        console.log(resultArray[0]);
-        setObj(resultArray)
+        // console.log(resultArray[0]);
+        setObj(resultArray);
         // console.log(resultArray);
       });
     fetch("http://localhost:3001/consumptions/2")
@@ -292,8 +326,52 @@ export const AppContextProvider = (props) => {
           }
           resultArray.push({ totalCurrent, totalVoltage });
         }
-        setObj2(resultArray)
+        setObj2(resultArray);
         // console.log(resultArray);
+      });
+  };
+
+  // Analytics page
+  const [aenergy1,setAenergy1] = useState([]);
+  const [aenergy2,setAenergy2] = useState([]);
+  const [apower1,setApower1] = useState([]);
+  const [apower2,setApower2] = useState([]);
+  const [acurrent1,setAcurrent1] = useState([]);
+  const [acurrent2,setAcurrent2] = useState([]);
+  const [avoltage1,setAvoltage1] = useState([]);
+  const [avoltage2,setAvoltage2] = useState([]);
+  const generateReadings = () => {
+    fetch("http://localhost:3001/consumptions/device1")
+      .then((response) => response.json())
+      .then((result) => {
+        //   console.log(result[0]);
+        for (let i = 0; i < result[0].length; i++) {
+          // console.log(result[i].length);
+          for (let j = 0; j < result[i].length; j++) {
+            // console.log(result[i][j]);
+            let energy = result[i][j]["aenergy"]["total"];
+            setAenergy1((prevEnergy) => [...prevEnergy, energy]);
+            setApower1((prevEnergy) => [...prevEnergy, result[i][j]["apower"]]);
+            setAcurrent1((prevEnergy) => [...prevEnergy, result[i][j]["current"]]);
+            setAvoltage1((prevEnergy) => [...prevEnergy, result[i][j]["voltage"]]);
+          }
+        }
+      });
+    fetch("http://localhost:3001/consumptions/device2")
+      .then((response) => response.json())
+      .then((result) => {
+        //   console.log(result[0]);
+        for (let i = 0; i < result[0].length; i++) {
+          // console.log(result[i].length);
+          for (let j = 0; j < result[i].length; j++) {
+            // console.log(result[i][j]);
+            let energy = result[i][j]["aenergy"]["total"];
+            setAenergy2((prevEnergy) => [...prevEnergy, energy]);
+            setApower2((prevEnergy) => [...prevEnergy, result[i][j]["apower"]]);
+            setAcurrent2((prevEnergy) => [...prevEnergy, result[i][j]["current"]]);
+            setAvoltage2((prevEnergy) => [...prevEnergy, result[i][j]["voltage"]]);
+          }
+        }
       });
   };
 
@@ -332,6 +410,17 @@ export const AppContextProvider = (props) => {
         errorMessage,
         obj,
         obj2,
+        aenergy1,
+        acurrent1,
+        apower1,
+        avoltage1,
+        aenergy2,
+        apower2,
+        acurrent2,
+        avoltage2,
+        labels,
+        setAenergy1,
+        generateReadings,
         togglePasswordVisibility,
         costFunction,
         setErrorMessage,

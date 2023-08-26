@@ -1399,7 +1399,7 @@ body{
     top: 3rem;
     left: 16rem;
     width: calc(100% - 18rem);
-    height: calc(100% - 4rem);
+    /* height: calc(100% + 35rem); */
     padding: 2.5rem;
     overflow: hidden;
 }
