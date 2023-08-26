@@ -15,6 +15,7 @@ Create new branch(make branch name to be descriptive):
   - Run command: git checkout -b 'branchname' (Will create branch if not there and switch to the branch )
   - Run command: git checkout branchname (To switch to a branch thats there already)
     
+<<<<<<< HEAD
     
 Install yarn and dependencies for the project:
   - On the terminal run the command: npm install --global yarn 
@@ -26,6 +27,13 @@ Install yarn and dependencies for the project:
   
 Run the application:
   - Run the command: yarn run dev
+=======
+Install dependencies for the project:
+  - On the terminal run the command: npm install
+  
+Run the application:
+  - Run the command: npm run dev
+>>>>>>> 2b063adaf8e762d967656e322c4caab72a10da82
   
 
 Saving changes to repository from newly created branch (follow these steps if you are working on a newly created branch and you havent followed them / to publish branch):
