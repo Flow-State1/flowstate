@@ -70,38 +70,36 @@ export const AppContextProvider = (props) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        fetch("http://localhost:3001/users/signup",{
-            method: 'POST',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify(inputValue)
-        }).then((response) => {
-            if(!response.ok) {
-                response.json().then(data => {
-                    console.log(data.message);
-                    setErrorMessage(data.message);
-                    setIsErrorVisible(true);
-                });
-            }
-            else {
-                console.log("User created and directed to dashboard");
-                setUser(inputValue);
-                navigate('/dashboard/dashboard/dashboard');
-            }
-        });
-    }
-    catch(error) {
-        console.log(error);
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      fetch("http://localhost:3001/users/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inputValue),
+      }).then((response) => {
+        if (!response.ok) {
+          response.json().then((data) => {
+            console.log(data.message);
+            setErrorMessage(data.message);
+            setIsErrorVisible(true);
+          });
+        } else {
+          console.log("User created and directed to dashboard");
+          setUser(inputValue);
+          navigate("/dashboard/dashboard/dashboard");
+        }
+      });
+    } catch (error) {
+      console.log(error);
     }
 
     setInputValue({
-        ...inputValue,
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
+      ...inputValue,
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
     });
     console.log(isLoading);
     setIsLoading(false);
@@ -120,31 +118,27 @@ export const AppContextProvider = (props) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise((resolve) => setTimeout(resolve, 1500));
       fetch("http://localhost:3001/users/login", {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type':'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(inputValue),
       }).then((response) => {
-
-        if(!response.ok) {
-          response.json().then(data => {
+        if (!response.ok) {
+          response.json().then((data) => {
             console.log(data.message);
             setErrorMessage(data.message);
             setIsErrorVisible(true);
           });
-        }
-        else {
+        } else {
           console.log("User logged in successfully");
           setAuthenticated(true);
           setUser(inputValue);
-          navigate('/dashboard/dashboard/dashboard');
+          navigate("/dashboard/dashboard/dashboard");
         }
-
-      })
-
+      });
     } catch (error) {
       console.log(error);
     }
@@ -195,6 +189,16 @@ export const AppContextProvider = (props) => {
       "11:00",
       "12:00",
       "13:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+      "18:00",
+      "19:00",
+      "20:00",
+      "21:00",
+      "22:00",
+      "23:00",
     ],
     datasets: [
       {
@@ -218,7 +222,7 @@ export const AppContextProvider = (props) => {
     link.href = chart_ref.current.toBase64Image();
     link.click();
     setChart_image(chart_ref.current.toBase64Image());
-    fetch("http://localhost:3001/consumptions")
+    fetch("http://localhost:3001/consumptions/device1")
       .then((response) => response.json())
       .then((results) => {
         results.forEach((result) => {
@@ -227,17 +231,71 @@ export const AppContextProvider = (props) => {
           let switch_0 = rslt["switch:0"];
           let aenergy = switch_0["aenergy"];
           let total_consumption = aenergy["total"];
-          setChartData_((prevData) => [...prevData, total_consumption]);
+          setChartData((prevData) => [...prevData, total_consumption]);
+        });
+      });
+    fetch("http://localhost:3001/consumptions/device2")
+      .then((response) => response.json())
+      .then((results) => {
+        results.forEach((result) => {
+          let payload = JSON.parse(result["payload"]);
+          let rslt = payload["result"];
+          let switch_0 = rslt["switch:0"];
+          let aenergy = switch_0["aenergy"];
+          let total_consumption = aenergy["total"];
+          setChartData2((prevData) => [...prevData, total_consumption]);
         });
       });
   }, []);
 
-  useEffect(() => {
-    let even = chartData_.filter((data, index) => index % 2 == 0);
-    let odd = chartData_.filter((data, index) => index % 2 != 0);
-    setChartData(even);
-    setChartData2(odd);
-  },[chartData_]);
+  const [obj, setObj] = useState();
+  const [obj2, setObj2] = useState();
+  
+
+  // For calculating costs of devices it returns the total current and voltage of the devices
+  const costFunction = () => {
+    fetch("http://localhost:3001/consumptions/1")
+      .then((response) => response.json())
+      .then((results) => {
+        // console.log(results);
+        let resultArray = [];
+
+        for (let out = 0; out < results.length; out++) {
+          let totalCurrent = 0;
+          let totalVoltage = 0;
+
+          for (let i = 0; i < results[out].length; i++) {
+            // console.log(results[out][i]["current"]);
+            totalCurrent += results[out][i]["current"];
+            totalVoltage += results[out][i]["voltage"];
+          }
+          resultArray.push({ totalCurrent, totalVoltage });
+        }
+        console.log(resultArray[0]);
+        setObj(resultArray)
+        // console.log(resultArray);
+      });
+    fetch("http://localhost:3001/consumptions/2")
+      .then((response) => response.json())
+      .then((results) => {
+        // console.log(results);
+        let resultArray = [];
+
+        for (let out = 0; out < results.length; out++) {
+          let totalCurrent = 0;
+          let totalVoltage = 0;
+
+          for (let i = 0; i < results[out].length; i++) {
+            // console.log(results[out][i]["current"]);
+            totalCurrent += results[out][i]["current"];
+            totalVoltage += results[out][i]["voltage"];
+          }
+          resultArray.push({ totalCurrent, totalVoltage });
+        }
+        setObj2(resultArray)
+        // console.log(resultArray);
+      });
+  };
 
   return (
     <AppContext.Provider
@@ -269,10 +327,13 @@ export const AppContextProvider = (props) => {
         confirmPassword,
         authenticated,
         chartData,
-        togglePasswordVisibility,
         isLoading,
         isErrorVisible,
-        errorMessage, 
+        errorMessage,
+        obj,
+        obj2,
+        togglePasswordVisibility,
+        costFunction,
         setErrorMessage,
         setIsErrorVisible,
         SignUpOnChange,

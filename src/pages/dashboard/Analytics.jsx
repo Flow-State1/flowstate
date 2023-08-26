@@ -3,10 +3,18 @@ import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router'
 import '../styles.css'
 import { DashboardContext } from '../../context/DashboardContext'
+import { AppContext } from '../../context/AppContext'
 
 const Analytics = () => {
+    const {costFunction,obj,obj2} = useContext(AppContext);
+    useEffect(()=>{
+        return()=>{
+            costFunction()
+        }
+    },[])
 
-
+    console.log(`Results for device1: `,obj);
+    console.log(`Results for device1: `,obj2);
     return(
         <motion.div 
             initial={{ opacity: 0 }}
@@ -52,13 +60,13 @@ const Analytics = () => {
 
                     <div className='analytics-content-body-power-right-card'>
                         <div className='analytics-content-body-power-right-card-header'>
-                            <h3>Power Saved</h3>
+                            {/* <h3>Power Saved</h3> */}
                         </div>
 
                         <div className='analytics-content-body-power-right-card-body'>
                             <div className='analytics-content-body-power-right-card-body-item'>
                                 <div className='analytics-content-body-power-right-card-body-item-header'>
-                                    <h3>2.5kW/hr</h3>
+                                    {/* <h3>2.5kW/hr</h3> */}
                                 </div>
                             </div>
                         </div>
@@ -89,10 +97,6 @@ const Analytics = () => {
                                 </select>
                             </div>
                         </div>
-                    </div>
-
-                    <div>
-                        <a href="annual-report">Annual Report</a>
                     </div>
                 </div>
             </div>
