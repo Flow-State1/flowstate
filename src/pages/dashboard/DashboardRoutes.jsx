@@ -24,7 +24,7 @@ const DashboardRoutes = () => {
   const { authenticated } = useContext(AppContext);
   const navigate = useNavigate();
   // console.log(authenticated);
-  return (
+return (
     <>
       <AnimatePresence mode="sync">
         <DashboardContextProvider>
