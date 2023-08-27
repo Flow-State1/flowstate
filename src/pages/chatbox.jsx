@@ -8,10 +8,11 @@ import LoadingCard from "../components/loadingCard";
 import logo from "../assets/flow-state-logo.png"
 const chatbox= () => { 
     const API_KEY="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";
+
     const [typing,setTyping]=useState(false);
     const [messages,setMessages]=useState([
         {
-            message:"Hi there I am Flow-Bot",
+            message:"Hi there I am Flow-Bot,let me help you learn more about electricity!",
             sender:"Flow-Bot"
         }
     ])
@@ -105,7 +106,7 @@ const chatbox= () => {
 
                     <div className="main-content-card">
                         <div className="main-content-card-item">
-                                <h1>Chatboat</h1>
+                                <h1>Chatbot</h1>
                         </div>
                             <div className="profile-details">
                             <div style={{ position: "left", height: "1000px", width: "700px" }}>
