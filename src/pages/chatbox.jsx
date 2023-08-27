@@ -1,11 +1,12 @@
 import React from "react";
-import {MainContainer,ChatContainer,MessageList,Message,MessageInput,TypingIndicator } from "@chatscope/chat-ui-kit-react" 
+import {MainContainer,ChatContainer,MessageList,Message,MessageInput,TypingIndicator,Avatar } from "@chatscope/chat-ui-kit-react" 
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import { useState, useEffect } from "react";
 import "./styles.css";
 import NavSideBarComponent from "../components/nav-side-bar";
 import LoadingCard from "../components/loadingCard";
 import logo from "../assets/flow-state-logo.png"
+import Chatbotbg from "../components/Chatbotbg";
 const chatbox= () => { 
     const API_KEY="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";
 
@@ -14,6 +15,7 @@ const chatbox= () => {
         {
             message:"Hi there I am Flow-Bot,let me help you learn more about electricity!",
             sender:"Flow-Bot"
+
         }
     ])
     const [isLoading, setIsLoading] = useState(true);
@@ -103,25 +105,23 @@ const chatbox= () => {
                 /* Render your main content here */
                 <div>
                     <NavSideBarComponent />
-
                     <div className="main-content-card">
                         <div className="main-content-card-item">
                                 <h1>Chatbot</h1>
                         </div>
                             <div className="profile-details">
                             <div style={{ position: "left", height: "1000px", width: "700px" }}>
-                   
-                   <MainContainer>
-                      <ChatContainer>
-                       <MessageList
+                   <MainContainer  style={{position: "left", height: "1000px", width: "700px"}}>
+                      <ChatContainer  style={{height: "1000px", width: "700px"}} >
+                       <MessageList 
                        scrollBehavior='smooth'
                        typingIndicator={typing ? <TypingIndicator content="Flow-Bot is typing"/>:null}
                        >
                            {messages.map((message,i)=>{
-                               return <Message key={i} model={message} />;
+                               return <Message key={i} model={message} avatar={message.role="user"? <Avatar style={{ width: 40, height: 40, borderRadius: 20 }} img src={"../assets/userPP.PNG"}/>:<Avatar style={{ width: 40, height: 40, borderRadius: 20 }} img src={"../assets/chatLogo.PNG"}/>}/>;
                            })}
                        </MessageList>
-                       <MessageInput placeholder='Type your message here' onSend={handleSend}/>
+                       <MessageInput   placeholder='Type your message here' onSend={handleSend}/>
                        </ChatContainer> 
                    </MainContainer>
                    </div>
