@@ -11,6 +11,7 @@ import Profile from "./Profile";
 import EditProfile from "./EditProfile";
 import ViewProfile from "./ViewProfile";
 import ChangePassword from "./ChangePassword";
+import ChatBot from "./ChatBot";
 import DashboardContextProvider from "../../context/DashboardContext";
 import Report from "./Report";
 import { AppContext } from "../../context/AppContext";
@@ -33,6 +34,7 @@ return (
             <Routes location={path} key={path.pathname}>
               <Route path="/dashboard/dashboard" element={<Dashboard />} />
               <Route path="/dashboard/analytics" element={<Analytics />} />
+              <Route path="/dashboard/chatbot" element={<ChatBot/>} />
               <Route
                 path="/dashboard/notifications"
                 element={<Notifications />}
