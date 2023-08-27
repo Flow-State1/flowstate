@@ -7,7 +7,7 @@ import NavSideBarComponent from "../components/nav-side-bar";
 import LoadingCard from "../components/loadingCard";
 import logo from "../assets/flow-state-logo.png"
 const chatbox= () => { 
-    const API_KEY="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";
+    const API_KEY="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";
     const [typing,setTyping]=useState(false);
     const [messages,setMessages]=useState([
         {
@@ -36,15 +36,27 @@ const chatbox= () => {
         //process message to chatGPT (senit over and see the response)
         await processMessagetoChatGPT(newMessages);
     }
+    let lastApiRequestTimestamp = 0;
+    const MINIMUM_TIME_BETWEEN_REQUESTS = 1000 / 3;
     async function processMessagetoChatGPT(chatMessages) {
         //chatMessages{sender:"user" or Flow-bot .message:"The message content here"}
         //apuMessages{role:"user" or assistant,content:"The message contenet here"}
+        const now = Date.now();
+        const timeSinceLastRequest = now - lastApiRequestTimestamp;
+
+        if (timeSinceLastRequest < MINIMUM_TIME_BETWEEN_REQUESTS) {
+            await new Promise((resolve) =>
+                setTimeout(resolve, MINIMUM_TIME_BETWEEN_REQUESTS - timeSinceLastRequest)
+            );
+        }
+
+    lastApiRequestTimestamp = Date.now();
         let apiMessages=chatMessages.map((messageObject)=>{
             let role="";
             if(messageObject.sender==="Flow-Bot"){
-                role="assisant"
+                role = "assistant";
             }else{
-                role="user"
+                role = "user";
             }
             return{role:role,content:messageObject.message}
         });
@@ -64,7 +76,7 @@ const chatbox= () => {
         await fetch("https://api.openai.com/v1/chat/completions",{
             method:"POST", 
             headers:{
-                "Authorization":"Bearer"+ API_KEY,
+                "Authorization":"Bearer "+ API_KEY,
                 "Content-Type":"application/json"
             },
             body:JSON.stringify(apiRequestBody)
@@ -72,10 +84,10 @@ const chatbox= () => {
             return data.json();
         }).then((data)=>{
             console.log(data);
-            console.log(data.choices[0].messages.content);
+            console.log(data.choices[0].message.content);
             setMessages(
                 [...chatMessages,{
-                    message:data.choices[0].messages.content,
+                    message:data.choices[0].message.content,
                     sender:"Flow-Bot"
                 }]//user wll see the response from chat chatpgt
             );
@@ -96,7 +108,7 @@ const chatbox= () => {
                                 <h1>Chatboat</h1>
                         </div>
                             <div className="profile-details">
-                            <div style={{postion:"left",height:"1000px",width:"700px"}}>
+                            <div style={{ position: "left", height: "1000px", width: "700px" }}>
                    
                    <MainContainer>
                       <ChatContainer>
@@ -105,7 +117,7 @@ const chatbox= () => {
                        typingIndicator={typing ? <TypingIndicator content="Flow-Bot is typing"/>:null}
                        >
                            {messages.map((message,i)=>{
-                               return<Message key={i} model={message}/>
+                               return <Message key={i} model={message} />;
                            })}
                        </MessageList>
                        <MessageInput placeholder='Type your message here' onSend={handleSend}/>
