@@ -1613,6 +1613,54 @@ body{
     cursor: pointer;
 }
 
+/* Main content */
+.main-content-card {
+    position: absolute;
+    top: 53%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-content-card h1 {
+    font-size: 2.5rem;
+    font-weight: 550;
+    color: var(--primary-color);
+    margin-top: 1.5%; /* Add margin for spacing */
+}
+
+.chat-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: var(--primary-color);
+    width: 80%;
+    height: 100px;
+    margin-top: 2%; 
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .main-content-card {
+        width: 90%; /* Adjust the width for smaller screens */
+    }
+
+    .main-content-card h1 {
+        font-size: 2rem; /* Adjust font size for smaller screens */
+    }
+
+    .chat-details {
+        font-size: 2rem; /* Adjust font size for smaller screens */
+    }
+}
+
 /* NOTIFICATIONS */
 .notifications-content{
     position: absolute;

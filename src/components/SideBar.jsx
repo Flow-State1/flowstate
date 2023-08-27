@@ -111,7 +111,22 @@ const SideBarNavigation = () => {
                                 Report
                             </Link>
                         </li>
-                        <li className={`sidebar-list-item ${isActiveLink('/dashboard/dashboard/notifications') ? 'active' : ''}`}>
+                        <li className={`sidebar-list-item ${isActiveLink('/dashboard/dashboard/chatbot') ? 'active' : ''}`}>
+                            <Link to='/dashboard/dashboard/chatbot' className='sidebar-link'>
+                                <FontAwesomeIcon
+                                    icon={faChartLine}
+                                    className="icon"
+                                    style={{
+                                        fontSize: '1.5rem',
+                                        color: '#fff',
+                                        marginRight: '1.5rem',
+                                    }}
+
+                                />
+                                Flow-Bot
+                            </Link>
+                        </li>
+                        {/* <li className={`sidebar-list-item ${isActiveLink('/dashboard/dashboard/notifications') ? 'active' : ''}`}>
                             <Link to='/dashboard/dashboard/notifications' className='sidebar-link'>
                                 <FontAwesomeIcon
                                     icon={faBell}
@@ -124,7 +139,7 @@ const SideBarNavigation = () => {
 
                                 />Notifications
                             </Link>
-                        </li>
+                        </li> */}
                         <li className={`sidebar-list-item ${isActiveLink('/dashboard/dashboard/settings') ? 'active' : ''}`}>
                             <Link to='/dashboard/dashboard/settings' className='sidebar-link'>
                                 <FontAwesomeIcon
