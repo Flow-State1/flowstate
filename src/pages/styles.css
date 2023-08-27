@@ -1286,3 +1286,14 @@ body{
     font-weight: 500;
     color: var(--primary-color);
 }
+.chat{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 5rem;
+    margin-top: 2rem;
+    background-image: url("");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
