@@ -7,11 +7,11 @@ import NavSideBarComponent from "../components/nav-side-bar";
 import LoadingCard from "../components/loadingCard";
 import logo from "../assets/flow-state-logo.png"
 const chatbox= () => { 
-    const API_KEY="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";
+    const API_KEY="";
     const [typing,setTyping]=useState(false);
     const [messages,setMessages]=useState([
         {
-            message:"Hi there I am Flow-Bot",
+            message:"Hi there I am Flow-Bot,let me help you learn more about electricity!",
             sender:"Flow-Bot"
         }
     ])
