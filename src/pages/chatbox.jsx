@@ -14,21 +14,19 @@ import NavSideBarComponent from "../components/nav-side-bar";
 import LoadingCard from "../components/loadingCard";
 import Chatbg from "../components/Chatbotbg";
 
-const Chatbox = () => {
+const chatbox = () => {
   const API_KEY = "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";
 
   const [typing, setTyping] = useState(false);
   const [messages, setMessages] = useState([
     {
-      message: "Hi there! I am Flow-Bot. Let me help you learn more about electricity!",
+      message: "Hi there I am Flow-Bot, let me help you learn more about electricity!",
       sender: "Flow-Bot"
     }
   ]);
-
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading delay
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);
@@ -38,19 +36,19 @@ const Chatbox = () => {
     const newMessage = {
       message: message,
       sender: "user",
-      direction: "outgoing" // message will show on the right
+      direction: "outgoing"
     };
 
     const newMessages = [...messages, newMessage];
     setMessages(newMessages);
     setTyping(true);
-    await processMessageToChatGPT(newMessages);
+    await processMessagetoChatGPT(newMessages);
   };
 
   let lastApiRequestTimestamp = 0;
   const MINIMUM_TIME_BETWEEN_REQUESTS = 1000 / 3;
 
-  async function processMessageToChatGPT(chatMessages) {
+  async function processMessagetoChatGPT(chatMessages) {
     const now = Date.now();
     const timeSinceLastRequest = now - lastApiRequestTimestamp;
 
@@ -61,9 +59,13 @@ const Chatbox = () => {
     }
 
     lastApiRequestTimestamp = Date.now();
-
-    const apiMessages = chatMessages.map((messageObject) => {
-      const role = messageObject.sender === "Flow-Bot" ? "assistant" : "user";
+    let apiMessages = chatMessages.map((messageObject) => {
+      let role = "";
+      if (messageObject.sender === "Flow-Bot") {
+        role = "assistant";
+      } else {
+        role = "user";
+      }
       return { role: role, content: messageObject.message };
     });
 
@@ -77,20 +79,27 @@ const Chatbox = () => {
       messages: [systemMessage, ...apiMessages]
     };
 
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         Authorization: "Bearer " + API_KEY,
         "Content-Type": "application/json"
       },
       body: JSON.stringify(apiRequestBody)
-    });
-
-    const data = await response.json();
-    const responseMessage = data.choices[0].message.content;
-
-    setMessages([...chatMessages, { message: responseMessage, sender: "Flow-Bot" }]);
-    setTyping(false);
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        console.log(data);
+        console.log(data.choices[0].message.content);
+        setMessages([
+          ...chatMessages,
+          {
+            message: data.choices[0].message.content,
+            sender: "Flow-Bot"
+          }
+        ]);
+        setTyping(false);
+      });
   }
 
   return (
@@ -109,13 +118,23 @@ const Chatbox = () => {
               <div style={{ position: "left", height: "1000px", width: "700px" }}>
                 <MainContainer style={{ position: "left", height: "1000px", width: "700px" }}>
                   <ChatContainer style={{ height: "1000px", width: "700px" }}>
-                    <MessageList scrollBehavior="smooth" typingIndicator={typing ? <TypingIndicator content="Flow-Bot is typing" /> : null}>
+                    <MessageList
+                      scrollBehavior="smooth"
+                      typingIndicator={typing ? <TypingIndicator content="Flow-Bot is typing" /> : null}
+                    >
                       {messages.map((message, i) => (
                         <Message key={i} model={message}>
-                          <Avatar
-                            style={{ width: 40, height: 40, borderRadius: 20 }}
-                            src={message.sender === "user" ? "user-avatar-url" : "assistant-avatar-url"}
-                          />
+                          {message.sender === "user" ? (
+                            <Avatar
+                              style={{ width: 40, height: 40, borderRadius: 20 }}
+                              src="https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png"
+                            />
+                          ) : (
+                            <Avatar
+                              style={{ width: 40, height: 40, borderRadius: 20 }}
+                              src="https://static.vecteezy.com/system/resources/previews/007/224/792/original/robot-modern-style-vector.jpg"
+                            />
+                          )}
                         </Message>
                       ))}
                     </MessageList>
@@ -131,4 +150,4 @@ const Chatbox = () => {
   );
 };
 
-export default Chatbox;
+export default chatbox;
