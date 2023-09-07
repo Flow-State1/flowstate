@@ -2191,7 +2191,6 @@ label{
     font-size: 0.8rem;
     font-weight: 500;
     position: relative;
-    top: 2rem;
     color: var(--primary-color);
     outline: none;
 }

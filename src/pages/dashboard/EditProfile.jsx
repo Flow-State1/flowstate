@@ -58,25 +58,9 @@ const EditProfile = () => {
                             </div>
 
                             <div className='profile-edit-details'>
-                                
                                 <form className='profile-edit-details-form'>
-                                    <input className='profile-edit-details-form-input' type="text" placeholder='Email' />
-                                    <input type={passwordVisible ? 'text' : 'password'} className='profile-edit-details-form-input' placeholder='Password' />
-                                    <input type={passwordVisible ? 'text' : 'password'} className='profile-edit-details-form-input' placeholder='Confirm Password' />
-                                    <FontAwesomeIcon 
-                                        icon={passwordVisible ? faEye : faEyeSlash}
-                                        className="eye-icon"
-                                        onClick={togglePasswordVisibility}
-                                        style={{ 
-                                            cursor: 'pointer',
-                                            position: 'relative',
-                                            top: '-1.1rem',
-                                            left: '5.8rem',
-                                            width: '1.5rem',
-                                            height: '1.5rem',
-                                        }}
-                                    />
-
+                                    <input className='profile-edit-details-form-input' type="text" placeholder='name' />
+                                    <input className='profile-edit-details-form-input' type='email' placeholder='email' />
                                     <button 
                                         className='profile-edit-details-form-button' 
                                         onClick={handleSaveChanges} 
