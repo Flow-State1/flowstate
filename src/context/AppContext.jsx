@@ -154,6 +154,48 @@ export const AppContextProvider = (props) => {
     setIsLoading(false);
   };
 
+  const ResetOnChange = (e) => {
+    const {name, value} = e.target;
+    setInputValue({
+      ...inputValue,
+      [name]: value,
+    });
+  };
+
+  const HandleResetPassword = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      fetch("http://localhost:3001/users/forgotpassword", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({inputValue}),
+      }).then((response) => {
+        if (!response.ok) {
+          response.json().then((data) => {
+            console.log(data.message);
+            setErrorMessage(data.message);
+          });
+        } else {
+          console.log("Email exists");
+          navigate("/newpassword");
+        }
+      });
+    }catch(error) {
+      console.log(error);
+    }
+    setInputValue({
+      ...inputValue,
+      email: "",
+      password: "",
+    });
+    console.log(isLoading);
+    setIsLoading(false);
+  };
+
   // Context for the live charts
   const [payload, setPayload] = useState([]);
   const [payload_, setPayload_] = useState([]);
@@ -429,6 +471,8 @@ export const AppContextProvider = (props) => {
         SignUpSubmit,
         LoginOnChange,
         LoginSubmit,
+        HandleResetPassword,
+        ResetOnChange,
         generateReport,
         setIsLoading,
         setPower,
