@@ -121,26 +121,29 @@ export const AppContextProvider = (props) => {
     setIsLoading(true);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      fetch("http://localhost:3001/users/login", {
+      const response = await fetch("http://localhost:3001/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(inputValue),
-      }).then((response) => {
-        if (!response.ok) {
-          response.json().then((data) => {
-            console.log(data.message);
-            setErrorMessage(data.message);
-            setIsErrorVisible(true);
-          });
-        } else {
-          console.log("User logged in successfully");
-          setAuthenticated(true);
-          setUser(inputValue);
-          navigate("/dashboard/dashboard/dashboard");
-        }
       });
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log(errorData.message);
+        setErrorMessage(errorData.message);
+        setIsErrorVisible(true);
+      } 
+      else {
+        console.log("User logged in successfully");
+        const responseData = await response.json();
+        console.log(responseData.data.user);
+        const token = responseData.token;
+        localStorage.setItem("authToken", token);
+        setAuthenticated(true);
+        setUser(responseData.data.user);
+        navigate("/dashboard/dashboard/dashboard");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -154,6 +157,10 @@ export const AppContextProvider = (props) => {
     setIsLoading(false);
   };
 
+  const getAuthToken = () => {
+    return localStorage.getItem("authToken");
+  };
+
   const ResetOnChange = (e) => {
     const {name, value} = e.target;
     setInputValue({
@@ -162,6 +169,7 @@ export const AppContextProvider = (props) => {
     });
   };
 
+  //Contains of a bug, only returns a 404 respond
   const HandleResetPassword = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -184,6 +192,39 @@ export const AppContextProvider = (props) => {
           navigate("/newpassword");
         }
       });
+    }catch(error) {
+      console.log(error);
+    }
+    setInputValue({
+      ...inputValue,
+      email: "",
+      password: "",
+    });
+    console.log(isLoading);
+    setIsLoading(false);
+  };
+
+  const HandleSaveChanges = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const token = getAuthToken();
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const response = await fetch("http://localhost:3001/users/updateMe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : `Bearer ${token}`,
+        },
+        body: JSON.stringify({inputValue}),
+      })
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log("Update failed:", errorData.message);
+        setErrorMessage(errorData.message);
+      } else {
+        console.log("Details updated successfully");
+      }
     }catch(error) {
       console.log(error);
     }
@@ -417,6 +458,87 @@ export const AppContextProvider = (props) => {
       });
   };
 
+  //Chat-bot context, functions and api-key
+  const API_KEY = "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";
+
+  const [typing, setTyping] = useState(false);
+  const [messages, setMessages] = useState([
+      {
+      message: "Hi there I am Flow-Bot, let me help you learn more about electricity!",
+      sender: "Flow-Bot"
+      }
+  ]);
+
+  const handleSend = async (message) => {
+    const newMessage = {
+      message: message,
+      sender: "user",
+      direction: "outgoing"
+    };
+
+    const newMessages = [...messages, newMessage];
+    setMessages(newMessages);
+    setTyping(true);
+    await processMessagetoChatGPT(newMessages);
+  };
+
+  let lastApiRequestTimestamp = 0;
+  const MINIMUM_TIME_BETWEEN_REQUESTS = 1000 / 3;
+
+  const processMessagetoChatGPT = async (chatMessages) => {
+    const now = Date.now();
+    const timeSinceLastRequest = now - lastApiRequestTimestamp;
+
+    if (timeSinceLastRequest < MINIMUM_TIME_BETWEEN_REQUESTS) {
+      await new Promise((resolve) =>
+        setTimeout(resolve, MINIMUM_TIME_BETWEEN_REQUESTS - timeSinceLastRequest)
+      );
+    }
+
+    lastApiRequestTimestamp = Date.now();
+    let apiMessages = chatMessages.map((messageObject) => {
+      let role = "";
+      if (messageObject.sender === "Flow-Bot") {
+        role = "assistant";
+      } else {
+        role = "user";
+      }
+      return { role: role, content: messageObject.message };
+    });
+
+    const systemMessage = {
+      role: "system",
+      content: "Explain all concepts like I am 10 years old"
+    };
+
+    const apiRequestBody = {
+      model: "gpt-3.5-turbo",
+      messages: [systemMessage, ...apiMessages]
+    };
+
+    await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + API_KEY,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(apiRequestBody)
+    })
+    .then((data) => data.json())
+    .then((data) => {
+    console.log(data);
+    console.log(data.choices[0].message.content);
+    setMessages([
+        ...chatMessages,
+        {
+        message: data.choices[0].message.content,
+        sender: "Flow-Bot"
+        }
+    ]);
+    setTyping(false);
+    });
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -473,6 +595,7 @@ export const AppContextProvider = (props) => {
         LoginSubmit,
         HandleResetPassword,
         ResetOnChange,
+        HandleSaveChanges,
         generateReport,
         setIsLoading,
         setPower,
@@ -489,6 +612,9 @@ export const AppContextProvider = (props) => {
         setVoltage_,
         setMinutes_ts,
         setCost,
+        typing,
+        messages,
+        handleSend
       }}
     >
       {props.children}

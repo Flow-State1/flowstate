@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from 'react-router'
 import { motion } from 'framer-motion'
 import '../styles.css'
+import { AppContext } from "../../context/AppContext";
 
 const ViewProfile = () => {
     const navigate = useNavigate()
+
+    const {user} = useContext(AppContext);
+    const userName =  user ? user.name : ' ';
 
     const handleBack = () => {
         navigate('/dashboard/dashboard/profile')
@@ -41,10 +45,10 @@ const ViewProfile = () => {
                                 <div className="view-profile-details">
                                     <div className="view-profile-details-item">
                                         <h3>Name</h3>
-                                        <p>Andre</p>
+                                        <p>{userName}</p>
 
                                         <h3>Email</h3>
-                                        <p>andre@gmail.com</p>
+                                        <p>{user.email}</p>
 
                                         <h3>Password</h3>
                                         <p>********</p>

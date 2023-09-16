@@ -2175,7 +2175,7 @@ label{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    top: 90%;
+    top: 107%;
     left: 50%;
     transform: translate(-50%, -50%);
 }

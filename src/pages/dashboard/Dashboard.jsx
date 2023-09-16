@@ -68,6 +68,8 @@ const Dashboard = () => {
     user
   } = useContext(AppContext);
 
+  const userName = user ? user.name : ' ';
+
   let c_cost = 0;
   console.log(user);
 
@@ -279,7 +281,7 @@ const Dashboard = () => {
                 />
 
                 <div className="dashboard-content-body-profile-right-card-avatar-name">
-                  <h3>Hi Andre!</h3>
+                  <h3>Hi {userName}</h3>
                   <p>How are you today?</p>
                 </div>
               </div>

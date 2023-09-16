@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine, faBell, faGears, faUserCircle, faLayerGroup, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faBell, faGears, faUserCircle, faLayerGroup, faSignOut, faComments, faMagnifyingGlassChart } from '@fortawesome/free-solid-svg-icons';
 import logo from "../assets/logo.png";
 import "../pages/styles.css"
 import HamburgerMenu from "./HamburgerMenu";
@@ -12,6 +12,8 @@ const SideBarNavigation = () => {
     const navigate = useNavigate()
 
     const {user} = useContext(AppContext);
+    // Check if user is defined before accessing its properties
+    const userName = user ? user.name : '';
 
     const handleLogout = () => {
         navigate('/')
@@ -48,7 +50,7 @@ const SideBarNavigation = () => {
                                 marginBottom: '0.1rem'
                             }}
                         >
-                            Andre
+                            {userName}
                         </h4>
                     </div>
 
@@ -99,7 +101,7 @@ const SideBarNavigation = () => {
                         <li className={`sidebar-list-item ${isActiveLink('/dashboard/dashboard/analytics') ? 'active' : ''}`}>
                             <Link to='/dashboard/dashboard/report' className='sidebar-link'>
                                 <FontAwesomeIcon
-                                    icon={faChartLine}
+                                    icon={faMagnifyingGlassChart}
                                     className="icon"
                                     style={{
                                         fontSize: '1.5rem',
@@ -114,7 +116,7 @@ const SideBarNavigation = () => {
                         <li className={`sidebar-list-item ${isActiveLink('/dashboard/dashboard/chatbot') ? 'active' : ''}`}>
                             <Link to='/dashboard/dashboard/chatbot' className='sidebar-link'>
                                 <FontAwesomeIcon
-                                    icon={faChartLine}
+                                    icon={faComments}
                                     className="icon"
                                     style={{
                                         fontSize: '1.5rem',

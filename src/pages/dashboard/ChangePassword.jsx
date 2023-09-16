@@ -49,10 +49,6 @@ const ChangePassword = () => {
 
                             </div>
 
-                            <div className='profile-content-body-card-head-name'>
-                                <h2>Andre</h2>
-                            </div>
-
                             <div className='profile-edit-details'>
                                 
                                 <form className='profile-edit-details-form'>
@@ -66,7 +62,7 @@ const ChangePassword = () => {
                                         style={{ 
                                             cursor: 'pointer',
                                             position: 'relative',
-                                            top: '-1.1rem',
+                                            top: '-2.9rem',
                                             width: '1.5rem',
                                             height: '1.5rem',
                                         }}
