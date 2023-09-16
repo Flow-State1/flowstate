@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 import {
   MainContainer,
@@ -12,87 +12,11 @@ import {
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import "../styles.css";
 //import Chatbg from "../components/Chatbotbg";
+import { AppContext } from "../../context/AppContext";
 
 const Chatbox = () => {
-    const API_KEY = "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";
 
-    const [typing, setTyping] = useState(false);
-    const [messages, setMessages] = useState([
-        {
-        message: "Hi there I am Flow-Bot, let me help you learn more about electricity!",
-        sender: "Flow-Bot"
-        }
-    ]);
-
-    const handleSend = async (message) => {
-    const newMessage = {
-      message: message,
-      sender: "user",
-      direction: "outgoing"
-    };
-
-    const newMessages = [...messages, newMessage];
-    setMessages(newMessages);
-    setTyping(true);
-    await processMessagetoChatGPT(newMessages);
-  };
-
-  let lastApiRequestTimestamp = 0;
-  const MINIMUM_TIME_BETWEEN_REQUESTS = 1000 / 3;
-
-  async function processMessagetoChatGPT(chatMessages) {
-    const now = Date.now();
-    const timeSinceLastRequest = now - lastApiRequestTimestamp;
-
-    if (timeSinceLastRequest < MINIMUM_TIME_BETWEEN_REQUESTS) {
-      await new Promise((resolve) =>
-        setTimeout(resolve, MINIMUM_TIME_BETWEEN_REQUESTS - timeSinceLastRequest)
-      );
-    }
-
-    lastApiRequestTimestamp = Date.now();
-    let apiMessages = chatMessages.map((messageObject) => {
-      let role = "";
-      if (messageObject.sender === "Flow-Bot") {
-        role = "assistant";
-      } else {
-        role = "user";
-      }
-      return { role: role, content: messageObject.message };
-    });
-
-    const systemMessage = {
-      role: "system",
-      content: "Explain all concepts like I am 10 years old"
-    };
-
-    const apiRequestBody = {
-      model: "gpt-3.5-turbo",
-      messages: [systemMessage, ...apiMessages]
-    };
-
-    await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + API_KEY,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(apiRequestBody)
-    })
-    .then((data) => data.json())
-    .then((data) => {
-    console.log(data);
-    console.log(data.choices[0].message.content);
-    setMessages([
-        ...chatMessages,
-        {
-        message: data.choices[0].message.content,
-        sender: "Flow-Bot"
-        }
-    ]);
-    setTyping(false);
-    });
-  }
+  const {typing, messages, handleSend}= useContext(AppContext);
 
   return (
     <motion.div

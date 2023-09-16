@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router';
 import { useMediaQuery } from 'react-responsive';
 import { motion } from 'framer-motion';
 import '../styles.css';
+import { AppContext } from '../../context/AppContext';
 
 const Profile = () => {
+
+    const {user} = useContext(AppContext);
+    const userName = user ? user.name : ' ';
     const navigate = useNavigate();
     const isTabletOrLaptop = useMediaQuery({ query: '(min-width: 768px)' });
     const handleEditProfile = () => {
@@ -50,7 +54,7 @@ const Profile = () => {
                             </div>
 
                             <div className='profile-content-body-card-header-name'>
-                                <h2>Andre</h2>
+                                <h2>{userName}</h2>
                             </div>
                         </div>
 

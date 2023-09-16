@@ -1,23 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useMediaQuery } from 'react-responsive';
 import { faCamera, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 import '../styles.css'
+import { AppContext } from '../../context/AppContext';
 
 const EditProfile = () => {
-    const navigate = useNavigate();
-    const isTabletOrLaptop = useMediaQuery({ query: '(min-width: 768px)' });
-    const [passwordVisible, setPasswordVisible] = useState(false);
 
-    const togglePasswordVisibility = () => {
-        setPasswordVisible(!passwordVisible);
-    };
+    const {isTabletOrLaptop, HandleSaveChanges } = useContext(AppContext);
 
-    const handleSaveChanges = () => {
-        navigate('/dashboard/dashboard/profile')
-    }
 
     return(
         <motion.div
@@ -58,12 +51,11 @@ const EditProfile = () => {
                             </div>
 
                             <div className='profile-edit-details'>
-                                <form className='profile-edit-details-form'>
+                                <form className='profile-edit-details-form' onSubmit={HandleSaveChanges}>
                                     <input className='profile-edit-details-form-input' type="text" placeholder='name' />
                                     <input className='profile-edit-details-form-input' type='email' placeholder='email' />
                                     <button 
                                         className='profile-edit-details-form-button' 
-                                        onClick={handleSaveChanges} 
                                         style={{ width: isTabletOrLaptop ? '15rem' : '50%' }}
                                     >
                                         Save Changes
