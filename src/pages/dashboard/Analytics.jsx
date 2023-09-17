@@ -95,7 +95,11 @@ const Analytics = () => {
   const { costFunction, obj, obj2 } = useContext(AppContext);
   useEffect(() => {
     return () => {
-      costFunction();
+      costFunction(() => {
+        const Precost = obj / 1000;
+        const cost = Precost * 0.017;
+        return cost;
+      });
       generateReadings();
     };
   }, []);

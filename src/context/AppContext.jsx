@@ -73,7 +73,7 @@ export const AppContextProvider = (props) => {
     setIsLoading(true);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      fetch("http://localhost:3001/users/signup", {
+      fetch("http://flowstate-api.onrender.com/users/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -121,7 +121,7 @@ export const AppContextProvider = (props) => {
     setIsLoading(true);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      const response = await fetch("http://localhost:3001/users/login", {
+      const response = await fetch("http://flowstate-api.onrender.com/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -175,7 +175,7 @@ export const AppContextProvider = (props) => {
     setIsLoading(true);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      fetch("http://localhost:3001/users/forgotpassword", {
+      fetch("http://flowstate-api.onrender.com/users/forgotpassword", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -210,7 +210,7 @@ export const AppContextProvider = (props) => {
     const token = getAuthToken();
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      const response = await fetch("http://localhost:3001/users/updateMe", {
+      const response = await fetch("http://flowstate-api.onrender.com/users/updateMe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -329,7 +329,7 @@ export const AppContextProvider = (props) => {
   ]
 
   const retrieveAll = () => {
-    fetch("http://localhost:3001/consumptions").then((response) =>
+    fetch("http://flowstate-api.onrender.com/consumptions").then((response) =>
       response.json()
     );
   };
@@ -340,7 +340,7 @@ export const AppContextProvider = (props) => {
     link.href = chart_ref.current.toBase64Image();
     link.click();
     setChart_image(chart_ref.current.toBase64Image());
-    fetch("http://localhost:3001/consumptions/device1")
+    fetch("http://flowstate-api.onrender.com/consumptions/device1")
       .then((response) => response.json())
       .then((results) => {
         results.forEach((result) => {
@@ -352,7 +352,7 @@ export const AppContextProvider = (props) => {
           setChartData((prevData) => [...prevData, total_consumption]);
         });
       });
-    fetch("http://localhost:3001/consumptions/device2")
+    fetch("http://flowstate-api.onrender.com/consumptions/device2")
       .then((response) => response.json())
       .then((results) => {
         results.forEach((result) => {
@@ -371,7 +371,7 @@ export const AppContextProvider = (props) => {
 
   // For calculating costs of devices it returns the total current and voltage of the devices
   const costFunction = () => {
-    fetch("http://localhost:3001/consumptions/1")
+    fetch("http://flowstate-api.onrender.com/consumptions/1")
       .then((response) => response.json())
       .then((results) => {
         // console.log(results);
@@ -392,7 +392,7 @@ export const AppContextProvider = (props) => {
         setObj(resultArray);
         // console.log(resultArray);
       });
-    fetch("http://localhost:3001/consumptions/2")
+    fetch("http://flowstate-api.onrender.com/consumptions/2")
       .then((response) => response.json())
       .then((results) => {
         // console.log(results);
@@ -424,7 +424,7 @@ export const AppContextProvider = (props) => {
   const [avoltage1,setAvoltage1] = useState([]);
   const [avoltage2,setAvoltage2] = useState([]);
   const generateReadings = () => {
-    fetch("http://localhost:3001/consumptions/device1")
+    fetch("http://flowstate-api.onrender.com/consumptions/device1")
       .then((response) => response.json())
       .then((result) => {
         //   console.log(result[0]);
@@ -440,7 +440,7 @@ export const AppContextProvider = (props) => {
           }
         }
       });
-    fetch("http://localhost:3001/consumptions/device2")
+    fetch("http://flowstate-api.onrender.com/consumptions/device2")
       .then((response) => response.json())
       .then((result) => {
         //   console.log(result[0]);
