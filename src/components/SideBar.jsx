@@ -11,15 +11,11 @@ import { AppContext } from "../context/AppContext";
 const SideBarNavigation = () => {
     const navigate = useNavigate()
 
-    const {user} = useContext(AppContext);
+    const {user, handleLogout} = useContext(AppContext);
     // Check if user is defined before accessing its properties
     const userName = user ? user.name : '';
 
-    const handleLogout = () => {
-        navigate('/')
-    }
     const location = useLocation();
-
 
     const isActiveLink = (path) => {
         return location.pathname === path;
@@ -173,18 +169,18 @@ const SideBarNavigation = () => {
                         </li>
                     </ul>
                     <div className='sidebar-logout'>
-                        <button className='sidebar-logout-btn' onClick={handleLogout}>
-                            <FontAwesomeIcon
-                                icon={faSignOut}
-                                className="icon"
-                                style={{
-                                    fontSize: '1.5rem',
-                                    color: '#fff',
-                                    marginRight: '1rem'
-                                }}
-                            />
-                            Logout
-                        </button>
+                            <button className='sidebar-logout-btn' onClick={handleLogout}>
+                                <FontAwesomeIcon
+                                    icon={faSignOut}
+                                    className="icon"
+                                    style={{
+                                        fontSize: '1.5rem',
+                                        color: '#fff',
+                                        marginRight: '1rem'
+                                    }}
+                                />
+                                Logout
+                            </button>
                     </div>
                 </div>
             </div>

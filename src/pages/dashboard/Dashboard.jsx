@@ -234,7 +234,7 @@ const Dashboard = () => {
         <div className="dashboard-content">
           <div className="dashboard-content-header">
             <h2>Dashboard</h2>
-            {/* <button
+            <button
               onClick={() => {
                 fetch("http://localhost:3001/publish/switch/1", {
                   method: "POST",
@@ -261,7 +261,7 @@ const Dashboard = () => {
               }}
             >
               Device2 On/Of
-            </button> */}
+            </button>
             <ToggleSwitch deviceId={1} />
             <ToggleSwitch deviceId={2} />
           </div>
