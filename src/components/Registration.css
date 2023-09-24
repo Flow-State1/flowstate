@@ -1,0 +1,37 @@
+.reg-container{
+    height: 100%;
+    width: 100%;
+    padding:25px;
+}
+.registration{
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    padding: 50px 100px;
+    box-shadow:0px 10px 10px 0px lightgray ;
+}
+.devices-registration{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.devices-list{
+    display: flex;
+    justify-content: space-between;
+}
+.btn-container{
+    display: flex;
+    justify-content: center;
+}
+.btn-register{
+    background-color: rgb(75, 128, 235);
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.input-registration{
+    padding: 0px 30px;
+    border: 1px solid lightgray;
+}

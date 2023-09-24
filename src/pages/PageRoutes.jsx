@@ -8,6 +8,7 @@ import Login from './Login'
 import SignUp from './SignUp'
 import ResetPassword from './ResetPassword'
 import NewPassword from './NewPassword'
+import Devices from './Devices'
 
 
 const PageRoutes = () => {
@@ -22,6 +23,7 @@ const PageRoutes = () => {
                 <Route path="/" element={<Splash />} />
                 <Route exact path="/login" element={<Login />} />
                 <Route exact path="/signup" element={<SignUp />} />
+                <Route exact path="/devices" element={<Devices />} />
                 <Route exact path="/resetpassword" element={<ResetPassword />} />
                 <Route exact path="/newpassword" element={<NewPassword />} />
             </Routes>
