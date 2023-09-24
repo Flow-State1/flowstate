@@ -162,8 +162,8 @@ const Dashboard = () => {
           >
             Device2 On/Of
           </button>
-            <ToggleSwitch deviceId={1} />
-            <ToggleSwitch deviceId={2} />
+            {/* <ToggleSwitch deviceId={1} />
+            <ToggleSwitch deviceId={2} /> */}
           </div>
 
           <div className="dashboard-content-body">
