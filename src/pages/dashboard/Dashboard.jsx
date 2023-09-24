@@ -18,6 +18,7 @@ import { Line } from "react-chartjs-2";
 import { DashboardContext } from "../../context/DashboardContext";
 import { AppContext } from "../../context/AppContext";
 import ToggleSwitch from "../../components/Switch";
+import Registration from "../../components/Registration";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -29,14 +30,10 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
-  const time = new Date();
-  const hour = time.getHours();
-  const minutes =
-    time.getMinutes() < 10 ? `0${time.getMinutes()}` : time.getMinutes();
 
-  const [labels, setLabels] = useState([`${hour}:${minutes}`]);
 
   const {
+    labels_, setLabels,
     apower,
     apower_,
     consumption,
@@ -65,157 +62,32 @@ const Dashboard = () => {
     setMinutes_ts,
     cost,
     setCost,
-    user
+    user,
+    setDevicesRegistered,
+    devicesRegistered,
+    dashRoutes,setDashroutes,
+    deviceInfo,
   } = useContext(AppContext);
 
-  const userName = user ? user.name : ' ';
+  const userName = user ? user.name : " ";
 
-  let c_cost = 0;
-  console.log(user);
+  
 
-  useEffect(() => {
-    return () => {
-      //Instance of the WebSocket
-      const socket = new WebSocket("ws://localhost:3001");
-      let saved_time = `${hour}:${minutes}`;
+  // After registering create an instance of the websocket, the websocket should only be created when devices are registered(we can just create an actual page fro registering the devices instead of using acomponent this way we can set a boolean and pass it to the dashboard)
 
-      //This is for creating the labels on the graph
-      setInterval(() => {
-        const c_time = new Date();
-        const c_hour = c_time.getHours();
-        const c_minutes =
-          c_time.getMinutes() < 10
-            ? `0${c_time.getMinutes()}`
-            : c_time.getMinutes();
 
-        if (saved_time != `${c_hour}:${c_minutes}`) {
-          saved_time = `${c_hour}:${c_minutes}`;
-          setLabels((prevLabel) => {
-            if (prevLabel !== `${c_hour}:${c_minutes}`) {
-              return [...prevLabel, `${c_hour}:${c_minutes}`];
-            } else {
-              return prevLabel;
-            }
-          });
-        }
-      }, 60000);
-
-      //Listen for messages from web socket
-      socket.addEventListener("message", (event) => {
-        const json = JSON.parse(event.data);
-        console.log(`Results: ${JSON.stringify(json.result["switch:0"])}`);
-
-        if (json["src"] == "shellyplus1pm-a8032ab11964") {
-          if (json.result["switch:0"]["output"] == true) {
-            const result = json.result["switch:0"];
-            const consumption = result["aenergy"];
-            console.log(`aenergy:${result.toString()}`);
-            setCost(() => {
-              const pwr_kwh = result["apower"] / 1000;
-              const cst = pwr_kwh * 1.77;
-              console.log(`current cost:${cst}`);
-              console.log(`Total cost:${c_cost}+${cst} = ${c_cost + cst}`);
-              c_cost = c_cost + cst;
-              return c_cost;
-            });
-            setPayload((prevLoad) => [...prevLoad, result]);
-            setConsumption((prevConsumption) => {
-              if (consumption["total"] != 0) {
-                return [...prevConsumption, consumption["total"]];
-              } else if (consumption["total"] == 0) {
-                return 0;
-              }
-            });
-            setCurrent(result["current"]);
-            setPower(result["apower"]);
-            setVoltage(result["voltage"]);
-          } 
-          // Check if switch is off
-          else {
-            const result = json.result["switch:0"];
-            console.log("switch is off");
-            setCost(() => {
-              const pwr_kwh = 0 / 1000;
-              // console.log(pwr_kwh);
-              const cst = pwr_kwh * 1.77;
-              console.log(`current cost:${cst}`);
-              console.log(`Total cost:${c_cost}+${cst} = ${c_cost + cst}`);
-              c_cost = c_cost + cst;
-              return c_cost;
-            });
-            setPayload((prevLoad) => [...prevLoad, result]);
-            setConsumption((prevConsumption) => [...prevConsumption, 0]);
-            setCurrent(0);
-            setPower(0);
-            setVoltage(result["voltage"]);
-          }
-        }
-
-        // Updating state variable for device 2
-        else if (json["src"] == "shellyplus1pm-7c87ce719ccc") {
-          if (json.result["switch:0"]["output"] == true) {
-            const result = json.result["switch:0"];
-            const consumption = result["aenergy"];
-            console.log(`aenergy:${result.toString()}`);
-            setCost(() => {
-              const pwr_kwh = result["apower"] / 1000;
-              // console.log(pwr_kwh);
-              const cst = pwr_kwh * 1.77;
-              console.log(`current cost:${cst}`);
-              console.log(`Total cost:${c_cost}+${cst} = ${c_cost + cst}`);
-              c_cost = c_cost + cst;
-              return c_cost;
-            });
-            setPayload_((prevLoad) => [...prevLoad, result]);
-            setConsumption_((prevConsumption) => {
-              if (consumption["total"] != 0) {
-                return [...prevConsumption, consumption["total"]];
-              } else if (consumption["total"] == 0) {
-                return 0;
-              }
-            });
-            setCurrent_(result["current"]);
-            setPower_(result["apower"]);
-            setVoltage_(result["voltage"]);
-          } 
-          //Check if switch is off
-          else {
-            const result = json.result["switch:0"];
-            console.log("switch is off");
-            setCost(() => {
-              const pwr_kwh = 0 / 1000;
-              // console.log(pwr_kwh);
-              const cst = pwr_kwh * 1.77;
-              console.log(`current cost:${cst}`);
-              console.log(`Total cost:${c_cost}+${cst} = ${c_cost + cst}`);
-              c_cost = c_cost + cst;
-              return c_cost;
-            });
-            setPayload_((prevLoad) => [...prevLoad, result]);
-            setConsumption_((prevConsumption) => [...prevConsumption, 0]);
-            setCurrent_(0);
-            setPower_(0);
-            setVoltage_(result["voltage"]);
-          }
-        }
-      });
-    };
-  }, []);
-
-  console.log(`Consumption:${consumption}`);
-  console.log(`Consumption_:${consumption_}`);
 
   const dataObject = {
-    labels,
+    labels:labels_,
     datasets: [
       {
-        label: "Device1 (Consumption)",
+        label: deviceInfo.device_1.alias,
         data: consumption,
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
       {
-        label: "Device2 (Consumption)",
+        label: deviceInfo.device_2.alias,
         data: consumption_,
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
@@ -262,6 +134,34 @@ const Dashboard = () => {
             >
               Device2 On/Of
             </button>
+            <button
+            onClick={() => {
+              fetch("http://localhost:3001/publish/switch/1", {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+              })
+                .then((response) => console.log(response))
+                .catch((error) => {
+                  console.log(`id:Switch_End_Point,${error}`);
+                });
+            }}
+          >
+            Device1 On/Of
+          </button>
+          <button
+            onClick={() => {
+              fetch("http://localhost:3001/publish/switch/2", {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+              })
+                .then((response) => console.log(response))
+                .catch((error) => {
+                  console.log(`id:Switch_End_Point,${error}`);
+                });
+            }}
+          >
+            Device2 On/Of
+          </button>
             <ToggleSwitch deviceId={1} />
             <ToggleSwitch deviceId={2} />
           </div>
@@ -322,3 +222,9 @@ const Dashboard = () => {
 };
 
 export default React.memo(Dashboard);
+
+/**
+ *
+ *
+ *
+ */
