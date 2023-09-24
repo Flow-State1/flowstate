@@ -7,7 +7,7 @@ import { AppContext } from '../../context/AppContext';
 
 const Profile = () => {
 
-    const {user} = useContext(AppContext);
+    const {user, profilePictureURL} = useContext(AppContext);
     const userName = user ? user.name : ' ';
     const navigate = useNavigate();
     const isTabletOrLaptop = useMediaQuery({ query: '(min-width: 768px)' });
@@ -40,7 +40,7 @@ const Profile = () => {
                         <div className='profile-content-body-card-header'>
                             <div className="profile-profile-avatar">
                                 <img 
-                                    src="https://www.w3schools.com/howto/img_avatar.png" 
+                                    src={profilePictureURL ? `http://localhost:3001/users/uploads/profile-pictures/${profilePictureURL}` : 'https://www.w3schools.com/howto/img_avatar.png'}
                                     alt=""                                    
                                     style={{
                                         width: '12rem',

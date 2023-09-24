@@ -316,11 +316,25 @@ export const AppContextProvider = (props) => {
     setIsLoading(false);
   };
 
+  const [updateInput, setUpdateInput] = useState({
+    name: "",
+    email: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUpdateInput((prevInput) => ({
+      ...prevInput,
+      [name]: value,
+    }));
+  };
+
   const HandleSaveChanges = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     const token = getAuthToken();
     try {
+      console.log(updateInput);
       await new Promise((resolve) => setTimeout(resolve, 1500));
       const response = await fetch("http://localhost:3001/users/updateMe", {
         method: "POST",
@@ -328,7 +342,7 @@ export const AppContextProvider = (props) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ inputValue }),
+        body: JSON.stringify({updateInput}),
       });
       if (!response.ok) {
         const errorData = await response.json();
@@ -340,12 +354,61 @@ export const AppContextProvider = (props) => {
     } catch (error) {
       console.log(error);
     }
-    setInputValue({
-      ...inputValue,
+    setUpdateInput({
+      ...updateInput,
+      name: "",
       email: "",
-      password: "",
     });
     console.log(isLoading);
+    setIsLoading(false);
+  };
+
+  const [passwordInput, setPasswordInput] = useState({
+    currentPassword: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const updateOnChange = (e) => {
+    const { name, value } = e.target;
+    setPasswordInput((prevInput) => ({
+      ...prevInput,
+      [name]: value,
+    }));
+  };
+
+  const HandlePasswordChange = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const token = getAuthToken();
+    try {
+      console.log(passwordInput);
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const response = await fetch("http://localhost:3001/users/updateMyPassword", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : `Bearer ${token}`,
+        },
+        body: JSON.stringify(passwordInput),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log(errorData.message);
+        setErrorMessage(errorData.message);
+        setIsErrorVisible(true);
+      } else {
+        console.log("Password updated successfully");
+      }
+    }catch(error) {
+      console.log(error);
+    }
+    setPasswordInput({
+      ...passwordInput,
+      currentPassword: "",
+      password: "",
+      confirmPassword: "",
+    });
     setIsLoading(false);
   };
 
@@ -583,7 +646,7 @@ export const AppContextProvider = (props) => {
   };
 
   //Chat-bot context, functions and api-key
-  const API_KEY = "";
+  const API_KEY = "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";
 
   const [typing, setTyping] = useState(false);
   const [messages, setMessages] = useState([
@@ -669,9 +732,83 @@ export const AppContextProvider = (props) => {
 
   const [labels_, setLabels] = useState([]);
 
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [profilePictureURL, setProfilePictureURL] = useState(null);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+  };
+
+  const handlePictureSubmit = async (e) => {
+    e.preventDefault();
+    const token = getAuthToken();
+    if (!selectedFile) {
+      console.log('Please select a file to upload.');
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append('profilePicture', selectedFile);
+
+      const response = await fetch('http://localhost:3001/users/upload-profile-picture', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        console.log('Profile picture uploaded successfully.');
+        const responseData = await response.json();
+        const uploadedImageURL = responseData.imageURL;
+        setProfilePictureURL(uploadedImageURL);
+      } else {
+        console.log('Error uploading profile picture.');
+      }
+    } catch (error) {
+      console.error('Error uploading profile picture:', error);
+    }
+  }
+
+  const [logoutSuccess, setLogoutSuccess] = useState(false);
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    //const token = getAuthToken();
+    try {
+      const response = await fetch('http://localhost:3001/users/logout', {
+        method: 'GET',
+        credentials: 'include',
+      })
+
+      if(response.status == 200) {
+        setLogoutSuccess(true);
+        console.log("Logged out successfully");
+        navigate('/');
+      }
+      else {
+        setLogoutSuccess(false);
+      }
+    }catch(error) {
+      console.error('Error logging out:', error);
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
+        handleLogout,
+        logoutSuccess, 
+        setLogoutSuccess,
+        profilePictureURL, 
+        setProfilePictureURL,
+        selectedFile,
+        setSelectedFile,
+        handleFileChange,
+        handlePictureSubmit,
         // dataObject,
         // dashRoutes,setDashroutes,
         labels_, setLabels,
@@ -763,9 +900,13 @@ export const AppContextProvider = (props) => {
         typing,
         messages,
         handleSend,
+        handleInputChange,
+        updateInput,
+        HandlePasswordChange,
+        updateOnChange,
+        passwordInput,
         c_cost,
         setc_Cost,
-        
       }}
     >
       {props.children}
