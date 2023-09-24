@@ -602,6 +602,145 @@ body{
 .login-form .signup-link:hover {
     color: var(--secondary-color);
 }
+
+
+/* DEVICE PAGE */
+.device-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+  
+.device-card {
+    position: relative;
+    width: 55%;
+    height: 95vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 25px;
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
+    margin: 10vh auto; 
+}
+  
+.device-card-content {
+    position: relative;
+    width: 80%;
+    height: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 95px; /* Adjust the margin-top value as needed */
+}
+  
+.device-card-content img {
+    width: 40%;
+    max-width: 6.6rem;
+    height: auto;
+    align-self: center; /* Added to center the image horizontally */
+    margin-bottom: 0.8rem; /* Adjusted margin for spacing */
+}
+  
+.device-card-content .device-title {
+    position: relative;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 1.2rem;
+}
+  
+.device-card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+  
+.device-card-content .device-form {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.device-form input {
+    width: 70%;
+    max-width: 17rem;
+    height: 2.8rem;
+    border-radius: 1rem;
+    border: 1px solid var(--primary-color);
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--primary-color);
+    outline: none;
+}
+
+.device-form select {
+    width: 70%;
+    max-width: 17rem;
+    height: 2.5rem;
+    border-radius: 1rem;
+    border: 1px solid var(--primary-color);
+    margin-bottom: 0.1rem;
+    padding-left: 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--primary-color);
+    outline: none;
+}
+  
+.device-form .device-button {
+    position: relative;
+    width: 50%;
+    max-width: 14rem;
+    height: 2.8rem;
+    border-radius: 40rem;
+    border: none;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    margin-bottom: 1rem;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+}
+  
+.device-form .device-button:hover {
+    background-color: var(--secondary-color);
+    transition: all 0.2s ease-in-out;
+}
+
+.device-button:disabled::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.8em;
+    color: #fff;
+}
+
+.device-button .fa-spinner {
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
   
 
 /* SIGNUP PAGE */
