@@ -20,7 +20,8 @@ const Analytics = () => {
     acurrent2,
     avoltage2,
     generateReadings,
-    labels
+    labels,
+    costFunction
   } = useContext(AppContext);
 
   const aenergyObject = {
@@ -92,7 +93,7 @@ const Analytics = () => {
     ],
   };
 
-  const { costFunction, obj, obj2 } = useContext(AppContext);
+ 
   useEffect(() => {
     return () => {
       costFunction();

@@ -56,9 +56,30 @@ export const AppContextProvider = (props) => {
   const [chartData, setChartData] = useState([]);
   const [chartData2, setChartData2] = useState([]);
   const [chartData_, setChartData_] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const [variants, setVariants] = useState([]);
+  const [c_cost,setc_Cost] = useState(0);
+  const [isdevicesRegistered,setIsDeviceRegistered] = useState(false);
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+  const [devicesRegistered, setDevicesRegisters] = useState({
+    device_1: false,
+    device_2: false,
+  });
+  const [deviceInfo, setDeviceInfo] = useState({
+    device_1: {
+      brand: "",
+      alias: "",
+    },
+    device_2: {
+      brand: "",
+      alias: "",
+    },
+  });
+
+  const [errortext, setErrorText] = useState();
+  const [errortext2, setErrorText2] = useState();
 
   const SignUpOnChange = (e) => {
     const { name, value } = e.target;
@@ -66,6 +87,98 @@ export const AppContextProvider = (props) => {
       ...inputValue,
       [name]: value,
     });
+  };
+
+  const handleDeviceRegistration = () => {
+    if (
+      deviceInfo.device_1.brand != "" &&
+      deviceInfo.device_2.brand != "" &&
+      deviceInfo.device_1.alias != "" &&
+      deviceInfo.device_2.alias != ""
+    ) {
+      console.log("Devices Registered");
+      devicesRegistered.device_1 = true;
+      devicesRegistered.device_2 = true;
+      // Device1: shellyplus1pm-a8032ab11964 Device2: shellyplus1pm-7c87ce719ccc
+      const data = {
+        device:1,
+        id: "shellyplus1pm-a8032ab11964",
+        applience_brand: deviceInfo.device_1.brand,
+        applience_variant: deviceInfo.device_1.alias,
+        data: {
+          apower: 0,
+          voltage: 0,
+          current: 0,
+          aenergy: 0,
+        },
+      };
+      const data2 = {
+        device:2,
+        id: "shellyplus1pm-7c87ce719ccc",
+        applience_brand: deviceInfo.device_2.brand,
+        applience_variant: deviceInfo.device_2.alias,
+        data: {
+          apower: 0,
+          voltage: 0,
+          current: 0,
+          aenergy: 0,
+        },
+      };
+      fetch("http://localhost:3001/payload/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }).then((response) => {
+        if (!response.ok) {
+          response.json().then((data) => {
+            devicesRegistered.device_1 = true;
+            devicesRegistered.device_2 = true;
+            // console.log(data.message);
+            setErrorText(data.message);
+          });
+        }
+      });
+      fetch("http://localhost:3001/payload/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data2),
+      }).then((response) => {
+        if (!response.ok) {
+          response.json().then((data) => {
+            // console.log(data.message);
+            setErrorText(data.message);
+          });
+        } else {
+          console.log("Second Fetch is running");
+          setIsDeviceRegistered(true)
+          navigate("/dashboard/dashboard/dashboard");
+        }
+      });
+    } else {
+      setErrorText2("Please make sure all fields have values");
+    }
+  };
+
+  const handleDevicePick = () => {
+    console.log("pressed");
+    if (
+      deviceInfo.device_1.brand != "" &&
+      deviceInfo.device_2.brand != "" &&
+      deviceInfo.device_1.alias != "" &&
+      deviceInfo.device_2.alias != ""
+    ) {
+      console.log("Devices picked");
+      devicesRegistered.device_1 = true;
+      devicesRegistered.device_2 = true;
+      navigate("/dashboard/dashboard/dashboard");
+    } else {
+      console.log("Pressed and has error");
+      setErrorText2("Please make sure all fields are selected");
+    }
   };
 
   const SignUpSubmit = async (e) => {
@@ -133,8 +246,7 @@ export const AppContextProvider = (props) => {
         console.log(errorData.message);
         setErrorMessage(errorData.message);
         setIsErrorVisible(true);
-      } 
-      else {
+      } else {
         console.log("User logged in successfully");
         const responseData = await response.json();
         console.log(responseData.data.user);
@@ -142,7 +254,7 @@ export const AppContextProvider = (props) => {
         localStorage.setItem("authToken", token);
         setAuthenticated(true);
         setUser(responseData.data.user);
-        navigate("/dashboard/dashboard/dashboard");
+        navigate("/devices");
       }
     } catch (error) {
       console.log(error);
@@ -162,7 +274,7 @@ export const AppContextProvider = (props) => {
   };
 
   const ResetOnChange = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     setInputValue({
       ...inputValue,
       [name]: value,
@@ -180,7 +292,7 @@ export const AppContextProvider = (props) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({inputValue}),
+        body: JSON.stringify({ inputValue }),
       }).then((response) => {
         if (!response.ok) {
           response.json().then((data) => {
@@ -192,7 +304,7 @@ export const AppContextProvider = (props) => {
           navigate("/newpassword");
         }
       });
-    }catch(error) {
+    } catch (error) {
       console.log(error);
     }
     setInputValue({
@@ -214,10 +326,10 @@ export const AppContextProvider = (props) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization : `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({inputValue}),
-      })
+        body: JSON.stringify({ inputValue }),
+      });
       if (!response.ok) {
         const errorData = await response.json();
         console.log("Update failed:", errorData.message);
@@ -225,7 +337,7 @@ export const AppContextProvider = (props) => {
       } else {
         console.log("Details updated successfully");
       }
-    }catch(error) {
+    } catch (error) {
       console.log(error);
     }
     setInputValue({
@@ -326,7 +438,7 @@ export const AppContextProvider = (props) => {
     "21:00",
     "22:00",
     "23:00",
-  ]
+  ];
 
   const retrieveAll = () => {
     fetch("http://localhost:3001/consumptions").then((response) =>
@@ -415,14 +527,14 @@ export const AppContextProvider = (props) => {
   };
 
   // Analytics page
-  const [aenergy1,setAenergy1] = useState([]);
-  const [aenergy2,setAenergy2] = useState([]);
-  const [apower1,setApower1] = useState([]);
-  const [apower2,setApower2] = useState([]);
-  const [acurrent1,setAcurrent1] = useState([]);
-  const [acurrent2,setAcurrent2] = useState([]);
-  const [avoltage1,setAvoltage1] = useState([]);
-  const [avoltage2,setAvoltage2] = useState([]);
+  const [aenergy1, setAenergy1] = useState([]);
+  const [aenergy2, setAenergy2] = useState([]);
+  const [apower1, setApower1] = useState([]);
+  const [apower2, setApower2] = useState([]);
+  const [acurrent1, setAcurrent1] = useState([]);
+  const [acurrent2, setAcurrent2] = useState([]);
+  const [avoltage1, setAvoltage1] = useState([]);
+  const [avoltage2, setAvoltage2] = useState([]);
   const generateReadings = () => {
     fetch("http://localhost:3001/consumptions/device1")
       .then((response) => response.json())
@@ -435,8 +547,14 @@ export const AppContextProvider = (props) => {
             let energy = result[i][j]["aenergy"]["total"];
             setAenergy1((prevEnergy) => [...prevEnergy, energy]);
             setApower1((prevEnergy) => [...prevEnergy, result[i][j]["apower"]]);
-            setAcurrent1((prevEnergy) => [...prevEnergy, result[i][j]["current"]]);
-            setAvoltage1((prevEnergy) => [...prevEnergy, result[i][j]["voltage"]]);
+            setAcurrent1((prevEnergy) => [
+              ...prevEnergy,
+              result[i][j]["current"],
+            ]);
+            setAvoltage1((prevEnergy) => [
+              ...prevEnergy,
+              result[i][j]["voltage"],
+            ]);
           }
         }
       });
@@ -451,8 +569,14 @@ export const AppContextProvider = (props) => {
             let energy = result[i][j]["aenergy"]["total"];
             setAenergy2((prevEnergy) => [...prevEnergy, energy]);
             setApower2((prevEnergy) => [...prevEnergy, result[i][j]["apower"]]);
-            setAcurrent2((prevEnergy) => [...prevEnergy, result[i][j]["current"]]);
-            setAvoltage2((prevEnergy) => [...prevEnergy, result[i][j]["voltage"]]);
+            setAcurrent2((prevEnergy) => [
+              ...prevEnergy,
+              result[i][j]["current"],
+            ]);
+            setAvoltage2((prevEnergy) => [
+              ...prevEnergy,
+              result[i][j]["voltage"],
+            ]);
           }
         }
       });
@@ -463,17 +587,18 @@ export const AppContextProvider = (props) => {
 
   const [typing, setTyping] = useState(false);
   const [messages, setMessages] = useState([
-      {
-      message: "Hi there I am Flow-Bot, let me help you learn more about electricity!",
-      sender: "Flow-Bot"
-      }
+    {
+      message:
+        "Hi there I am Flow-Bot, let me help you learn more about electricity!",
+      sender: "Flow-Bot",
+    },
   ]);
 
   const handleSend = async (message) => {
     const newMessage = {
       message: message,
       sender: "user",
-      direction: "outgoing"
+      direction: "outgoing",
     };
 
     const newMessages = [...messages, newMessage];
@@ -491,7 +616,10 @@ export const AppContextProvider = (props) => {
 
     if (timeSinceLastRequest < MINIMUM_TIME_BETWEEN_REQUESTS) {
       await new Promise((resolve) =>
-        setTimeout(resolve, MINIMUM_TIME_BETWEEN_REQUESTS - timeSinceLastRequest)
+        setTimeout(
+          resolve,
+          MINIMUM_TIME_BETWEEN_REQUESTS - timeSinceLastRequest
+        )
       );
     }
 
@@ -508,40 +636,45 @@ export const AppContextProvider = (props) => {
 
     const systemMessage = {
       role: "system",
-      content: "Explain all concepts like I am 10 years old"
+      content: "Explain all concepts like I am 10 years old",
     };
 
     const apiRequestBody = {
       model: "gpt-3.5-turbo",
-      messages: [systemMessage, ...apiMessages]
+      messages: [systemMessage, ...apiMessages],
     };
 
     await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         Authorization: "Bearer " + API_KEY,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(apiRequestBody)
+      body: JSON.stringify(apiRequestBody),
     })
-    .then((data) => data.json())
-    .then((data) => {
-    console.log(data);
-    console.log(data.choices[0].message.content);
-    setMessages([
-        ...chatMessages,
-        {
-        message: data.choices[0].message.content,
-        sender: "Flow-Bot"
-        }
-    ]);
-    setTyping(false);
-    });
-  }
+      .then((data) => data.json())
+      .then((data) => {
+        console.log(data);
+        console.log(data.choices[0].message.content);
+        setMessages([
+          ...chatMessages,
+          {
+            message: data.choices[0].message.content,
+            sender: "Flow-Bot",
+          },
+        ]);
+        setTyping(false);
+      });
+  };
+
+  const [labels_, setLabels] = useState([]);
 
   return (
     <AppContext.Provider
       value={{
+        // dataObject,
+        // dashRoutes,setDashroutes,
+        labels_, setLabels,
         apower,
         apower_,
         consumption,
@@ -583,6 +716,21 @@ export const AppContextProvider = (props) => {
         acurrent2,
         avoltage2,
         labels,
+        devicesRegistered,
+        deviceInfo,
+        errortext,
+        errortext2,
+        brands,
+        setBrands,
+        variants,
+        navigate,
+        isdevicesRegistered,setIsDeviceRegistered,
+        setVariants,
+        handleDevicePick,
+        setErrorText,
+        handleDeviceRegistration,
+        setDeviceInfo,
+        setDevicesRegisters,
         setAenergy1,
         generateReadings,
         togglePasswordVisibility,
@@ -614,7 +762,10 @@ export const AppContextProvider = (props) => {
         setCost,
         typing,
         messages,
-        handleSend
+        handleSend,
+        c_cost,
+        setc_Cost,
+        
       }}
     >
       {props.children}
