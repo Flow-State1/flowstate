@@ -58,8 +58,8 @@ export const AppContextProvider = (props) => {
   const [chartData_, setChartData_] = useState([]);
   const [brands, setBrands] = useState([]);
   const [variants, setVariants] = useState([]);
-  const [c_cost,setc_Cost] = useState(0);
-  const [isdevicesRegistered,setIsDeviceRegistered] = useState(false);
+  const [c_cost, setc_Cost] = useState(0);
+  const [isdevicesRegistered, setIsDeviceRegistered] = useState(false);
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
@@ -101,7 +101,7 @@ export const AppContextProvider = (props) => {
       devicesRegistered.device_2 = true;
       // Device1: shellyplus1pm-a8032ab11964 Device2: shellyplus1pm-7c87ce719ccc
       const data = {
-        device:1,
+        device: 1,
         id: "shellyplus1pm-a8032ab11964",
         applience_brand: deviceInfo.device_1.brand,
         applience_variant: deviceInfo.device_1.alias,
@@ -113,7 +113,7 @@ export const AppContextProvider = (props) => {
         },
       };
       const data2 = {
-        device:2,
+        device: 2,
         id: "shellyplus1pm-7c87ce719ccc",
         applience_brand: deviceInfo.device_2.brand,
         applience_variant: deviceInfo.device_2.alias,
@@ -154,7 +154,7 @@ export const AppContextProvider = (props) => {
           });
         } else {
           console.log("Second Fetch is running");
-          setIsDeviceRegistered(true)
+          setIsDeviceRegistered(true);
           navigate("/dashboard/dashboard/dashboard");
         }
       });
@@ -729,8 +729,9 @@ export const AppContextProvider = (props) => {
         setTyping(false);
       });
   };
-
+  const [isCon,setCon] = useState(true);
   const [labels_, setLabels] = useState([]);
+  
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [profilePictureURL, setProfilePictureURL] = useState(null);
@@ -811,7 +812,9 @@ export const AppContextProvider = (props) => {
         handlePictureSubmit,
         // dataObject,
         // dashRoutes,setDashroutes,
-        labels_, setLabels,
+        labels_,
+        isCon,setCon,
+        setLabels,
         apower,
         apower_,
         consumption,
@@ -861,7 +864,8 @@ export const AppContextProvider = (props) => {
         setBrands,
         variants,
         navigate,
-        isdevicesRegistered,setIsDeviceRegistered,
+        isdevicesRegistered,
+        setIsDeviceRegistered,
         setVariants,
         handleDevicePick,
         setErrorText,

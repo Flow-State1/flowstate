@@ -67,6 +67,7 @@ const Dashboard = () => {
     devicesRegistered,
     dashRoutes,setDashroutes,
     deviceInfo,
+    setCon
   } = useContext(AppContext);
 
   const userName = user ? user.name : " ";
@@ -75,7 +76,9 @@ const Dashboard = () => {
 
   // After registering create an instance of the websocket, the websocket should only be created when devices are registered(we can just create an actual page fro registering the devices instead of using acomponent this way we can set a boolean and pass it to the dashboard)
 
-
+// console.log("comsumption",consumption);
+// console.log("comsumption_",consumption_);
+// console.log(socket);
 
   const dataObject = {
     labels:labels_,
@@ -94,7 +97,7 @@ const Dashboard = () => {
       },
     ],
   };
-
+  const navigate = useNavigate();
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -169,7 +172,7 @@ const Dashboard = () => {
           <div className="dashboard-content-body">
             <div className="dashboard-content-body-summary-graph-card">
               <div className="dashboard-content-body-summary-graph-card-header">
-                <h3>Live Graph</h3>
+                <h3>Live Graph Consumption(Kw/h)</h3>
               </div>
               <Line data={dataObject} />
             </div>
@@ -183,6 +186,38 @@ const Dashboard = () => {
                 <div className="dashboard-content-body-profile-right-card-avatar-name">
                   <h3>Hi {userName}</h3>
                   <p>How are you today?</p>
+                  {/* Close connection to the websocket first */}
+                  <p>Click button to change devices</p>
+                  <button
+                    style={{
+                      border:"none",
+                      padding:"5px 25px",
+                      borderRadius:"5px",
+                      background: "#0A4D68",
+                      color:"white"
+                    }}
+                    onClick={()=>{
+                      // This should also reset the values of power and everything else that is being shown on the live chart portion
+                      setCon(false)
+                      fetch('http://localhost:3001/payload/reset').then((res)=>{
+                        setPower(0)
+                        setPower_(0)
+                        setConsumption([])
+                        setConsumption_([])
+                        setCurrent(0)
+                        setCurrent_(0)
+                        setVoltage(0)
+                        setVoltage_(0)
+                        setCost(0)
+                        setLabels([])
+                        if(!res.ok){
+                          console.log("Response error");
+                        }else{
+                          navigate('/devices')
+                        }
+                      })
+                    }}
+                  >Change Devices</button>
                 </div>
               </div>
             </div>
@@ -193,6 +228,7 @@ const Dashboard = () => {
               </div>
             </div>
 
+            {/*Change this section to be a form wheee user can change the devices they are using  */}
             <div className="dashboard-content-body-profile-middle-mini-cards">
               <div className="dashboard-content-body-profile-middle-mini-card">
                 <div className="dashboard-content-body-profile-middle-mini-card-header">
@@ -213,6 +249,8 @@ const Dashboard = () => {
                   <h3>Power2: {apower_}</h3>
                 </div>
               </div>
+
+            {/*Add a section with a table to show data that is receive, such as the current for device 1 and so on  */}
             </div>
           </div>
         </div>
