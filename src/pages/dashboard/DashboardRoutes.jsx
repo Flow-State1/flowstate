@@ -41,66 +41,89 @@ const DashboardRoutes = () => {
   let c_cost = 0;
 
   useEffect(() => {
+    const socket = new WebSocket("ws://localhost:3001");
+    let saved_time = `${hour}:${minutes}`;
+    socket.onopen = () => {
+      console.log("Connected to websocket");
+    };
+
+    //Listen for messages from web socket
+    socket.addEventListener("message", (event) => {
+      const json = JSON.parse(event.data);
+      console.log(json);
+      // Updating variables for device1
+      if (json["payload_src"] == "shellyplus1pm-a8032ab11964") {
+        let power = json.data[json.data.length - 1].apower.toFixed(4);
+        let voltage = json.data[json.data.length - 1].voltage.toFixed(4);
+        let current = json.data[json.data.length - 1].current;
+        let labels = json.labels_array[(json.labels_array).length - 1];
+        console.log("Labels for ", json["payload_src"], " is ", labels);
+        console.log("Labels for ", json["payload_src"], " is ", json.labels_array);
+
+        setPower(power);
+        setConsumption((prevConsumption) => {
+          let consumption = [...prevConsumption, json.power];
+          // let duration = consumption.length/60;
+          let result = power / 60;
+          console.log("cons1", result);
+          return [...prevConsumption, result];
+        });
+        setVoltage(voltage);
+        setCurrent(current);
+        setCost(() => {
+          const pwr_kwh = power;
+          const cst = pwr_kwh * 1.77;
+          c_cost = c_cost + cst;
+          let finalCost = c_cost.toFixed(4);
+          return finalCost;
+        });
+      }
+
+      // Updating state variable for device 2
+      else if (json["payload_src"] == "shellyplus1pm-7c87ce719ccc") {
+        let power = json.data[json.data.length - 1].apower.toFixed(4);
+        let voltage = json.data[json.data.length - 1].voltage.toFixed(4);
+        let current = json.data[json.data.length - 1].current;
+        let labels = json.labels_array[(json.labels_array).length - 1];
+        console.log("Labels for ", json["payload_src"], " is ", labels);
+        console.log("Labels for ", json["payload_src"], " is ", json.labels_array);
+
+        setLabels((prevLabel) => {
+          if (prevLabel !== labels) {
+            console.log("Prev label is ", prevLabel);
+            console.log("Current label is ", labels);
+            return [...prevLabel, labels];
+          } else {
+            console.log("Prev label is ", prevLabel);
+            console.log("Current label is ", labels);
+            return prevLabel;
+          }
+        });
+        setPower_(power);
+        // Calculate the consumption of the devices, by using the values in the labels array is the number of minutes a device has been on(time/duration)
+        // Then use the power(which is now in Kw/h)
+        // Get the duration the device has been on for(length of array) devide it by 60 to get it in hour
+        // Divide the power you got by the newly calculated duration
+        setConsumption_((prevConsumption) => {
+          let consumption = [...prevConsumption, json.power];
+          // let duration = consumption.length/60;
+          let result = power / 60;
+          console.log("cons2", result);
+          return [...prevConsumption, result];
+        });
+        setVoltage_(voltage);
+        setCurrent_(current);
+        setCost(() => {
+          const pwr_kwh = power;
+          const cst = pwr_kwh * 1.77;
+          let finalCost = c_cost.toFixed(4);
+          return finalCost;
+        });
+      }
+    });
+
     return () => {
-      const socket = new WebSocket("ws://localhost:3001");
-      let saved_time = `${hour}:${minutes}`;
-
-      //Listen for messages from web socket
-      socket.addEventListener("message", (event) => {
-        const json = JSON.parse(event.data);
-        // Updating variables for device1
-        if (json["payload_src"] == "shellyplus1pm-a8032ab11964") {
-          setPower(json.power);
-          setConsumption((prevConsumption) => {
-            if (json.aenergy != 0) {
-              return [...prevConsumption, json.aenergy];
-            } else if (json.aenergy == 0) {
-              return 0;
-            }
-          });
-          setVoltage(json.voltage);
-          setCurrent(json.current_);
-          setCost(() => {
-            const pwr_kwh = json.power;
-            const cst = pwr_kwh * 1.77;
-            c_cost = c_cost + cst;
-            let finalCost = c_cost.toFixed(4)
-            return finalCost ;
-          });
-
-        }
-
-        // Updating state variable for device 2
-        else if (json["payload_src"] == "shellyplus1pm-7c87ce719ccc") {
-          setLabels((prevLabel) => {
-            if ((prevLabel) !== json.time_label) {
-              console.log("Prev label is ",prevLabel);
-              console.log("Current label is ",json.time_label);
-              return [...prevLabel, json.time_label];
-            } else {
-              console.log("Prev label is ",prevLabel);
-              console.log("Current label is ",json.time_label);
-              return prevLabel
-            }
-          });
-          setPower_(json.power);
-          setConsumption_((prevConsumption) => {
-            if (json.aenergy != 0) {
-              return [...prevConsumption, json.aenergy];
-            } else if (json.aenergy == 0) {
-              return 0;
-            }
-          });
-          setVoltage_(json.voltage);
-          setCurrent_(json.current_);
-          setCost(() => {
-            const pwr_kwh = json.power;
-            const cst = pwr_kwh * 1.77;
-            let finalCost = c_cost.toFixed(4)
-            return finalCost ;
-          });
-        }
-      });
+      // socket.close();
     };
   }, []);
 
