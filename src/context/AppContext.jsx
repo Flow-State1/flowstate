@@ -229,6 +229,8 @@ export const AppContextProvider = (props) => {
     });
   };
 
+  const [UserId, setUserId] = useState(null);
+
   const LoginSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -250,6 +252,10 @@ export const AppContextProvider = (props) => {
         console.log("User logged in successfully");
         const responseData = await response.json();
         console.log(responseData.data.user);
+        const user = responseData.data.user;
+        console.log(user);
+        const UserId = user.id;
+        setUserId(UserId);
         const token = responseData.token;
         localStorage.setItem("authToken", token);
         setAuthenticated(true);
@@ -329,8 +335,51 @@ export const AppContextProvider = (props) => {
     }));
   };
 
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [profilePictureURL, setProfilePictureURL] = useState(null);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+  };
+
+  const handlePictureSubmit = async (e) => {
+    e.preventDefault();
+    const token = getAuthToken();
+    console.log('function called: picture uploaded');
+    if (!selectedFile) {
+      console.log('Please select a file to upload.');
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append('profilePicture', selectedFile);
+
+      const response = await fetch('http://localhost:3001/users/upload-profile-picture', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        console.log('Profile picture uploaded successfully.');
+        const responseData = await response.json();
+        const uploadedImageURL = responseData.imageURL;
+        setProfilePictureURL(uploadedImageURL);
+      } else {
+        console.log('Error uploading profile picture.');
+      }
+    } catch (error) {
+      console.error('Error uploading profile picture:', error);
+    }
+  }
+
   const HandleSaveChanges = async (e) => {
     e.preventDefault();
+    handlePictureSubmit(e);
     setIsLoading(true);
     const token = getAuthToken();
     try {
@@ -646,7 +695,7 @@ export const AppContextProvider = (props) => {
   };
 
   //Chat-bot context, functions and api-key
-  const API_KEY = "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";
+  const API_KEY = "";
 
   const [typing, setTyping] = useState(false);
   const [messages, setMessages] = useState([
@@ -732,46 +781,6 @@ export const AppContextProvider = (props) => {
 
   const [labels_, setLabels] = useState([]);
 
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [profilePictureURL, setProfilePictureURL] = useState(null);
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setSelectedFile(file);
-  };
-
-  const handlePictureSubmit = async (e) => {
-    e.preventDefault();
-    const token = getAuthToken();
-    if (!selectedFile) {
-      console.log('Please select a file to upload.');
-      return;
-    }
-
-    try {
-      const formData = new FormData();
-      formData.append('profilePicture', selectedFile);
-
-      const response = await fetch('http://localhost:3001/users/upload-profile-picture', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (response.status === 200) {
-        console.log('Profile picture uploaded successfully.');
-        const responseData = await response.json();
-        const uploadedImageURL = responseData.imageURL;
-        setProfilePictureURL(uploadedImageURL);
-      } else {
-        console.log('Error uploading profile picture.');
-      }
-    } catch (error) {
-      console.error('Error uploading profile picture:', error);
-    }
-  }
 
   const [logoutSuccess, setLogoutSuccess] = useState(false);
 
@@ -800,6 +809,8 @@ export const AppContextProvider = (props) => {
   return (
     <AppContext.Provider
       value={{
+        UserId, 
+        setUserId,
         handleLogout,
         logoutSuccess, 
         setLogoutSuccess,
@@ -808,7 +819,7 @@ export const AppContextProvider = (props) => {
         selectedFile,
         setSelectedFile,
         handleFileChange,
-        handlePictureSubmit,
+        //handlePictureSubmit,
         // dataObject,
         // dashRoutes,setDashroutes,
         labels_, setLabels,

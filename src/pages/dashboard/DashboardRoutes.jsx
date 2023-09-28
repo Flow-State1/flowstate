@@ -74,12 +74,12 @@ const DashboardRoutes = () => {
         else if (json["payload_src"] == "shellyplus1pm-7c87ce719ccc") {
           setLabels((prevLabel) => {
             if ((prevLabel) !== json.time_label) {
-              console.log("Prev label is ",prevLabel);
-              console.log("Current label is ",json.time_label);
+              //console.log("Prev label is ",prevLabel);
+              //console.log("Current label is ",json.time_label);
               return [...prevLabel, json.time_label];
             } else {
-              console.log("Prev label is ",prevLabel);
-              console.log("Current label is ",json.time_label);
+              //console.log("Prev label is ",prevLabel);
+              //console.log("Current label is ",json.time_label);
               return prevLabel
             }
           });

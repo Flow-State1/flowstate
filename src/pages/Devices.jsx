@@ -83,7 +83,7 @@ const Devices = () => {
                   style={{ width: isTabletOrLaptop ? "30rem" : "80%" }}
                 />
               </div>
-            <div className="device-registered-select" style={{ borderLeft: "1px solid #ccc",paddingLeft: "50px"}}>
+            <div className="device-registered-select" style={{ borderLeft: "2px solid #ccc",paddingLeft: "50px"}}>
               <h1 className="device-card-title">Registered</h1>
               <select
                 style={{
