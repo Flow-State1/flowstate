@@ -27,6 +27,8 @@ const Devices = () => {
   const [variants,setVariants] = useState([]);
   const [variants_,setVariants_] = useState([]);
 
+  console.log(user.id);
+
   useEffect(() => {
     fetch(`http://localhost:3001/users/${user.id}`, {
       method: "POST",

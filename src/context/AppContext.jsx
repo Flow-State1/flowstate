@@ -271,7 +271,7 @@ export const AppContextProvider = (props) => {
                 } else {
                     console.log("User created and directed to dashboard");
                     setUser(inputValue);
-                    navigate("/dashboard/dashboard/dashboard");
+                    navigate("/devices");
                 }
             });
         } catch (error) {
