@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useMediaQuery } from 'react-responsive';
 import { motion } from 'framer-motion';
@@ -7,10 +7,31 @@ import { AppContext } from '../../context/AppContext';
 
 const Profile = () => {
 
-    const {user, profilePictureURL} = useContext(AppContext);
+    const {
+        user, 
+        profilePictureURL, 
+        isTabletOrLaptop,
+        setProfilePictureURL,
+        UserId
+    } = useContext(AppContext);
     const userName = user ? user.name : ' ';
+
+    useEffect(() => {
+        console.log(UserId);
+        fetch(`/uploads/profile-pictures/${UserId}`)
+      .then((response) => response.blob())
+      .then((data) => {
+        const imageUrl = URL.createObjectURL(data);
+        console.log(imageUrl);
+        setProfilePictureURL(imageUrl);
+      })
+      .catch((error) => {
+        console.error("Error fetching photo:", error);
+      });
+      console.log(profilePictureURL);
+    }, [UserId]);
+
     const navigate = useNavigate();
-    const isTabletOrLaptop = useMediaQuery({ query: '(min-width: 768px)' });
     const handleEditProfile = () => {
         navigate('/dashboard/dashboard/profile/editprofile')
     }
@@ -34,14 +55,13 @@ const Profile = () => {
                 <div className='profile-content-header'>
                     <h2>Profile</h2>
                 </div>
-
                 <div className='profile-content-body'>
                     <div className='profile-content-body-card'>
                         <div className='profile-content-body-card-header'>
                             <div className="profile-profile-avatar">
                                 <img 
-                                    src={profilePictureURL ? `http://localhost:3001/users/uploads/profile-pictures/${profilePictureURL}` : 'https://www.w3schools.com/howto/img_avatar.png'}
-                                    alt=""                                    
+                                    src={'https://www.w3schools.com/howto/img_avatar.png'}
+                                    alt="" 
                                     style={{
                                         width: '12rem',
                                         height: '12rem',

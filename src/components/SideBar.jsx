@@ -62,7 +62,6 @@ const SideBarNavigation = () => {
                     <img src={logo} alt='logo' className='sidebar-logo' />
                     <h1 className='sidebar-title'>Flow State</h1>
                 </div>
-
                 <div className='sidebar-menu'>
                     <ul className='sidebar-list'>
                         <li className={`sidebar-list-item ${isActiveLink('/dashboard/dashboard/dashboard') ? 'active' : ''}`}>
@@ -176,7 +175,7 @@ const SideBarNavigation = () => {
                                     style={{
                                         fontSize: '1.5rem',
                                         color: '#fff',
-                                        marginRight: '1rem'
+                                        marginRight: '1rem',
                                     }}
                                 />
                                 Logout
