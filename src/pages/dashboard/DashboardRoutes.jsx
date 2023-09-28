@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useMemo } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Routes, Route } from "react-router-dom";
+import React, { useContext, useEffect} from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import LayoutDashboard from "../../../src/components/BackgroundImage";
 import Analytics from "./Analytics";
@@ -15,11 +14,10 @@ import ChatBot from "./ChatBot";
 import DashboardContextProvider from "../../context/DashboardContext";
 import Report from "./Report";
 import { AppContext } from "../../context/AppContext";
-import LoginCard from "../../components/LoginCard";
-import Redirect from "../Redirect";
 import { ThemeProvider } from "../../context/ThemeContext";
 
 const DashboardRoutes = () => {
+    const path = useLocation();
     const {
         setPower,
         setPower_,
@@ -31,18 +29,15 @@ const DashboardRoutes = () => {
         setVoltage_,
         setCost,
         setLabels,
+        user
     } = useContext(AppContext);
 
-    const time = new Date();
-    const hour = time.getHours();
-    const minutes =
-        time.getMinutes() < 10 ? `0${time.getMinutes()}` : time.getMinutes();
-    const path = useLocation();
     let c_cost = 0;
+    console.log("User: ",user);
 
     useEffect(() => {
         const socket = new WebSocket("ws://localhost:3001");
-        let saved_time = `${hour}:${minutes}`;
+        // let saved_time = `${hour}:${minutes}`;
         socket.onopen = () => {
             console.log("Connected to websocket");
         };
@@ -62,7 +57,7 @@ const DashboardRoutes = () => {
 
                 setPower(power);
                 setConsumption((prevConsumption) => {
-                    let consumption = [...prevConsumption, json.power];
+                    // let consumption = [...prevConsumption, json.power];
                     // let duration = consumption.length/60;
                     let result = power / 60;
                     console.log("cons1", result);
@@ -105,7 +100,7 @@ const DashboardRoutes = () => {
                 // Get the duration the device has been on for(length of array) devide it by 60 to get it in hour
                 // Divide the power you got by the newly calculated duration
                 setConsumption_((prevConsumption) => {
-                    let consumption = [...prevConsumption, json.power];
+                    // let consumption = [...prevConsumption, json.power];
                     // let duration = consumption.length/60;
                     let result = power / 60;
                     console.log("cons2", result);
@@ -116,6 +111,7 @@ const DashboardRoutes = () => {
                 setCost(() => {
                     const pwr_kwh = power;
                     const cst = pwr_kwh * 1.77;
+                    c_cost = c_cost + cst;
                     let finalCost = c_cost.toFixed(4);
                     return finalCost;
                 });

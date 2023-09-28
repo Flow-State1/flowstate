@@ -154,10 +154,25 @@ export const AppContextProvider = (props) => {
                     });
                 } else {
                     console.log("Second Fetch is running");
+                }
+            })
+            fetch(`http://localhost:3001/users/${user.id}`,{
+                method:"POST",
+                headers:{
+                    "Content-Type": "application/json",
+                }
+            }).then((response) => {
+                if (!response.ok) {
+                    response.json().then((data) => {
+                        // console.log(data.message);
+                        setErrorText(data.message);
+                    });
+                } else {
+                    console.log("Third Fetch is running");
                     setIsDeviceRegistered(true);
                     navigate("/dashboard/dashboard/dashboard");
                 }
-            });
+            })
         } else {
             setErrorText2("Please make sure all fields have values");
         }
