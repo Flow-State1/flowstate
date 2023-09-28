@@ -77,6 +77,16 @@ export const AppContextProvider = (props) => {
             alias: "",
         },
     });
+    const [deviceInfo_, setDeviceInfo_] = useState({
+        device_1: {
+            brand: "",
+            alias: "",
+        },
+        device_2: {
+            brand: "",
+            alias: "",
+        },
+    });
 
     const [errortext, setErrorText] = useState();
     const [errortext2, setErrorText2] = useState();
@@ -154,32 +164,18 @@ export const AppContextProvider = (props) => {
                     });
                 } else {
                     console.log("Second Fetch is running");
-                }
-            })
-            fetch(`http://localhost:3001/users/${user.id}`,{
-                method:"POST",
-                headers:{
-                    "Content-Type": "application/json",
-                }
-            }).then((response) => {
-                if (!response.ok) {
-                    response.json().then((data) => {
-                        // console.log(data.message);
-                        setErrorText(data.message);
-                    });
-                } else {
-                    console.log("Third Fetch is running");
                     setIsDeviceRegistered(true);
                     navigate("/dashboard/dashboard/dashboard");
                 }
             })
+
         } else {
             setErrorText2("Please make sure all fields have values");
         }
     };
 
     const handleDevicePick = () => {
-        console.log("pressed");
+        
         if (
             deviceInfo.device_1.brand != "" &&
             deviceInfo.device_2.brand != "" &&
@@ -189,10 +185,68 @@ export const AppContextProvider = (props) => {
             console.log("Devices picked");
             devicesRegistered.device_1 = true;
             devicesRegistered.device_2 = true;
-            navigate("/dashboard/dashboard/dashboard");
+            // Device1: shellyplus1pm-a8032ab11964 Device2: shellyplus1pm-7c87ce719ccc
+            const data = {
+                device: 1,
+                id: "shellyplus1pm-a8032ab11964",
+                applience_brand: deviceInfo_.device_1.brand,
+                applience_variant: deviceInfo_.device_1.alias,
+                data: {
+                    apower: 0,
+                    voltage: 0,
+                    current: 0,
+                    aenergy: 0,
+                },
+            };
+            const data2 = {
+                device: 2,
+                id: "shellyplus1pm-7c87ce719ccc",
+                applience_brand: deviceInfo_.device_2.brand,
+                applience_variant: deviceInfo_.device_2.alias,
+                data: {
+                    apower: 0,
+                    voltage: 0,
+                    current: 0,
+                    aenergy: 0,
+                },
+            };
+            fetch("http://localhost:3001/payload/2", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            }).then((response) => {
+                if (!response.ok) {
+                    response.json().then((data) => {
+                        devicesRegistered.device_1 = true;
+                        devicesRegistered.device_2 = true;
+                        // console.log(data.message);
+                        setErrorText(data.message);
+                    });
+                }
+            });
+            fetch("http://localhost:3001/payload/2", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data2),
+            }).then((response) => {
+                if (!response.ok) {
+                    response.json().then((data) => {
+                        // console.log(data.message);
+                        setErrorText(data.message);
+                    });
+                } else {
+                    console.log("Second Fetch is running");
+                    setIsDeviceRegistered(true);
+                    navigate("/dashboard/dashboard/dashboard");
+                }
+            })
+
         } else {
-            console.log("Pressed and has error");
-            setErrorText2("Please make sure all fields are selected");
+            setErrorText2("Please make sure all fields have values");
         }
     };
 
