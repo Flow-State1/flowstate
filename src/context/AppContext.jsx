@@ -484,6 +484,7 @@ const [data, setData] = useState([]);
 const [voltage, setVoltage] = useState();
 const [apower, setPower] = useState();
 const [current, setCurrent] = useState();
+const [killowatts, setKillowatts] = useState(0);
 const [consumption, setConsumption] = useState([]);
 const [minutes_ts, setMinutes_ts] = useState();
 const [cost, setCost] = useState(0);
@@ -491,6 +492,7 @@ const [cost, setCost] = useState(0);
 const [data_, setData_] = useState([]);
 const [voltage_, setVoltage_] = useState();
 const [apower_, setPower_] = useState();
+const [killowatts_, setKillowatts_] = useState(0);
 const [current_, setCurrent_] = useState();
 const [consumption_, setConsumption_] = useState([]);
 
@@ -652,6 +654,25 @@ const retrieveAll = () => {
               // console.log(resultArray);
           });
   };
+
+  // const kilowattsValue = apower / 1000;
+  // const kilowattsValue_ = apower_ / 1000;
+  // setKillowatts(kilowattsValue);
+  // setKillowatts_(kilowattsValue_);
+
+  useEffect(() => {
+
+    if (!isNaN(apower) && !isNaN(apower_)) {
+      //Convert apower from watts to kilowatts
+      const kilowattsValue = apower / 1000;
+      const kilowattsValue_ = apower_ / 1000;
+      setKillowatts(kilowattsValue);
+      setKillowatts_(kilowattsValue_);
+    } else {
+      setKillowatts(0);
+      setKillowatts_(0); 
+    }
+  }, [apower]); // This effect will run whenever apower changes
 
   // Analytics page
   const [aenergy1, setAenergy1] = useState([]);
@@ -826,6 +847,19 @@ const handleLogout = async (e) => {
   return (
       <AppContext.Provider
           value={{
+              killowatts_, 
+              setKillowatts_,
+              killowatts,
+              setKillowatts,
+              handleInputChange,
+              profilePictureURL,
+              UserId,
+              handleFileChange,
+              updateOnChange,
+              HandlePasswordChange,
+              retrieveAll,
+              logoutSuccess,
+              handleLogout,
               // dataObject,
               // dashRoutes,setDashroutes,
               labels_,

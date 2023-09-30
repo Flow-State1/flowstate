@@ -33,6 +33,10 @@ const Dashboard = () => {
 
 
     const {
+        killowatts_, 
+        setKillowatts_,
+        killowatts,
+        setKillowatts,
         labels_, setLabels,
         apower,
         apower_,
@@ -198,6 +202,8 @@ const Dashboard = () => {
                             <div className="dashboard-content-body-profile-right-summary-card-header">
                                 <h3>Running Costs:R{cost}</h3>
                             </div>
+                            <h3>{deviceInfo.device_1.alias} kW: {killowatts.toFixed(4)}</h3>
+                            <h3>{deviceInfo.device_2.alias} kW: {killowatts_.toFixed(4)}</h3>
                         </div>
 
                         {/*Change this section to be a form wheee user can change the devices they are using  */}
