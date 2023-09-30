@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   useState,
   createContext,
@@ -138,9 +139,7 @@ export const AppContextProvider = (props) => {
                       // console.log(data.message);
                       setErrorText(data.message);
                   });
-              }
-          });
-          fetch("http://localhost:3001/payload/", {
+              }          fetch("http://localhost:3001/payload/", {
               method: "POST",
               headers: {
                   "Content-Type": "application/json",
@@ -156,6 +155,7 @@ export const AppContextProvider = (props) => {
                   console.log("Second Fetch is running");
               }
           })
+          console.log("Creating appliences with user_id: ",user.id);
           fetch(`http://localhost:3001/users/${user.id}`,{
               method:"POST",
               headers:{
@@ -173,6 +173,8 @@ export const AppContextProvider = (props) => {
                   navigate("/dashboard/dashboard/dashboard");
               }
           })
+          });
+
       } else {
           setErrorText2("Please make sure all fields have values");
       }
@@ -817,7 +819,10 @@ const retrieveAll = () => {
 
 
 const [logoutSuccess, setLogoutSuccess] = useState(false);
-
+const [isCon, setCon] = useState(true);
+const [labels_, setLabels] = useState([]);
+const [cost1,setCost1]=useState(0);
+const [cost2,setCost2]=useState(0);
 const handleLogout = async (e) => {
   e.preventDefault();
   //const token = getAuthToken();
@@ -838,127 +843,128 @@ const handleLogout = async (e) => {
   }catch(error) {
     console.error('Error logging out:', error);
   }
+
+  
+
+
+
 };
 
-  const [isCon, setCon] = useState(true);
-  const [labels_, setLabels] = useState([]);
-
-
-  return (
-      <AppContext.Provider
-          value={{
-              killowatts_, 
-              setKillowatts_,
-              killowatts,
-              setKillowatts,
-              handleInputChange,
-              profilePictureURL,
-              UserId,
-              handleFileChange,
-              updateOnChange,
-              HandlePasswordChange,
-              retrieveAll,
-              logoutSuccess,
-              handleLogout,
-              // dataObject,
-              // dashRoutes,setDashroutes,
-              labels_,
-              isCon, setCon,
-              setLabels,
-              apower,
-              apower_,
-              consumption,
-              consumption_,
-              current,
-              current_,
-              data,
-              data_,
-              payload,
-              payload_,
-              voltage,
-              voltage_,
-              minutes_ts,
-              cost,
-              chart_data_object,
-              chart_image,
-              chart_ref,
-              isTabletOrLaptop,
-              passwordVisible,
-              inputValue,
-              user,
-              name,
-              email,
-              password,
-              confirmPassword,
-              authenticated,
-              chartData,
-              isLoading,
-              isErrorVisible,
-              errorMessage,
-              obj,
-              obj2,
-              aenergy1,
-              acurrent1,
-              apower1,
-              avoltage1,
-              aenergy2,
-              apower2,
-              acurrent2,
-              avoltage2,
-              labels,
-              devicesRegistered,
-              deviceInfo,
-              errortext,
-              errortext2,
-              brands,
-              setBrands,
-              variants,
-              navigate,
-              isdevicesRegistered,
-              setIsDeviceRegistered,
-              setVariants,
-              handleDevicePick,
-              setErrorText,
-              handleDeviceRegistration,
-              setDeviceInfo,
-              setDevicesRegisters,
-              setAenergy1,
-              generateReadings,
-              togglePasswordVisibility,
-              costFunction,
-              setErrorMessage,
-              setIsErrorVisible,
-              SignUpOnChange,
-              SignUpSubmit,
-              LoginOnChange,
-              LoginSubmit,
-              HandleResetPassword,
-              ResetOnChange,
-              HandleSaveChanges,
-              generateReport,
-              setIsLoading,
-              setPower,
-              setPower_,
-              setConsumption,
-              setConsumption_,
-              setCurrent,
-              setCurrent_,
-              setData,
-              setData_,
-              setPayload,
-              setPayload_,
-              setVoltage,
-              setVoltage_,
-              setMinutes_ts,
-              setCost,
-              typing,
-              messages,
-              handleSend,
-              c_cost,
-              setc_Cost,
-          }}
-      >
-          {props.children}
-      </AppContext.Provider>
-  );
+return (
+  <AppContext.Provider
+      value={{
+        killowatts_, 
+        setKillowatts_,
+        killowatts,
+        setKillowatts,
+        handleInputChange,
+        profilePictureURL,
+        UserId,
+        handleFileChange,
+        updateOnChange,
+        HandlePasswordChange,
+        retrieveAll,
+        logoutSuccess,
+        handleLogout,
+          // dataObject,
+          // dashRoutes,setDashroutes,
+          labels_,cost2,setCost2 ,cost1,setCost1,
+          isCon, setCon,
+          setLabels,
+          apower,
+          apower_,
+          consumption,
+          consumption_,
+          current,
+          current_,
+          data,
+          data_,
+          payload,
+          payload_,
+          voltage,
+          voltage_,
+          minutes_ts,
+          cost,
+          chart_data_object,
+          chart_image,
+          chart_ref,
+          isTabletOrLaptop,
+          passwordVisible,
+          inputValue,
+          user,
+          name,
+          email,
+          password,
+          confirmPassword,
+          authenticated,
+          chartData,
+          isLoading,
+          isErrorVisible,
+          errorMessage,
+          obj,
+          obj2,
+          aenergy1,
+          acurrent1,
+          apower1,
+          avoltage1,
+          aenergy2,
+          apower2,
+          acurrent2,
+          avoltage2,
+          labels,
+          devicesRegistered,
+          deviceInfo,
+          errortext,
+          errortext2,
+          brands,
+          setBrands,
+          variants,
+          navigate,
+          isdevicesRegistered,
+          setIsDeviceRegistered,
+          setVariants,
+          handleDevicePick,
+          setErrorText,
+          handleDeviceRegistration,
+          setDeviceInfo,
+          setDevicesRegisters,
+          setAenergy1,
+          generateReadings,
+          togglePasswordVisibility,
+          costFunction,
+          setErrorMessage,
+          setIsErrorVisible,
+          SignUpOnChange,
+          SignUpSubmit,
+          LoginOnChange,
+          LoginSubmit,
+          HandleResetPassword,
+          ResetOnChange,
+          HandleSaveChanges,
+          generateReport,
+          setIsLoading,
+          setPower,
+          setPower_,
+          setConsumption,
+          setConsumption_,
+          setCurrent,
+          setCurrent_,
+          setData,
+          setData_,
+          setPayload,
+          setPayload_,
+          setVoltage,
+          setVoltage_,
+          setMinutes_ts,
+          setCost,
+          typing,
+          messages,
+          handleSend,
+          c_cost,
+          setc_Cost,
+      }}
+  >
+      {props.children}
+  </AppContext.Provider>
+);
 };
