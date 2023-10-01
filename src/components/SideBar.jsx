@@ -78,6 +78,20 @@ const SideBarNavigation = () => {
                                 />Dashboard
                             </Link>
                         </li>
+                        <li className={`sidebar-list-item ${isActiveLink('/dashboard/dashboard/recommendation') ? 'active' : ''}`}>
+                            <Link to='/dashboard/dashboard/recommendation' className='sidebar-link active'>
+                            <FontAwesomeIcon
+                                    icon={faMagnifyingGlassChart}
+                                    className="icon"
+                                    style={{
+                                        fontSize: '1.5rem',
+                                        color: '#fff',
+                                        marginRight: '1.5rem',
+                                    }}
+
+                                />Recommendation
+                            </Link>
+                        </li>
                         <li className={`sidebar-list-item ${isActiveLink('/dashboard/dashboard/analytics') ? 'active' : ''}`}>
                             <Link to='/dashboard/dashboard/analytics' className='sidebar-link'>
                                 <FontAwesomeIcon
@@ -93,7 +107,7 @@ const SideBarNavigation = () => {
                                 Analytics
                             </Link>
                         </li>
-                        <li className={`sidebar-list-item ${isActiveLink('/dashboard/dashboard/analytics') ? 'active' : ''}`}>
+                        {/* <li className={`sidebar-list-item ${isActiveLink('/dashboard/dashboard/analytics') ? 'active' : ''}`}>
                             <Link to='/dashboard/dashboard/report' className='sidebar-link'>
                                 <FontAwesomeIcon
                                     icon={faMagnifyingGlassChart}
@@ -107,7 +121,7 @@ const SideBarNavigation = () => {
                                 />
                                 Report
                             </Link>
-                        </li>
+                        </li> */}
                         <li className={`sidebar-list-item ${isActiveLink('/dashboard/dashboard/chatbot') ? 'active' : ''}`}>
                             <Link to='/dashboard/dashboard/chatbot' className='sidebar-link'>
                                 <FontAwesomeIcon

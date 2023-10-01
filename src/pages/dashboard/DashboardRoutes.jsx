@@ -15,6 +15,7 @@ import DashboardContextProvider from "../../context/DashboardContext";
 import Report from "./Report";
 import { AppContext } from "../../context/AppContext";
 import { ThemeProvider } from "../../context/ThemeContext";
+import Recommendations from "./Recommendation";
 
 const DashboardRoutes = () => {
     const path = useLocation();
@@ -28,6 +29,8 @@ const DashboardRoutes = () => {
         setVoltage,
         setVoltage_,
         setCost,
+        setCost1,
+        setCost2,
         setLabels,
         user
     } = useContext(AppContext);
@@ -66,6 +69,13 @@ const DashboardRoutes = () => {
                 setVoltage(voltage);
                 setCurrent(current);
                 setCost(() => {
+                    const pwr_kwh = power;
+                    const cst = pwr_kwh * 1.77;
+                    c_cost = c_cost + cst;
+                    let finalCost = c_cost.toFixed(4);
+                    return finalCost;
+                });
+                setCost1(() => {
                     const pwr_kwh = power;
                     const cst = pwr_kwh * 1.77;
                     c_cost = c_cost + cst;
@@ -115,6 +125,13 @@ const DashboardRoutes = () => {
                     let finalCost = c_cost.toFixed(4);
                     return finalCost;
                 });
+                setCost2(() => {
+                    const pwr_kwh = power;
+                    const cst = pwr_kwh * 1.77;
+                    c_cost = c_cost + cst;
+                    let finalCost = c_cost.toFixed(4);
+                    return finalCost;
+                });
             }
         });
 
@@ -130,7 +147,8 @@ const DashboardRoutes = () => {
                     <ThemeProvider>
                         <LayoutDashboard>
                             <Routes location={path} key={path.pathname}>
-                                <Route path="/dashboard/dashboard" element={<Dashboard />} />z
+                                <Route path="/dashboard/dashboard" element={<Dashboard />} />
+                                <Route path="/dashboard/recommendation" element={<Recommendations />} />
                                 <Route path="/dashboard/analytics" element={<Analytics />} />
                                 <Route path="/dashboard/chatbot" element={<ChatBot />} />
                                 <Route
