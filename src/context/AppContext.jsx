@@ -308,7 +308,7 @@ const HandleResetPassword = async (e) => {
   setIsLoading(true);
   try {
     await new Promise((resolve) => setTimeout(resolve, 1500));
-    fetch("http://localhost:3001/users/forgotpassword", {
+    fetch("http://localhost:3001/users/forgot-password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -331,7 +331,6 @@ const HandleResetPassword = async (e) => {
   setInputValue({
     ...inputValue,
     email: "",
-    password: "",
   });
   console.log(isLoading);
   setIsLoading(false);
@@ -847,6 +846,9 @@ const handleLogout = async (e) => {
   return (
       <AppContext.Provider
           value={{
+              user,
+              updateInput,
+              passwordInput,
               killowatts_, 
               setKillowatts_,
               killowatts,
