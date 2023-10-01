@@ -109,7 +109,7 @@ const EditProfile = () => {
                                         type="text" 
                                         placeholder='name'
                                         onChange={handleInputChange}
-                                        value={updateInput.name}
+                                        // value={updateInput.name}
                                     />
                                     <input 
                                         className='profile-edit-details-form-input' 
@@ -117,7 +117,7 @@ const EditProfile = () => {
                                         type='email' 
                                         placeholder='email'
                                         onChange={handleInputChange}
-                                        value={updateInput.email}
+                                        // value={updateInput.email}
                                     />
                                     <button 
                                         className='profile-edit-details-form-button' 
