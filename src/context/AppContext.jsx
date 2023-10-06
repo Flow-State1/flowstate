@@ -61,6 +61,7 @@ export const AppContextProvider = (props) => {
   const [variants, setVariants] = useState([]);
   const [c_cost, setc_Cost] = useState(0);
   const [isdevicesRegistered, setIsDeviceRegistered] = useState(false);
+  const [appliencesId,setAppliencesId] = useState([]);
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
@@ -70,14 +71,17 @@ export const AppContextProvider = (props) => {
   });
   const [deviceInfo, setDeviceInfo] = useState({
     device_1: {
+      id:"shellyplus1pm-a8032ab11964",
       brand: "",
       alias: "",
     },
     device_2: {
+      id:"shellyplus1pm-7c87ce719cc",
       brand: "",
       alias: "",
     },
   });
+ 
 
   const [errortext, setErrorText] = useState();
   const [errortext2, setErrorText2] = useState();
@@ -90,114 +94,45 @@ export const AppContextProvider = (props) => {
     });
   };
 
-  const handleDeviceRegistration = () => {
-    fetch(`http://localhost:3001/users/${user.id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((response) => {
-      if (!response.ok) {
-        response.json().then((data) => {
-          // console.log(data.message);
-          setErrorText(data.message);
-        });
-      } else {
-        console.log("Created user session");
-        setIsDeviceRegistered(true);
-       
-      }
-    });
-    if (
-      deviceInfo.device_1.brand != "" &&
-      deviceInfo.device_2.brand != "" &&
-      deviceInfo.device_1.alias != "" &&
-      deviceInfo.device_2.alias != ""
-    ) {
-      console.log("Devices Registered");
-      devicesRegistered.device_1 = true;
-      devicesRegistered.device_2 = true;
-      // Device1: shellyplus1pm-a8032ab11964 Device2: shellyplus1pm-7c87ce719ccc
-      const data = {
-        device: 1,
-        id: "shellyplus1pm-a8032ab11964",
-        applience_brand: deviceInfo.device_1.brand,
-        applience_variant: deviceInfo.device_1.alias,
-        data: {
-          apower: 0,
-          voltage: 0,
-          current: 0,
-          aenergy: 0,
-        },
-      };
-      const data2 = {
-        device: 2,
-        id: "shellyplus1pm-7c87ce719ccc",
-        applience_brand: deviceInfo.device_2.brand,
-        applience_variant: deviceInfo.device_2.alias,
-        data: {
-          apower: 0,
-          voltage: 0,
-          current: 0,
-          aenergy: 0,
-        },
-      };
-      fetch("http://localhost:3001/payload/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }).then((response) => {
-        if (!response.ok) {
-          response.json().then((data) => {
-            devicesRegistered.device_1 = true;
-            devicesRegistered.device_2 = true;
-            // console.log(data.message);
-            setErrorText(data.message);
-          });
-        }
-      });
-      fetch("http://localhost:3001/payload/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data2),
-      }).then((response) => {
-        if (!response.ok) {
-          response.json().then((data) => {
-            // console.log(data.message);
-            setErrorText(data.message);
-          });
-        } else {
-          console.log("Second Fetch is running");
-          navigate("/dashboard/dashboard/dashboard");
-        }
-      });
-      console.log("Creating appliences with user_id: ", user.id);
-    } else {
-      setErrorText2("Please make sure all fields have values");
-    }
-  };
 
-  const handleDevicePick = () => {
-    console.log("pressed");
-    if (
-      deviceInfo.device_1.brand != "" &&
-      deviceInfo.device_2.brand != "" &&
-      deviceInfo.device_1.alias != "" &&
-      deviceInfo.device_2.alias != ""
-    ) {
-      console.log("Devices picked");
-      devicesRegistered.device_1 = true;
-      devicesRegistered.device_2 = true;
-      navigate("/dashboard/dashboard/dashboard");
-    } else {
-      console.log("Pressed and has error");
-      setErrorText2("Please make sure all fields are selected");
+  const handleDeviceRegistration = async ()=>{
+    try{
+      // Create applience document within the database
+      if(deviceInfo.device_1.brand !="" && deviceInfo.device_2.brand !=="" && deviceInfo.device_1.alias !=="" && deviceInfo.device_2.alias !==""){
+          let deviceObjects = {
+            device1Object :{
+              applience_brand:deviceInfo.device_1.brand,
+              applience_variant:deviceInfo.device_1.alias,
+              user_id:user.id,
+              device_id:deviceInfo.device_1.id
+            },
+            device2Object:{
+              applience_brand:deviceInfo.device_2.brand,
+              applience_variant:deviceInfo.device_2.alias,
+              user_id:user.id,
+              device_id:deviceInfo.device_2.id
+            }
+          }
+          let endPoint = await fetch("http://localhost:3001/appliences/",{
+            method:"POST",
+            headers:{
+              "Content-Type":"Application/json"
+            },
+            body:JSON.stringify(deviceObjects)
+          })
+          let results = await endPoint.json();
+          console.log("AppliencesId array on registering and picking devices: ",results);
+          setAppliencesId(results)
+          navigate("/dashboard/dashboard/dashboard");
+      }
+      else{
+        setErrorText2("Please make sure all fields have values");
+      }
+    }catch(error){
+      console.log(error);      
     }
-  };
+  }
+
 
   const SignUpSubmit = async (e) => {
     e.preventDefault();
@@ -894,7 +829,6 @@ export const AppContextProvider = (props) => {
               isTabletOrLaptop,
               passwordVisible,
               inputValue,
-              user,
               name,
               email,
               password,
@@ -926,7 +860,7 @@ export const AppContextProvider = (props) => {
               isdevicesRegistered,
               setIsDeviceRegistered,
               setVariants,
-              handleDevicePick,
+
               setErrorText,
               handleDeviceRegistration,
               setDeviceInfo,
@@ -948,6 +882,7 @@ export const AppContextProvider = (props) => {
               setIsLoading,
               setPower,
               setPower_,
+              appliencesId,
               setConsumption,
               setConsumption_,
               setCurrent,

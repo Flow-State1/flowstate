@@ -112,7 +112,7 @@ const Dashboard = () => {
         <div className="dashboard-content">
           <div className="dashboard-content-header">
             <h2>Dashboard</h2>
-            {/* <button
+            <button
             onClick={() => {
               fetch("http://localhost:3001/publish/switch/1", {
                 method: "POST",
@@ -123,8 +123,15 @@ const Dashboard = () => {
                   console.log(`id:Switch_End_Point,${error}`);
                 });
             }}
+            style={{
+              border: "none",
+              padding: "5px 25px",
+              borderRadius: "5px",
+              background: "#0A4D68",
+              color: "white",
+            }}
           >
-            Device1 On/Of
+            {deviceInfo.device_1.alias}
           </button>
           <button
             onClick={() => {
@@ -137,17 +144,24 @@ const Dashboard = () => {
                   console.log(`id:Switch_End_Point,${error}`);
                 });
             }}
+            style={{
+              border: "none",
+              padding: "5px 25px",
+              borderRadius: "5px",
+              background: "#0A4D68",
+              color: "white",
+            }}
           >
-            Device2 On/Of
-          </button> */}
-            <ToggleSwitch deviceId={1} />
-            <ToggleSwitch deviceId={2} />
+           {deviceInfo.device_2.alias}
+          </button>
+            {/* <ToggleSwitch deviceId={1} />
+            <ToggleSwitch deviceId={2} /> */}
           </div>
 
           <div className="dashboard-content-body">
             <div className="dashboard-content-body-summary-graph-card">
               <div className="dashboard-content-body-summary-graph-card-header">
-                <h3>Live Graph Consumption(Kw/h)</h3>
+                <h3>Live Consumption(Kw/h)</h3>
               </div>
               <Line data={dataObject} />
             </div>
@@ -218,12 +232,12 @@ const Dashboard = () => {
               <div className="dashboard-content-body-profile-right-summary-card-header">
                 <h3>Running Costs:R{cost}</h3>
               </div>
-              <h3>
-                {deviceInfo.device_1.alias} kW: {killowatts.toFixed(4)}
+              {/* <h3>
+                {deviceInfo.device_1.alias} kW: {killowatts}
               </h3>
               <h3>
-                {deviceInfo.device_2.alias} kW: {killowatts_.toFixed(4)}
-              </h3>
+                {deviceInfo.device_2.alias} kW: {killowatts_}
+              </h3> */}
             </div>
 
             {/*Change this section to be a form wheee user can change the devices they are using  */}
@@ -243,8 +257,8 @@ const Dashboard = () => {
 
               <div className="dashboard-content-body-profile-middle-mini-card">
                 <div className="dashboard-content-body-profile-middle-mini-card-header">
-                  <h3>Power1: {apower}</h3>
-                  <h3>Power2: {apower_}</h3>
+                  <h3>{deviceInfo.device_1.alias}: {apower} Kwh</h3>
+                  <h3>{deviceInfo.device_2.alias}: {apower_} Kwh</h3>
                 </div>
               </div>
 

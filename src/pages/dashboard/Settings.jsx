@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useTheme } from '../../context/ThemeContext'
@@ -57,7 +58,7 @@ const Settings = () => {
 
               <br />
 
-              <div className='settings-section'>
+              {/* <div className='settings-section'>
                 <h3>Notifications Preference</h3>
                 <div className='notification-options'>
                   <label
@@ -94,7 +95,7 @@ const Settings = () => {
                     None
                   </label>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

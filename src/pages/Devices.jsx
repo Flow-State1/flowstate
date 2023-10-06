@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/logo.png";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import "./styles.css";
@@ -13,13 +11,8 @@ const Devices = () => {
     isLoading,
     isTabletOrLaptop,
     deviceInfo,
-    deviceInfo_,
-    errortext,
-    errortext2,
     handleDeviceRegistration,
-    handleDevicePick,
     user,
-    setErrorText,
   } = useContext(AppContext);
 
   const [appliances, setAppliances] = useState([]);
@@ -27,37 +20,17 @@ const Devices = () => {
   const [variants,setVariants] = useState([]);
   const [variants_,setVariants_] = useState([]);
 
-  console.log(user.id);
 
-  useEffect(() => {
-    fetch(`http://localhost:3001/users/${user.id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((response) => {
-      if (!response.ok) {
-        response.json().then((data) => {
-          // console.log(data.message);
-          setErrorText(data.message);
-        });
-      } else {
-        console.log("User session created");
-      }
-    });
-    fetch("http://localhost:3001/appliences/").then((response) => {
-      // console.log(response.json());
-      if(response.ok){
-        response.json().then((result) => {
-          // console.log();
-          // let appliences = result.appliances
-          setAppliances(result.appliances);
-          setAppliances_(result.appliances);
-        })
-      }
-    }).catch((err)=>{
-      console.log(err);
-    })
+  const userAppliences = async ()=>{ 
+    let appliences = await fetch(`http://localhost:3001/appliences/${user.id}`)
+    let results = await appliences.json()
+    console.log(results);
+    setAppliances(results)
+    setAppliances_(results)
+  } 
+
+  useEffect( () => {
+      userAppliences();
   }, []);
 
   return (
