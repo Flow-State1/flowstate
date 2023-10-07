@@ -109,7 +109,7 @@ const DashboardRoutes = () => {
           consumption.push(apower);
 
         });
-        // console.log("Labels array: ",labels);
+        console.log("Labels array: ",labels);
         setLabels(labels);
         setConsumption((prevConsumption) => [
           ...prevConsumption,

@@ -17,20 +17,19 @@ const Devices = () => {
 
   const [appliances, setAppliances] = useState([]);
   const [appliances_, setAppliances_] = useState([]);
-  const [variants,setVariants] = useState([]);
-  const [variants_,setVariants_] = useState([]);
+  const [variants, setVariants] = useState([]);
+  const [variants_, setVariants_] = useState([]);
 
+  const userAppliences = async () => {
+    let appliences = await fetch(`http://localhost:3001/appliences/${user.id}`);
+    let results = await appliences.json();
+    // console.log(results);
+    setAppliances(results);
+    setAppliances_(results);
+  };
 
-  const userAppliences = async ()=>{ 
-    let appliences = await fetch(`http://localhost:3001/appliences/${user.id}`)
-    let results = await appliences.json()
-    console.log(results);
-    setAppliances(results)
-    setAppliances_(results)
-  } 
-
-  useEffect( () => {
-      userAppliences();
+  useEffect(() => {
+    userAppliences();
   }, []);
 
   return (
@@ -56,15 +55,11 @@ const Devices = () => {
           <div className="device-form">
             <div
               className="device-form-column"
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginRight: "80px",
-              }}
+  
             >
-              <div style={{ marginRight: "50px" }}>
-                <h1 className="device-card-title">Register Devices </h1>
-                <input
+              <div style={{ display:"flex",flexDirection:"column",alignItems:"center" }}>
+                <h1 className="device-card-title">Register or Pick Device </h1>
+                {/* <input
                   type="test"
                   placeholder="Device 1 Brand"
                   onChange={(e) => {
@@ -82,10 +77,55 @@ const Devices = () => {
                   }}
                   className="login-input"
                   style={{ width: isTabletOrLaptop ? "30rem" : "80%" }}
+                /> */}
+
+                <input
+                  type="search"
+                  list="device1"
+                  placeholder="Device 1 Brand"
+                  onChange={(e) => {
+                    deviceInfo.device_1.brand = e.target.value;
+                    let field = e.target.value;
+                    let array = appliances.filter(
+                      (item) =>
+                        item.applience_brand.toLowerCase() ==
+                        field.toLocaleLowerCase()
+                    );
+                    console.log("Filtered array: ", array);
+                    setVariants(array);
+                  }}
+                  className="login-input"
+                  style={{ width: isTabletOrLaptop ? "30rem" : "80%" }}
                 />
+                <datalist id="device1">
+                  {appliances.map((applience, index) => {
+                    console.log("Appliences: ", applience);
+                    return (
+                      <option key={index} value={applience.applience_brand} />
+                    );
+                  })}
+                </datalist>
+                <input
+                  type="search"
+                  list="device1_alias"
+                  placeholder="Device 1 variant"
+                  onChange={(e) => {
+                    deviceInfo.device_1.alias = e.target.value;
+                  }}
+                  className="login-input"
+                  style={{ width: isTabletOrLaptop ? "30rem" : "80%" }}
+                />
+                <datalist id="device1_alias">
+                  {variants.map((applience, index) => {
+                    // console.log("Appliences: ",applience);
+                    return (
+                      <option key={index} value={applience.applience_variant} />
+                    );
+                  })}
+                </datalist>
 
                 {/* Device 2 details */}
-                <input
+                {/* <input
                   type="test"
                   placeholder="Device 2 Brand"
                   onChange={(e) => {
@@ -103,9 +143,53 @@ const Devices = () => {
                   }}
                   className="login-input"
                   style={{ width: isTabletOrLaptop ? "30rem" : "80%" }}
+                /> */}
+                <input
+                  type="search"
+                  list="device2"
+                  placeholder="Device 1 Brand"
+                  onChange={(e) => {
+                    deviceInfo.device_2.brand = e.target.value;
+                    let field = e.target.value;
+                    let array = appliances.filter(
+                      (item) =>
+                        item.applience_brand.toLowerCase() ==
+                        field.toLocaleLowerCase()
+                    );
+                    console.log("Filtered array: ", array);
+                    setVariants_(array);
+                  }}
+                  className="login-input"
+                  style={{ width: isTabletOrLaptop ? "30rem" : "80%" }}
                 />
+                <datalist id="device2">
+                  {appliances_.map((applience, index) => {
+                    console.log("Appliences: ", applience);
+                    return (
+                      <option key={index} value={applience.applience_brand} />
+                    );
+                  })}
+                </datalist>
+                <input
+                  type="search"
+                  list="device2_alias"
+                  placeholder="Device 2 variant"
+                  onChange={(e) => {
+                    deviceInfo.device_2.alias = e.target.value;
+                  }}
+                  className="login-input"
+                  style={{ width: isTabletOrLaptop ? "30rem" : "80%" }}
+                />
+                <datalist id="device2_alias">
+                  {variants_.map((applience, index) => {
+                    // console.log("Appliences: ",applience);
+                    return (
+                      <option key={index} value={applience.applience_variant} />
+                    );
+                  })}
+                </datalist>
               </div>
-              <div
+              {/* <div
                 className="device-registered-select"
                 style={{ borderLeft: "1px solid #ccc", paddingLeft: "50px" }}
               >
@@ -119,27 +203,34 @@ const Devices = () => {
                   }}
                   name=""
                   onChange={(e) => {
-                    let variants_ = appliances.filter((applience) => applience.applience_brand==e.target.value);
-                    console.log("Appliences from brand ",e.target.value,": ",variants_);
-                    setVariants(variants_)
+                    let variants_ = appliances.filter(
+                      (applience) => applience.applience_brand == e.target.value
+                    );
+                    console.log(
+                      "Appliences from brand ",
+                      e.target.value,
+                      ": ",
+                      variants_
+                    );
+                    setVariants(variants_);
                     deviceInfo.device_1.brand = e.target.value;
                   }}
                 >
                   <option value="">Device 1</option>
-                  {appliances.length > 0 
-                  ?
-                  appliances.map((appliance) => {
-                      
-                    return(
-                      <option
-                      key={appliance.applience_id}
-                      value={appliance.applience_brand}
-                    >
-                      {appliance.applience_brand}
-                    </option>
-                    )
-                }): (<></>)
-                  }
+                  {appliances.length > 0 ? (
+                    appliances.map((appliance) => {
+                      return (
+                        <option
+                          key={appliance.applience_id}
+                          value={appliance.applience_brand}
+                        >
+                          {appliance.applience_brand}
+                        </option>
+                      );
+                    })
+                  ) : (
+                    <></>
+                  )}
                 </select>
                 <select
                   style={{
@@ -150,27 +241,33 @@ const Devices = () => {
                   }}
                   name=""
                   onChange={(e) => {
-                    let variants = appliances.filter((applience) => applience.applience_brand==e.target.value);
-                    console.log("Appliences from brand ",e.target.value,": ",variants);
+                    let variants = appliances.filter(
+                      (applience) => applience.applience_brand == e.target.value
+                    );
+                    console.log(
+                      "Appliences from brand ",
+                      e.target.value,
+                      ": ",
+                      variants
+                    );
                     deviceInfo.device_1.alias = e.target.value;
                   }}
                 >
                   <option value="">Device 1 variant</option>
-                  {
-                    variants.length > 0
-                    ?
+                  {variants.length > 0 ? (
                     variants.map((appliance) => {
-                      
-                      return(
+                      return (
                         <option
-                        key={appliance.applience_id}
-                        value={appliance.applience_variant}
-                      >
-                        {appliance.applience_variant}
-                      </option>
-                      )
-                  }):(<></>)
-                  }
+                          key={appliance.applience_id}
+                          value={appliance.applience_variant}
+                        >
+                          {appliance.applience_variant}
+                        </option>
+                      );
+                    })
+                  ) : (
+                    <></>
+                  )}
                 </select>
                 <br />
                 <select
@@ -182,28 +279,34 @@ const Devices = () => {
                   }}
                   name=""
                   onChange={(e) => {
-                    let variants_ = appliances_.filter((applience) => applience.applience_brand==e.target.value);
-                    console.log("Appliences from brand ",e.target.value,": ",variants_);
-                    setVariants_(variants_)
+                    let variants_ = appliances_.filter(
+                      (applience) => applience.applience_brand == e.target.value
+                    );
+                    console.log(
+                      "Appliences from brand ",
+                      e.target.value,
+                      ": ",
+                      variants_
+                    );
+                    setVariants_(variants_);
                     deviceInfo.device_2.brand = e.target.value;
                   }}
                 >
                   <option value="">Device 2</option>
-                  {
-                    appliances.length > 0
-                    ?
+                  {appliances.length > 0 ? (
                     appliances_.map((appliance) => {
-                      
-                      return(
+                      return (
                         <option
-                        key={appliance.applience_id}
-                        value={appliance.applience_brand}
-                      >
-                        {appliance.applience_brand}
-                      </option>
-                      )
-                  }):(<></>)
-                  }
+                          key={appliance.applience_id}
+                          value={appliance.applience_brand}
+                        >
+                          {appliance.applience_brand}
+                        </option>
+                      );
+                    })
+                  ) : (
+                    <></>
+                  )}
                 </select>
                 <select
                   style={{
@@ -214,28 +317,35 @@ const Devices = () => {
                   }}
                   name=""
                   onChange={(e) => {
-                    let variants = appliances.filter((applience) => applience.applience_brand==e.target.value);
-                    console.log("Appliences from brand ",e.target.value,": ",variants);
+                    let variants = appliances.filter(
+                      (applience) => applience.applience_brand == e.target.value
+                    );
+                    console.log(
+                      "Appliences from brand ",
+                      e.target.value,
+                      ": ",
+                      variants
+                    );
                     deviceInfo.device_2.alias = e.target.value;
                   }}
                 >
                   <option value="">Device 2 variant</option>
-                  {
-                    variants_.length > 0?
+                  {variants_.length > 0 ? (
                     variants_.map((appliance) => {
-                      
-                      return(
+                      return (
                         <option
-                        key={appliance.applience_id}
-                        value={appliance.applience_variant}
-                      >
-                        {appliance.applience_variant}
-                      </option>
-                      )
-                  }):(<></>)
-                  }
+                          key={appliance.applience_id}
+                          value={appliance.applience_variant}
+                        >
+                          {appliance.applience_variant}
+                        </option>
+                      );
+                    })
+                  ) : (
+                    <></>
+                  )}
                 </select>
-              </div>
+              </div> */}
             </div>
             <br />
             <button
