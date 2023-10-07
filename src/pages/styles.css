@@ -2412,3 +2412,18 @@ label{
     border: 1px solid var(--secondary-color);
     transition: all 0.2s ease-in-out;
 }
+table {
+
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #0a4d6821;
+  }

@@ -96,32 +96,61 @@ const DashboardRoutes = () => {
     })
       .then((response) => response.json())
       .then((results_) => {
-        console.log("Results from the 2 appliences: ",results_);
+        // console.log("Results from the 2 appliences: ",results_);
         // For device 1
         const labels = [];
         const consumption = [];
+        let power = [];
         results_[appliencesId["applience_id1"]].forEach((element) => {
           // console.log("Element1: ",element);
           labels.push(element.label);
-          consumption.push(element["data"]["apower"]);
+          power.push((element["data"]["apower"]).toFixed(6))
+          let apower =  (element["data"]["apower"]/1000).toFixed(6);
+          consumption.push(apower);
+
         });
-        console.log("Labels array: ",labels);
-        setLabels((prevLabel) => [...prevLabel, ...labels]);
+        // console.log("Labels array: ",labels);
+        setLabels(labels);
         setConsumption((prevConsumption) => [
           ...prevConsumption,
           ...consumption,
         ]);
+        setPower(power[power.length - 1])
 
         // For device 2
         const consumption_ = [];
+        let power_ = [];
         results_[appliencesId["applience_id2"]].forEach((element) => {
           // console.log("Element2: ",element);
-          consumption_.push(element["data"]["apower"]);
+          power_.push((element["data"]["apower"]).toFixed(6))
+          let apower =  (element["data"]["apower"]/1000).toFixed(6);
+          consumption_.push(apower);
         });
         setConsumption_((prevConsumption) => [
           ...prevConsumption,
           ...consumption,
         ]);
+        setPower_(power_[power_.length - 1]);
+
+        // Calculate the cost of running both devices
+        let cost1 = 0;
+        consumption.forEach((cons)=>{
+          let rate = cons * 1.77;
+          console.log(rate);
+          cost1 = cost1 + rate
+
+        })
+        let cost2 = 0;
+
+        consumption_.forEach((cons)=>{
+          console.log(`Cost ${cost2} + ${cons} * 1,77 = ${cost2 + (cons * 1.77)}`);
+          let rate = cons * 1.77;
+          console.log(rate);
+          cost2 = cost2 + rate
+        })
+        const totalcost = cost1 +cost2
+        setCost(totalcost.toFixed(6))
+
       });
   };
 

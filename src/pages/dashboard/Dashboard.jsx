@@ -113,47 +113,47 @@ const Dashboard = () => {
           <div className="dashboard-content-header">
             <h2>Dashboard</h2>
             <button
-            onClick={() => {
-              fetch("http://localhost:3001/publish/switch/1", {
-                method: "POST",
-                headers: { "Content-type": "application/json" },
-              })
-                .then((response) => console.log(response))
-                .catch((error) => {
-                  console.log(`id:Switch_End_Point,${error}`);
-                });
-            }}
-            style={{
-              border: "none",
-              padding: "5px 25px",
-              borderRadius: "5px",
-              background: "#0A4D68",
-              color: "white",
-            }}
-          >
-            {deviceInfo.device_1.alias}
-          </button>
-          <button
-            onClick={() => {
-              fetch("http://localhost:3001/publish/switch/2", {
-                method: "POST",
-                headers: { "Content-type": "application/json" },
-              })
-                .then((response) => console.log(response))
-                .catch((error) => {
-                  console.log(`id:Switch_End_Point,${error}`);
-                });
-            }}
-            style={{
-              border: "none",
-              padding: "5px 25px",
-              borderRadius: "5px",
-              background: "#0A4D68",
-              color: "white",
-            }}
-          >
-           {deviceInfo.device_2.alias}
-          </button>
+              onClick={() => {
+                fetch("http://localhost:3001/publish/switch/1", {
+                  method: "POST",
+                  headers: { "Content-type": "application/json" },
+                })
+                  .then((response) => console.log(response))
+                  .catch((error) => {
+                    console.log(`id:Switch_End_Point,${error}`);
+                  });
+              }}
+              style={{
+                border: "none",
+                padding: "5px 25px",
+                borderRadius: "5px",
+                background: "#0A4D68",
+                color: "white",
+              }}
+            >
+              {deviceInfo.device_1.alias}
+            </button>
+            <button
+              onClick={() => {
+                fetch("http://localhost:3001/publish/switch/2", {
+                  method: "POST",
+                  headers: { "Content-type": "application/json" },
+                })
+                  .then((response) => console.log(response))
+                  .catch((error) => {
+                    console.log(`id:Switch_End_Point,${error}`);
+                  });
+              }}
+              style={{
+                border: "none",
+                padding: "5px 25px",
+                borderRadius: "5px",
+                background: "#0A4D68",
+                color: "white",
+              }}
+            >
+              {deviceInfo.device_2.alias}
+            </button>
             {/* <ToggleSwitch deviceId={1} />
             <ToggleSwitch deviceId={2} /> */}
           </div>
@@ -211,54 +211,81 @@ const Dashboard = () => {
                   >
                     Change Devices
                   </button>
-                  {/* <button
-                    style={{
-                      border: "none",
-                      padding: "5px 25px",
-                      borderRadius: "5px",
-                      background: "#0A4D68",
-                      color: "white",
-                      marginTop: "10px",
-                    }}
-                    onClick={() => navigate("/dashboard/recommendation")}
-                  >
-                    Get Recommendations
-                  </button> */}
                 </div>
               </div>
             </div>
 
             <div className="dashboard-content-body-profile-right-summary-card">
               <div className="dashboard-content-body-profile-right-summary-card-header">
-                <h3>Running Costs:R{cost}</h3>
+                <p
+                  style={{
+                    fontSize: 11,
+                    textAlign: "start",
+                    padding: 12,
+                  }}
+                >
+                  Electricity consumption (in killowatt-hours,Kwh) is determined
+                  by multiplying the power used in (Killowatts kw) by the time
+                  its used(hours).
+                  <br />
+                  Formula: Consumption = Power(Kw) x Time(hour)..
+                  <br />
+                  This means that if an applience of 100 watt was being used
+                  over a period of 5 hours, the consumption would be 0,1Kw x 5 =
+                  0,5 Kwh
+                </p>
+                <p
+                  style={{
+                    textAlign: "center",
+                    fontSize: 11,
+                    
+                  }}
+                >
+                  Power for {deviceInfo.device_1["alias"]}: {" "}
+                  <span style={{fontWeight: "bold",}}>{apower}{" "}
+                  Wh</span>
+                </p>
+                <p
+                  style={{
+                    textAlign: "center",
+                    fontSize: 11,
+                  }}
+                >
+                  Power for {deviceInfo.device_2["alias"]}: {" "}
+                  <span style={{fontWeight: "bold",}}>{apower_}{" "}
+                  Wh</span>
+                </p>
               </div>
-              {/* <h3>
-                {deviceInfo.device_1.alias} kW: {killowatts}
-              </h3>
-              <h3>
-                {deviceInfo.device_2.alias} kW: {killowatts_}
-              </h3> */}
             </div>
-
-            {/*Change this section to be a form wheee user can change the devices they are using  */}
             <div className="dashboard-content-body-profile-middle-mini-cards">
-              <div className="dashboard-content-body-profile-middle-mini-card">
-                <div className="dashboard-content-body-profile-middle-mini-card-header">
-                  <h3>Voltage1: {voltage}</h3>
-                  <h3>Voltage2: {voltage_}</h3>
+              <div
+                style={{
+                  background: "white",
+                  width: "100%",
+                  padding: "43px",
+                  borderRadius: "8px",
+                  display: "flex",
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <p>
+                    Consumption for {deviceInfo.device_1["alias"]}: <span style={{fontWeight:"bold"}}>{consumption[consumption.length - 1]} Kwh</span>{" "}
+                    
+                  </p>
+                  <p>
+                    Consumption for {deviceInfo.device_2["alias"]}:{" "}
+                    <span style={{fontWeight:"bold"}}>{consumption_[consumption_.length - 1]} Kwh</span>
+                  </p>
                 </div>
-              </div>
-              <div className="dashboard-content-body-profile-middle-mini-card">
-                <div className="dashboard-content-body-profile-middle-mini-card-header">
-                  <h3>Current1: {current}</h3>
-                  <h3>Current2: {current_}</h3>
-                </div>
-              </div>
-
-              <div className="dashboard-content-body-profile-middle-mini-card">
-                <div className="dashboard-content-body-profile-middle-mini-card-header">
-                  <h3>{deviceInfo.device_1.alias}: {apower} Kwh</h3>
-                  <h3>{deviceInfo.device_2.alias}: {apower_} Kwh</h3>
+                <div>
+                  <p>Total running cost: <span style={{fontWeight:"bold"}}> R {cost}</span></p>
                 </div>
               </div>
 

@@ -76,7 +76,7 @@ export const AppContextProvider = (props) => {
       alias: "",
     },
     device_2: {
-      id:"shellyplus1pm-7c87ce719cc",
+      id:"shellyplus1pm-7c87ce719ccc",
       brand: "",
       alias: "",
     },

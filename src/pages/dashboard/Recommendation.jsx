@@ -159,6 +159,12 @@ const Recommendations = () => {
               onChange={(e) => {
                 setCategory(e.target.value);
               }}
+              style={{
+                border: "1px solid #0A4D68",
+                padding: "5px 25px",
+                borderRadius: "5px",
+                width:"25%"
+              }}
             >
               <option value="">Category</option>
               {categories.map((category) => (
@@ -167,7 +173,18 @@ const Recommendations = () => {
                 </option>
               ))}
             </select>
-            <button onClick={() => handleSelect()}>Select Category</button>
+            <button
+              style={{
+                border: "none",
+                padding: "5px 25px",
+                borderRadius: "5px",
+                background: "#0A4D68",
+                color: "white",
+              }}
+              onClick={() => handleSelect()}
+            >
+              Select Category
+            </button>
             <p style={{ marginTop: "15px" }}>
               Please note that, consumption and cost will, vary based on how you
               use the electrical applience that you are using. The figures,
@@ -176,58 +193,13 @@ const Recommendations = () => {
               the suggested appliences
             </p>
             <>
-              <table
-                style={{
-                  border: "1px solid black",
-                  borderCollapse: "collapse",
-                  padding: "8px",
-                  marginTop: "20px",
-                }}
-              >
-                <thead
-                  style={{
-                    border: "1px solid black",
-                    borderCollapse: "collapse",
-                    padding: "8px",
-                  }}
-                >
+              <table>
+                <thead>
                   <tr>
-                    <td
-                      style={{
-                        border: "1px solid black",
-                        borderCollapse: "collapse",
-                        padding: "8px",
-                      }}
-                    >
-                      Brand
-                    </td>
-                    <td
-                      style={{
-                        border: "1px solid black",
-                        borderCollapse: "collapse",
-                        padding: "8px",
-                      }}
-                    >
-                      Variant
-                    </td>
-                    <td
-                      style={{
-                        border: "1px solid black",
-                        borderCollapse: "collapse",
-                        padding: "8px",
-                      }}
-                    >
-                      Estimated Hourly Consumption(Kw/h)
-                    </td>
-                    <td
-                      style={{
-                        border: "1px solid black",
-                        borderCollapse: "collapse",
-                        padding: "8px",
-                      }}
-                    >
-                      Estimated Hourly Cost
-                    </td>
+                    <td>Brand</td>
+                    <td>Variant</td>
+                    <td>Estimated Hourly Consumption(Kw/h)</td>
+                    <td>Estimated Hourly Cost</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -236,42 +208,10 @@ const Recommendations = () => {
 
                     return (
                       <tr key={electronic._id}>
-                        <td
-                          style={{
-                            border: "1px solid black",
-                            borderCollapse: "collapse",
-                            padding: "8px",
-                          }}
-                        >
-                          {electronic.electronic_brand}
-                        </td>
-                        <td
-                          style={{
-                            border: "1px solid black",
-                            borderCollapse: "collapse",
-                            padding: "8px",
-                          }}
-                        >
-                          {electronic.electronic_variant}
-                        </td>
-                        <td
-                          style={{
-                            border: "1px solid black",
-                            borderCollapse: "collapse",
-                            padding: "8px",
-                          }}
-                        >
-                          {electronic.electronic_consumption}
-                        </td>
-                        <td
-                          style={{
-                            border: "1px solid black",
-                            borderCollapse: "collapse",
-                            padding: "8px",
-                          }}
-                        >
-                          R {electronic.electronic_cost}
-                        </td>
+                        <td>{electronic.electronic_brand}</td>
+                        <td>{electronic.electronic_variant}</td>
+                        <td>{electronic.electronic_consumption}</td>
+                        <td>R {electronic.electronic_cost}</td>
                       </tr>
                     );
                   })}
