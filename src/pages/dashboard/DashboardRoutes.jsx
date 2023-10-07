@@ -128,7 +128,7 @@ const DashboardRoutes = () => {
         });
         setConsumption_((prevConsumption) => [
           ...prevConsumption,
-          ...consumption,
+          ...consumption_,
         ]);
         setPower_(power_[power_.length - 1]);
 
@@ -136,16 +136,16 @@ const DashboardRoutes = () => {
         let cost1 = 0;
         consumption.forEach((cons)=>{
           let rate = cons * 1.77;
-          console.log(rate);
+          // console.log(rate);
           cost1 = cost1 + rate
 
         })
         let cost2 = 0;
 
         consumption_.forEach((cons)=>{
-          console.log(`Cost ${cost2} + ${cons} * 1,77 = ${cost2 + (cons * 1.77)}`);
+          // console.log(`Cost ${cost2} + ${cons} * 1,77 = ${cost2 + (cons * 1.77)}`);
           let rate = cons * 1.77;
-          console.log(rate);
+          // console.log(rate);
           cost2 = cost2 + rate
         })
         const totalcost = cost1 +cost2
