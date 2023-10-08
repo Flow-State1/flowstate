@@ -26,7 +26,7 @@ const Analytics = () => {
   } = useContext(AppContext);
 
   //Making analytics functional
-  const [selected, setSelected] = useState("thirty");
+  const [selected, setSelected] = useState("");
   const [apowerData, setAPowerData] = useState([]);
 
   //Data for Apower chart
@@ -127,15 +127,24 @@ const Analytics = () => {
 
         apowerData.forEach((item) => {
           let apowerStuff = item.data;
-          apowerStuff.forEach(element => {
-            setApowerChart((prev) => [...prev, element.apower]);
-            setAEnergyChart((prev) => [...prev, element.aenergy]);
-            setACurrentChart((prev) => [...prev, element.current]);
-            setVoltageChart((prev) => [...prev, element.voltage]);
-            console.log(apowerChart);
-            console.log(element.apower)
-          });
-          console.log("A power stuff:", apowerStuff)
+          console.log("Data: ", apowerStuff);
+
+            let apowerInfo = apowerStuff.split(',');
+
+            //Getting individual apower
+            let actualApower = apowerInfo[1].split(':');
+            console.log("Actual aPower: ", actualApower[1]);
+            setApowerChart((prev) => [...prev, actualApower[1]]);
+
+            //Getting individual voltage
+            let actualVoltage = apowerInfo[2].split(':');
+            console.log("Actual Voltage: ", actualVoltage[1]);
+            setVoltageChart((prev) => [...prev, actualVoltage[1]]);
+
+            //Getting individual current
+            let actualCurrent = apowerInfo[3].split(':');
+            console.log("Actual Current: ", actualCurrent[1]);
+            setACurrentChart((prev) => [...prev, actualCurrent[1]]);
         })
   }
 
