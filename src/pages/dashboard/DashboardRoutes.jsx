@@ -96,7 +96,7 @@ const DashboardRoutes = () => {
     })
       .then((response) => response.json())
       .then((results_) => {
-        // console.log("Results from the 2 appliences: ",results_);
+        console.log("Results from the",dataObject," ",results_);
         // For device 1
         const labels = [];
         const consumption = [];
@@ -109,7 +109,7 @@ const DashboardRoutes = () => {
           consumption.push(apower);
 
         });
-        console.log("Labels array: ",labels);
+        // console.log("Labels array: ",labels);
         setLabels(labels);
         setConsumption((prevConsumption) => [
           ...prevConsumption,

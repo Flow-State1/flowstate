@@ -91,7 +91,7 @@ const Devices = () => {
                         item.applience_brand.toLowerCase() ==
                         field.toLocaleLowerCase()
                     );
-                    console.log("Filtered array: ", array);
+                    // console.log("Filtered array: ", array);
                     setVariants(array);
                   }}
                   className="login-input"
@@ -99,7 +99,7 @@ const Devices = () => {
                 />
                 <datalist id="device1">
                   {appliances.map((applience, index) => {
-                    console.log("Appliences: ", applience);
+                    // console.log("Appliences: ", applience);
                     return (
                       <option key={index} value={applience.applience_brand} />
                     );
@@ -156,7 +156,7 @@ const Devices = () => {
                         item.applience_brand.toLowerCase() ==
                         field.toLocaleLowerCase()
                     );
-                    console.log("Filtered array: ", array);
+                    // console.log("Filtered array: ", array);
                     setVariants_(array);
                   }}
                   className="login-input"
@@ -164,7 +164,7 @@ const Devices = () => {
                 />
                 <datalist id="device2">
                   {appliances_.map((applience, index) => {
-                    console.log("Appliences: ", applience);
+                    // console.log("Appliences: ", applience);
                     return (
                       <option key={index} value={applience.applience_brand} />
                     );

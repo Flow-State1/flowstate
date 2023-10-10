@@ -187,26 +187,17 @@ const Dashboard = () => {
                     }}
                     onClick={() => {
                       // This should also reset the values of power and everything else that is being shown on the live chart portion
-                      setCon(false);
-                      fetch("http://localhost:3001/payload/reset").then(
-                        (res) => {
-                          setPower(0);
-                          setPower_(0);
-                          setConsumption([]);
-                          setConsumption_([]);
-                          setCurrent(0);
-                          setCurrent_(0);
-                          setVoltage(0);
-                          setVoltage_(0);
-                          setCost(0);
-                          setLabels([]);
-                          if (!res.ok) {
-                            console.log("Response error");
-                          } else {
-                            navigate("/devices");
-                          }
-                        }
-                      );
+                      setPower(0);
+                      setPower_(0);
+                      setConsumption([]);
+                      setConsumption_([]);
+                      setCurrent(0);
+                      setCurrent_(0);
+                      setVoltage(0);
+                      setVoltage_(0);
+                      setCost(0);
+                      setLabels([]);
+                      navigate("/devices");
                     }}
                   >
                     Change Devices
@@ -238,12 +229,10 @@ const Dashboard = () => {
                   style={{
                     textAlign: "center",
                     fontSize: 11,
-                    
                   }}
                 >
-                  Power for {deviceInfo.device_1["alias"]}: {" "}
-                  <span style={{fontWeight: "bold",}}>{apower}{" "}
-                  Wh</span>
+                  Power for {deviceInfo.device_1["alias"]}:{" "}
+                  <span style={{ fontWeight: "bold" }}>{apower} Wh</span>
                 </p>
                 <p
                   style={{
@@ -251,9 +240,8 @@ const Dashboard = () => {
                     fontSize: 11,
                   }}
                 >
-                  Power for {deviceInfo.device_2["alias"]}: {" "}
-                  <span style={{fontWeight: "bold",}}>{apower_}{" "}
-                  Wh</span>
+                  Power for {deviceInfo.device_2["alias"]}:{" "}
+                  <span style={{ fontWeight: "bold" }}>{apower_} Wh</span>
                 </p>
               </div>
             </div>
@@ -276,16 +264,23 @@ const Dashboard = () => {
                   }}
                 >
                   <p>
-                    Consumption for {deviceInfo.device_1["alias"]}: <span style={{fontWeight:"bold"}}>{consumption[consumption.length - 1]} Kwh</span>{" "}
-                    
+                    Consumption for {deviceInfo.device_1["alias"]}:{" "}
+                    <span style={{ fontWeight: "bold" }}>
+                      {consumption[consumption.length - 1]} Kwh
+                    </span>{" "}
                   </p>
                   <p>
                     Consumption for {deviceInfo.device_2["alias"]}:{" "}
-                    <span style={{fontWeight:"bold"}}>{consumption_[consumption_.length - 1]} Kwh</span>
+                    <span style={{ fontWeight: "bold" }}>
+                      {consumption_[consumption_.length - 1]} Kwh
+                    </span>
                   </p>
                 </div>
                 <div>
-                  <p>Total running cost: <span style={{fontWeight:"bold"}}> R {cost}</span></p>
+                  <p>
+                    Total running cost:{" "}
+                    <span style={{ fontWeight: "bold" }}> R {cost}</span>
+                  </p>
                 </div>
               </div>
 
