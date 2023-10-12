@@ -12,7 +12,7 @@ const Devices = () => {
     isTabletOrLaptop,
     deviceInfo,
     handleDeviceRegistration,
-    user,
+    user,setAppliences,setApplienceId,appliences
   } = useContext(AppContext);
 
   const [appliances, setAppliances] = useState([]);
@@ -21,11 +21,19 @@ const Devices = () => {
   const [variants_, setVariants_] = useState([]);
 
   const userAppliences = async () => {
-    let appliences = await fetch(`http://localhost:3001/appliences/${user.id}`);
-    let results = await appliences.json();
+    let appliences_ = await fetch(`http://localhost:3001/appliences/${user.id}`);
+    let results = await appliences_.json();
     // console.log(results);
     setAppliances(results);
+    setApplienceId((prev) => {
+      let arr = [];
+      results.map(applience=>{
+        arr.push(applience.applience_id);        
+      })
+      return [...arr]
+    });
     setAppliances_(results);
+    setAppliences(results);
   };
 
   useEffect(() => {
