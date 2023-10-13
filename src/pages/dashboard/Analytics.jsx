@@ -49,6 +49,8 @@ const Analytics = () => {
   const [data, setData] = useState([{ hour: "", readings: "" }]);
   const [data_, setData_] = useState([{ hour: "", readings: "" }]);
 
+  const [cost,setCost] = useState([]);
+
   // const [appliencesId,setAppliencesId] = useState([]);
   const [object, setObject] = useState([]);
 
@@ -93,6 +95,9 @@ const Analytics = () => {
       const data = JSON.parse(element.data);
       setPayload(data);
       const consumption = data["apower"] / 1000;
+      let rate = 1.77/60
+      let cost = consumption * rate;
+      setCost(prev=>[...prev,cost])
       const label = element.label;
       setConsumptionAnalytics((prevCons) => [...prevCons, consumption]);
       existingArr.push({ hour: label, readings: consumption }); //Existing data
@@ -480,10 +485,18 @@ const Analytics = () => {
                 data={dataObject}
                 options={options}
               />
+              <div className="analytics-content-header">
+                <h2>Cost</h2>
+              </div>
+              <Line
+                style={{ width: "700px", height: "700px" }}
+                data={dataObject}
+                options={options}
+              />
             </div>
           </div>
           <div className="analytics-content-header">
-            <h2>User Devices Statistics</h2>
+            <h2>User Registered Devices and Statistics</h2>
           </div>
           <div
             style={{
