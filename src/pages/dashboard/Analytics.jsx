@@ -217,15 +217,15 @@ const Analytics = () => {
       {
         label: appliance1,
         data: data.map((data) => data.readings),
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
+        borderColor: "lightblue",
+        backgroundColor: "lightblue",
         tension: 0.1,
       },
       {
         label: appliance2,
         data: data_.map((data) => data.readings),
-        borderColor: "rgb(54, 12, 235)",
-        backgroundColor: "rgba(54, 12, 235, 0.5)",
+        borderColor: "lightpink",
+        backgroundColor: "lightpink",
         tension: 0.1,
       },
     ],
@@ -287,9 +287,12 @@ const Analytics = () => {
               borderRadius: "10px",
               padding: "25px",
               marginBottom: "10px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              
             }}
           >
-            <h2>Filter data</h2>
             <div
               style={{
                 boxShadow: "0 10px 10px 10px lightgrey",
@@ -297,11 +300,18 @@ const Analytics = () => {
                 width: "49%",
                 borderRadius: "5px",
                 padding: "10px",
+                     background: "white",
               }}
             >
+        <h2 style={{ alignItems: "center"}}>Filter data</h2>
               <select
                 name=""
                 id=""
+                style={{
+                  backgroundColor: "lightblue",
+                  margin: "16px ",
+                  width: "150px"
+                }}
                 onChange={(e) => {
                   // console.log(e.target.value);
                   setAppliance1(e.target.value);
@@ -313,11 +323,12 @@ const Analytics = () => {
                   setVariants(filteredAppliences);
                 }}
               >
-                <option value="">Device 1 Brand</option>
+                <option value="" >Device 1 Brand</option>
                 {appliences.map((applience, index) => {
                   return (
-                    <option value={applience.applience_brand} key={index}>
+                    <option  value={applience.applience_brand} key={index}>
                       {applience.applience_brand}
+
                     </option>
                   );
                 })}
@@ -325,6 +336,11 @@ const Analytics = () => {
               <select
                 name=""
                 id=""
+                style={{
+                  backgroundColor: "lightblue",
+                  margin: "16px ",
+                  width: "150px"
+                }}
                 onChange={(e) => {
                   let selectedApplience = variants.filter(
                     (variant) => variant.applience_variant == e.target.value
@@ -346,6 +362,11 @@ const Analytics = () => {
                 type="date"
                 name=""
                 id=""
+                style={{
+                  backgroundColor: "lightblue",
+                  margin: "16px ",
+                  width: "150px"
+                }}
                 onChange={(e) => {
                   const date = new Date(e.target.value);
                   const year = date.getFullYear();
@@ -363,6 +384,11 @@ const Analytics = () => {
               <select
                 name=""
                 id=""
+                style={{
+                  backgroundColor: "lightpink",
+                  margin: "16px ",
+                  width: "150px"
+                }}
                 onChange={(e) => {
                   // console.log(e.target.value);
                   setAppliance2(e.target.value);
@@ -386,6 +412,11 @@ const Analytics = () => {
               <select
                 name=""
                 id=""
+                style={{
+                  backgroundColor: "lightpink",
+                  margin: "16px ",
+                  width: "150px"
+                }}
                 onChange={(e) => {
                   let selectedApplience = variants_.filter(
                     (variant) => variant.applience_variant == e.target.value
@@ -407,6 +438,12 @@ const Analytics = () => {
                 type="date"
                 name=""
                 id=""
+                style={{
+                  backgroundColor: "lightpink",
+                  margin: "16px ",
+                  width:"150px"
+
+                }}
                 onChange={(e) => {
                   const date = new Date(e.target.value);
                   const year = date.getFullYear();
@@ -423,6 +460,10 @@ const Analytics = () => {
               <select
                 name=""
                 id=""
+                style={{
+                  margin: "16px ",
+                  width: "200px"
+                }}
                 onChange={(e) => {
                   const value = e.target.value.split(":");
                   const hour = value[0];
@@ -489,7 +530,7 @@ const Analytics = () => {
             style={{
               background: "white",
               boxShadow:
-                "0 3px 10px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1)",
+                "0 3px 10px rgba(173, 216, 230, 0.1), 0 3px 10px rgba(173, 216, 230, 0.1), 0 3px 10px rgba(173, 216, 230, 0.1)",
               borderRadius: "10px",
               padding: "25px",
               display: "flex",

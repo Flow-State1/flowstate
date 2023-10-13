@@ -501,7 +501,10 @@ body{
     color: var(--primary-color);
     outline: none;
 }
-  
+  .drp1
+  {
+    background-color:lightblue;
+  }
 .eye-icon {
     position: relative;
     top: -16%;
