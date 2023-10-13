@@ -74,6 +74,10 @@ const Dashboard = () => {
     setDashroutes,
     deviceInfo,
     setCon,
+    isButton1On,
+    isButton2On,
+    toggleButton1,
+    toggleButton2
   } = useContext(AppContext);
 
   const userName = user ? user.name : " ";
@@ -83,7 +87,9 @@ const Dashboard = () => {
   // console.log("comsumption",consumption);
   // console.log("comsumption_",consumption_);
   // console.log(socket);
-
+  const device1Label = isButton1On ? `${deviceInfo.device_1.alias} ON` : `${deviceInfo.device_1.alias} OFF`;
+  const device2Label = isButton2On ? `${deviceInfo.device_2.alias} ON` : `${deviceInfo.device_2.alias} OFF`;
+  
   const dataObject = {
     labels: labels_,
     datasets: [
@@ -114,46 +120,30 @@ const Dashboard = () => {
           <div className="dashboard-content-header">
             <h2>Dashboard</h2>
             <button
-              onClick={() => {
-                fetch("http://localhost:3001/publish/switch/1", {
-                  method: "POST",
-                  headers: { "Content-type": "application/json" },
-                })
-                  .then((response) => console.log(response))
-                  .catch((error) => {
-                    console.log(`id:Switch_End_Point,${error}`);
-                  });
-              }}
+              onClick={toggleButton1}
               style={{
                 border: "none",
                 padding: "5px 25px",
                 borderRadius: "5px",
-                background: "#0A4D68",
-                color: "white",
+                margin: '5px',
+                background: isButton1On ? "limegreen" : "#0A4D68",
+                color: isButton1On ? "black" : "white",
               }}
             >
-              {deviceInfo.device_1.alias}
+              {device1Label}
             </button>
             <button
-              onClick={() => {
-                fetch("http://localhost:3001/publish/switch/2", {
-                  method: "POST",
-                  headers: { "Content-type": "application/json" },
-                })
-                  .then((response) => console.log(response))
-                  .catch((error) => {
-                    console.log(`id:Switch_End_Point,${error}`);
-                  });
-              }}
+              onClick={toggleButton2}
               style={{
                 border: "none",
                 padding: "5px 25px",
                 borderRadius: "5px",
-                background: "#0A4D68",
-                color: "white",
+                margin: '5px',
+                background: isButton2On ? "limegreen" : "#0A4D68",
+                color: isButton2On ? "black" : "white",
               }}
             >
-              {deviceInfo.device_2.alias}
+              {device2Label}
             </button>
             {/* <ToggleSwitch deviceId={1} />
             <ToggleSwitch deviceId={2} /> */}
