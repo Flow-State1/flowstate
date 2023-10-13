@@ -135,7 +135,7 @@ const DashboardRoutes = () => {
         // Calculate the cost of running both devices
         let cost1 = 0;
         consumption.forEach((cons)=>{
-          let rate = cons * 1.77;
+          let rate = cons * (0.0295);
           // console.log(rate);
           cost1 = cost1 + rate
 
@@ -144,7 +144,7 @@ const DashboardRoutes = () => {
 
         consumption_.forEach((cons)=>{
           // console.log(`Cost ${cost2} + ${cons} * 1,77 = ${cost2 + (cons * 1.77)}`);
-          let rate = cons * 1.77;
+          let rate = cons *(0.0295);
           // console.log(rate);
           cost2 = cost2 + rate
         })

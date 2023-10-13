@@ -95,7 +95,7 @@ const Devices = () => {
                     setVariants(array);
                   }}
                   className="login-input"
-                  style={{ width: isTabletOrLaptop ? "30rem" : "80%" }}
+                  style={{ width: isTabletOrLaptop ? "30rem" : "80%",backgroundColor: "lightblue" }}
                 />
                 <datalist id="device1">
                   {appliances.map((applience, index) => {
@@ -113,7 +113,7 @@ const Devices = () => {
                     deviceInfo.device_1.alias = e.target.value;
                   }}
                   className="login-input"
-                  style={{ width: isTabletOrLaptop ? "30rem" : "80%" }}
+                  style={{ width: isTabletOrLaptop ? "30rem" : "80%",backgroundColor: "lightblue" }}
                 />
                 <datalist id="device1_alias">
                   {variants.map((applience, index) => {
@@ -147,7 +147,7 @@ const Devices = () => {
                 <input
                   type="search"
                   list="device2"
-                  placeholder="Device 1 Brand"
+                  placeholder="Device 2 Brand"
                   onChange={(e) => {
                     deviceInfo.device_2.brand = e.target.value;
                     let field = e.target.value;
@@ -160,7 +160,7 @@ const Devices = () => {
                     setVariants_(array);
                   }}
                   className="login-input"
-                  style={{ width: isTabletOrLaptop ? "30rem" : "80%" }}
+                  style={{ width: isTabletOrLaptop ? "30rem" : "80%" ,backgroundColor: "lightpink"}}
                 />
                 <datalist id="device2">
                   {appliances_.map((applience, index) => {
@@ -178,7 +178,7 @@ const Devices = () => {
                     deviceInfo.device_2.alias = e.target.value;
                   }}
                   className="login-input"
-                  style={{ width: isTabletOrLaptop ? "30rem" : "80%" }}
+                  style={{ width: isTabletOrLaptop ? "30rem" : "80%" ,backgroundColor: "lightpink"}}
                 />
                 <datalist id="device2_alias">
                   {variants_.map((applience, index) => {

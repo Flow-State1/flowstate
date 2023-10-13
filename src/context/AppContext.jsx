@@ -675,7 +675,7 @@ export const AppContextProvider = (props) => {
   };
 
   //Chat-bot context, functions and api-key
-  const API_KEY = "";
+  const API_KEY = "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";
 
   const [typing, setTyping] = useState(false);
   const [messages, setMessages] = useState([
