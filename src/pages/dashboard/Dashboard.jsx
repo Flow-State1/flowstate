@@ -20,6 +20,7 @@ import { DashboardContext } from "../../context/DashboardContext";
 import { AppContext } from "../../context/AppContext";
 import ToggleSwitch from "../../components/Switch";
 import Registration from "../../components/Registration";
+import { zoom } from "chartjs-plugin-zoom";
 ChartJS.register(
   CategoryScale,
   LinearScale,

@@ -785,9 +785,37 @@ export const AppContextProvider = (props) => {
     }
   };
 
+  const [appliences,setAppliences] = useState([]);
+  const [applienceId,setApplienceId] = useState([]);
+  const [consumptionAnalaytics,setConsumptionAnalytics] = useState([])
+  const [consumptionAnalaytics_,setConsumptionAnalytics_] = useState([])
+
+  var analyticsLabel = [];
+  
+
+// Loop through the hours (0 to 23)
+for (var hour = 0; hour < 24; hour++) {
+    // Loop through the minutes (0 to 59)
+    for (var minute = 0; minute < 60; minute++) {
+        // Format the hour and minute as "HH:MM" and push it to the array
+        var time = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+        analyticsLabel.push(time);
+    }
+}
+
+// Find the sum of the consumption of appliences and the costs as well
+
+
+
+
   return (
       <AppContext.Provider
           value={{
+            applienceId,setApplienceId,
+            analyticsLabel,
+            consumptionAnalaytics,setConsumptionAnalytics,
+            consumptionAnalaytics_,setConsumptionAnalytics_,
+            appliences,setAppliences,
               user,
               updateInput,
               passwordInput,
