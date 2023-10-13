@@ -776,7 +776,7 @@ export const AppContextProvider = (props) => {
       if (response.status == 200) {
         setLogoutSuccess(true);
         console.log("Logged out successfully");
-        navigate("/");
+        navigate("/login");
       } else {
         setLogoutSuccess(false);
       }
@@ -785,9 +785,47 @@ export const AppContextProvider = (props) => {
     }
   };
 
+  //Button state ON/OFF
+  const [isButton1On, setIsButton1On] = useState(false);
+  const [isButton2On, setIsButton2On] = useState(false);
+
+  const toggleButton1 = () => {
+    // Toggle the state
+    setIsButton1On(!isButton1On);
+
+    // Make the POST request
+    fetch("http://localhost:3001/publish/switch/1", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+    })
+      .then((response) => console.log(response))
+      .catch((error) => {
+        console.log(`id:Switch_End_Point, ${error}`);
+      });
+  };
+
+  const toggleButton2 = () => {
+    // Toggle the state
+    setIsButton2On(!isButton2On);
+
+    // Make the POST request
+    fetch("http://localhost:3001/publish/switch/2", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+    })
+      .then((response) => console.log(response))
+      .catch((error) => {
+        console.log(`id:Switch_End_Point, ${error}`);
+      });
+  };
+
   return (
       <AppContext.Provider
           value={{
+              isButton1On,
+              isButton2On,
+              toggleButton1,
+              toggleButton2,
               user,
               updateInput,
               passwordInput,
