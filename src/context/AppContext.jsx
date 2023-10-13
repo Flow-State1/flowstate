@@ -780,6 +780,7 @@ export const AppContextProvider = (props) => {
       if (response.status == 200) {
         setLogoutSuccess(true);
         console.log("Logged out successfully");
+        setUser();
         navigate("/");
       } else {
         setLogoutSuccess(false);
