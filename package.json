@@ -18,6 +18,7 @@
     "@jikji/react": "^0.4.1",
     "@react-pdf/renderer": "^3.1.12",
     "chart.js": "^4.3.3",
+    "chartjs-plugin-zoom": "^2.0.1",
     "chartjs-to-image": "^1.2.1",
     "faker": "^6.6.6",
     "file-saver": "^2.0.5",

@@ -96,7 +96,7 @@ const DashboardRoutes = () => {
     })
       .then((response) => response.json())
       .then((results_) => {
-        console.log("Results from the",dataObject," ",results_);
+        // console.log("Results from the",dataObject," ",results_);
         // For device 1
         const labels = [];
         const consumption = [];
