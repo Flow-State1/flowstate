@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import LayoutDashboard from "../../../src/components/BackgroundImage";
+import { motion } from "framer-motion";
 import Analytics from "./Analytics";
 import Dashboard from "./Dashboard";
 import Notifications from "./Notifications";
@@ -17,6 +18,8 @@ import Report from "./Report";
 import { AppContext } from "../../context/AppContext";
 import { ThemeProvider } from "../../context/ThemeContext";
 import Recommendations from "./Recommendation";
+import "../styles.css";
+import Redirect from "../Redirect";
 
 const DashboardRoutes = () => {
   const path = useLocation();
@@ -34,11 +37,10 @@ const DashboardRoutes = () => {
     setKillowatts_,
     setKillowatts,
     user,
-    appliencesId
+    appliencesId,
   } = useContext(AppContext);
 
   const [data, setData] = useState();
-
 
   const results = [
     {
@@ -81,9 +83,12 @@ const DashboardRoutes = () => {
       id: "651c1f800b60b6a0633e19b5",
     },
   ];
-// console.log("Appliences: ",appliencesId);
+  // console.log("Appliences: ",appliencesId);
   const dataObject = JSON.stringify({
-    applience_id: [appliencesId["applience_id1"], appliencesId["applience_id2"]],
+    applience_id: [
+      appliencesId["applience_id1"],
+      appliencesId["applience_id2"],
+    ],
   });
 
   const Fetchdata = () => {
@@ -104,28 +109,31 @@ const DashboardRoutes = () => {
         results_[appliencesId["applience_id1"]].forEach((element) => {
           // console.log("Element1: ",element);
           labels.push(element.label);
-          power.push((element["data"]["apower"]).toFixed(6))
-          let apower =  (element["data"]["apower"]/1000).toFixed(6);
+          power.push(element["data"]["apower"].toFixed(6));
+          let apower = (element["data"]["apower"] / 1000).toFixed(6);
+          // console.log("Device1 Power: ",apower);
           consumption.push(apower);
-
         });
         // console.log("Labels array: ",labels);
+        console.log("Consumption array for dev1: ",consumption);
         setLabels(labels);
         setConsumption((prevConsumption) => [
           ...prevConsumption,
           ...consumption,
         ]);
-        setPower(power[power.length - 1])
+        setPower(power[power.length - 1]);
 
         // For device 2
         const consumption_ = [];
         let power_ = [];
         results_[appliencesId["applience_id2"]].forEach((element) => {
           // console.log("Element2: ",element);
-          power_.push((element["data"]["apower"]).toFixed(6))
-          let apower =  (element["data"]["apower"]/1000).toFixed(6);
+          power_.push(element["data"]["apower"].toFixed(6));
+          let apower = (element["data"]["apower"] / 1000).toFixed(6);
+          // console.log("Device2 Power: ",apower);
           consumption_.push(apower);
         });
+        console.log("Consumption array for dev1: ",consumption_);
         setConsumption_((prevConsumption) => [
           ...prevConsumption,
           ...consumption_,
@@ -134,23 +142,21 @@ const DashboardRoutes = () => {
 
         // Calculate the cost of running both devices
         let cost1 = 0;
-        consumption.forEach((cons)=>{
-          let rate = cons * (0.0295);
+        consumption.forEach((cons) => {
+          let rate = cons * 0.0295;
           // console.log(rate);
-          cost1 = cost1 + rate
-
-        })
+          cost1 = cost1 + rate;
+        });
         let cost2 = 0;
 
-        consumption_.forEach((cons)=>{
+        consumption_.forEach((cons) => {
           // console.log(`Cost ${cost2} + ${cons} * 1,77 = ${cost2 + (cons * 1.77)}`);
-          let rate = cons *(0.0295);
+          let rate = cons * 0.0295;
           // console.log(rate);
-          cost2 = cost2 + rate
-        })
-        const totalcost = cost1 +cost2
-        setCost(totalcost.toFixed(6))
-
+          cost2 = cost2 + rate;
+        });
+        const totalcost = cost1 + cost2;
+        setCost(totalcost.toFixed(6));
       });
   };
 
@@ -163,161 +169,56 @@ const DashboardRoutes = () => {
     return () => clearInterval(interval);
   }, []);
 
-  //       // let saved_time = `${hour}:${minutes}`;
-
-  //       console.log("User: ", user);
-  //     const socket = io("ws://localhost:3001", {
-  //       transports: ["websocket"],
-  //     });
-
-  //     socket.onAny((e)=>{
-  //         console.log("Connects ",e);
-  //     })
-
-  //     //Listen for messages from web socket
-  //     socket.on("message", (event) => {
-  //       console.log(event);
-  //       const json = JSON.parse(event.data);
-  //       console.log(json);
-  //       // Updating variables for device1
-  //       if (json["payload_src"] == "shellyplus1pm-a8032ab11964") {
-  //         let power = json.data[json.data.length - 1].apower.toFixed(4);
-  //         let voltage = json.data[json.data.length - 1].voltage.toFixed(4);
-  //         let current = json.data[json.data.length - 1].current;
-  //         let labels = json.labels_array[json.labels_array.length - 1];
-  //         console.log("Labels for ", json["payload_src"], " is ", labels);
-  //         console.log(
-  //           "Labels for ",
-  //           json["payload_src"],
-  //           " is ",
-  //           json.labels_array
-  //         );
-
-  //         setPower(power);
-  //         setConsumption((prevConsumption) => {
-  //           // let consumption = [...prevConsumption, json.power];
-  //           // let duration = consumption.length/60;
-  //           let result = power / 60;
-  //           console.log("cons1", result);
-  //           return [...prevConsumption, result];
-  //         });
-  //         setVoltage(voltage);
-  //         setCurrent(current);
-  //         setCost(() => {
-  //           const pwr_kwh = power;
-  //           const cst = pwr_kwh * 1.77;
-  //           c_cost = c_cost + cst;
-  //           let finalCost = c_cost.toFixed(4);
-  //           return finalCost;
-  //         });
-  //         setCost1(() => {
-  //           const pwr_kwh = power;
-  //           const cst = pwr_kwh * 1.77;
-  //           c_cost = c_cost + cst;
-  //           let finalCost = c_cost.toFixed(4);
-  //           return finalCost;
-  //         });
-  //       }
-
-  //       // Updating state variable for device 2
-  //       else if (json["payload_src"] == "shellyplus1pm-7c87ce719ccc") {
-  //         let power = json.data[json.data.length - 1].apower.toFixed(4);
-  //         let voltage = json.data[json.data.length - 1].voltage.toFixed(4);
-  //         let current = json.data[json.data.length - 1].current;
-  //         let labels = json.labels_array[json.labels_array.length - 1];
-  //         console.log("Labels for ", json["payload_src"], " is ", labels);
-  //         console.log(
-  //           "Labels for ",
-  //           json["payload_src"],
-  //           " is ",
-  //           json.labels_array
-  //         );
-
-  //         setLabels((prevLabel) => {
-  //           if (prevLabel !== labels) {
-  //             console.log("Prev label is ", prevLabel);
-  //             console.log("Current label is ", labels);
-  //             return [...prevLabel, labels];
-  //           } else {
-  //             console.log("Prev label is ", prevLabel);
-  //             console.log("Current label is ", labels);
-  //             return prevLabel;
-  //           }
-  //         });
-  //         setPower_(power);
-  //         // Calculate the consumption of the devices, by using the values in the labels array is the number of minutes a device has been on(time/duration)
-  //         // Then use the power(which is now in Kw/h)
-  //         // Get the duration the device has been on for(length of array) devide it by 60 to get it in hour
-  //         // Divide the power you got by the newly calculated duration
-  //         setConsumption_((prevConsumption) => {
-  //           // let consumption = [...prevConsumption, json.power];
-  //           // let duration = consumption.length/60;
-  //           let result = power / 60;
-  //           console.log("cons2", result);
-  //           return [...prevConsumption, result];
-  //         });
-  //         setVoltage_(voltage);
-  //         setCurrent_(current);
-  //         setCost(() => {
-  //           const pwr_kwh = power;
-  //           const cst = pwr_kwh * 1.77;
-  //           c_cost = c_cost + cst;
-  //           let finalCost = c_cost.toFixed(4);
-  //           return finalCost;
-  //         });
-  //         setCost2(() => {
-  //           const pwr_kwh = power;
-  //           const cst = pwr_kwh * 1.77;
-  //           c_cost = c_cost + cst;
-  //           let finalCost = c_cost.toFixed(4);
-  //           return finalCost;
-  //         });
-  //       }
-  //     });
-
-  //     return () => {
-  //       socket.disconnect();
-  //     };
-  //   }, []);
-
   return (
     <>
-      <AnimatePresence mode="sync">
-        <DashboardContextProvider>
-          <ThemeProvider>
-            <LayoutDashboard>
-              <Routes location={path} key={path.pathname}>
-                <Route path="/dashboard/dashboard" element={<Dashboard />} />
-                <Route
-                  path="/dashboard/recommendation"
-                  element={<Recommendations />}
-                />
-                <Route path="/dashboard/analytics" element={<Analytics />} />
-                <Route path="/dashboard/chatbot" element={<ChatBot />} />
-                <Route
-                  path="/dashboard/notifications"
-                  element={<Notifications />}
-                />
-                <Route path="/dashboard/settings" element={<Settings />} />
-                <Route path="/dashboard/profile" element={<Profile />} />
-                <Route
-                  path="/dashboard/profile/editprofile"
-                  element={<EditProfile />}
-                />
-                <Route
-                  path="/dashboard/profile/viewprofile"
-                  element={<ViewProfile />}
-                />
-                <Route
-                  path="/dashboard/profile/changepassword"
-                  element={<ChangePassword />}
-                />
-                <Route path="/dashboard/Report" element={<Report />} />
-              </Routes>
-            </LayoutDashboard>
-          </ThemeProvider>
-        </DashboardContextProvider>
-      </AnimatePresence>
+      {user ? (
+        <AnimatePresence mode="sync">
+          <DashboardContextProvider>
+            <ThemeProvider>
+              <LayoutDashboard>
+                <Routes location={path} key={path.pathname}>
+                  <Route path="/dashboard/dashboard" element={<Dashboard />} />
+                  <Route
+                    path="/dashboard/recommendation"
+                    element={<Recommendations />}
+                  />
+                  <Route path="/dashboard/analytics" element={<Analytics />} />
+                  <Route path="/dashboard/chatbot" element={<ChatBot />} />
+                  <Route
+                    path="/dashboard/notifications"
+                    element={<Notifications />}
+                  />
+                  <Route path="/dashboard/settings" element={<Settings />} />
+                  <Route path="/dashboard/profile" element={<Profile />} />
+                  <Route
+                    path="/dashboard/profile/editprofile"
+                    element={<EditProfile />}
+                  />
+                  <Route
+                    path="/dashboard/profile/viewprofile"
+                    element={<ViewProfile />}
+                  />
+                  <Route
+                    path="/dashboard/profile/changepassword"
+                    element={<ChangePassword />}
+                  />
+                  <Route path="/dashboard/Report" element={<Report />} />
+                </Routes>
+              </LayoutDashboard>
+            </ThemeProvider>
+          </DashboardContextProvider>
+        </AnimatePresence>
+      ) : (
+          <motion.div
+            className="login-container"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.75 }}
+          >
+            <Redirect />
+          </motion.div>
+      )}
     </>
   );
 };
