@@ -297,46 +297,45 @@ export const AppContextProvider = (props) => {
     setSelectedFile(file);
   };
 
-  const handlePictureSubmit = async (e) => {
-    e.preventDefault();
-    const token = getAuthToken();
-    console.log("function called: picture uploaded");
-    if (!selectedFile) {
-      console.log("Please select a file to upload.");
-      return;
-    }
+  // const handlePictureSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const token = getAuthToken();
+  //   console.log("function called: picture uploaded");
+  //   if (!selectedFile) {
+  //     console.log("Please select a file to upload.");
+  //     return;
+  //   }
 
-    try {
-      const formData = new FormData();
-      formData.append("profilePicture", selectedFile);
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("profilePicture", selectedFile);
 
-      const response = await fetch(
-        "http://localhost:3001/users/upload-profile-picture",
-        {
-          method: "POST",
-          body: formData,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  //     const response = await fetch(
+  //       "http://localhost:3001/users/upload-profile-picture",
+  //       {
+  //         method: "POST",
+  //         body: formData,
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
 
-      if (response.status === 200) {
-        console.log("Profile picture uploaded successfully.");
-        const responseData = await response.json();
-        const uploadedImageURL = responseData.imageURL;
-        setProfilePictureURL(uploadedImageURL);
-      } else {
-        console.log("Error uploading profile picture.");
-      }
-    } catch (error) {
-      console.error("Error uploading profile picture:", error);
-    }
-  };
+  //     if (response.status === 200) {
+  //       console.log("Profile picture uploaded successfully.");
+  //       const responseData = await response.json();
+  //       const uploadedImageURL = responseData.imageURL;
+  //       setProfilePictureURL(uploadedImageURL);
+  //     } else {
+  //       console.log("Error uploading profile picture.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error uploading profile picture:", error);
+  //   }
+  // };
 
   const HandleSaveChanges = async (e) => {
     e.preventDefault();
-    handlePictureSubmit(e);
     setIsLoading(true);
     const token = getAuthToken();
     try {
@@ -842,6 +841,7 @@ for (var hour = 0; hour < 24; hour++) {
  };
 
 // Find the sum of the consumption of appliences and the costs as well
+
 
 
 
