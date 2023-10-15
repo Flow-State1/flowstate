@@ -25,6 +25,8 @@ const Devices = () => {
   const [variants, setVariants] = useState([]);
   const [variants_, setVariants_] = useState([]);
 
+  // console.log("User on devices: ",user);
+
   const userAppliences = async () => {
     let appliences_ = await fetch(
       `http://localhost:3001/appliences/${user.id}`

@@ -155,7 +155,8 @@ export const AppContextProvider = (props) => {
         } else {
           console.log("User created and directed to dashboard");
           setUser(inputValue);
-          navigate("/devices");
+          // console.log("User on register",user);
+          navigate("/login");
         }
       });
     } catch (error) {
