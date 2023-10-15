@@ -45,7 +45,7 @@ const EditProfile = () => {
       var blob = new Blob([binary], { type: "image/jpeg"});
       var url = URL.createObjectURL(blob);
       let backBlob = await fetch(url).then(r => r.blob());
-      setProfileImage(blob);
+      setProfileImage(result);
       console.log("IMAGE URL: " + url);
       console.log("IMAGEBLOB:", backBlob);
     };
@@ -81,20 +81,20 @@ const EditProfile = () => {
     console.log("Profile IMage: ", profileImage);
   };
 
-  const blobToBase64 = (b) => {
-    const reader = new FileReader();
-    reader.readAsDataURL({b});
-    return new Promise(resolve => {
-      reader.onloadend = () => {
-        resolve(reader.result);
-      };
-    });
-  };
+  // const blobToBase64 = (b) => {
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL({b});
+  //   return new Promise(resolve => {
+  //     reader.onloadend = () => {
+  //       resolve(reader.result);
+  //     };
+  //   });
+  // };
 
-  blobToBase64(profileImage).then(res => {
-    // do what you wanna do
-    console.log(res); // res is base64 now
-  });
+  // blobToBase64(profileImage).then(res => {
+  //   // do what you wanna do
+  //   console.log(res); // res is base64 now
+  // });
 
   useEffect(() => {
     console.log(UserId);
@@ -129,7 +129,7 @@ const EditProfile = () => {
                 <div className="profile-profile-avatar">
                   {profilePictureURL ? (
                     <img
-                      src={"MDViNmE4MDQtOTA2OC00MDFmLWIyYmEtOTM4NjNjODkwNzhh"}
+                      src={profileImage}
                       alt="Profile picture"
                       style={{
                         width: "12rem",
@@ -142,7 +142,7 @@ const EditProfile = () => {
                     />
                   ) : (
                     <img
-                      src={"MDViNmE4MDQtOTA2OC00MDFmLWIyYmEtOTM4NjNjODkwNzhh"}
+                      src={profileImage}
                       alt=""
                       style={{
                         width: "12rem",
